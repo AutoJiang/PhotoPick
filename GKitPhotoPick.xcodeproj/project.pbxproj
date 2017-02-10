@@ -12,26 +12,17 @@
 		C958FE021E4DDE4B00C5684A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C958FE001E4DDE4B00C5684A /* Main.storyboard */; };
 		C958FE041E4DDE4B00C5684A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C958FE031E4DDE4B00C5684A /* Assets.xcassets */; };
 		C958FE071E4DDE4B00C5684A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C958FE051E4DDE4B00C5684A /* LaunchScreen.storyboard */; };
-		C958FE121E4DDE4B00C5684A /* GKitPhotoPickTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C958FE111E4DDE4B00C5684A /* GKitPhotoPickTests.swift */; };
-		C958FE1D1E4DDE4B00C5684A /* GKitPhotoPickUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C958FE1C1E4DDE4B00C5684A /* GKitPhotoPickUITests.swift */; };
+		C958FE351E4DDEF200C5684A /* AssetModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C958FE2B1E4DDEF200C5684A /* AssetModel.swift */; };
+		C958FE361E4DDEF200C5684A /* AssetTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = C958FE2C1E4DDEF200C5684A /* AssetTool.swift */; };
+		C958FE371E4DDEF200C5684A /* BigPhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C958FE2D1E4DDEF200C5684A /* BigPhotoCell.swift */; };
+		C958FE381E4DDEF200C5684A /* CanimaCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C958FE2E1E4DDEF200C5684A /* CanimaCell.swift */; };
+		C958FE391E4DDEF200C5684A /* CircleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C958FE2F1E4DDEF200C5684A /* CircleButton.swift */; };
+		C958FE3A1E4DDEF200C5684A /* CircleLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C958FE301E4DDEF200C5684A /* CircleLabel.swift */; };
+		C958FE3B1E4DDEF200C5684A /* PhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C958FE311E4DDEF200C5684A /* PhotoCell.swift */; };
+		C958FE3C1E4DDEF200C5684A /* PhotoPickGroupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C958FE321E4DDEF200C5684A /* PhotoPickGroupVC.swift */; };
+		C958FE3D1E4DDEF200C5684A /* PhotoPickVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C958FE331E4DDEF200C5684A /* PhotoPickVC.swift */; };
+		C958FE3E1E4DDEF200C5684A /* PhotoShowVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C958FE341E4DDEF200C5684A /* PhotoShowVC.swift */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		C958FE0E1E4DDE4B00C5684A /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = C958FDF11E4DDE4B00C5684A /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = C958FDF81E4DDE4B00C5684A;
-			remoteInfo = GKitPhotoPick;
-		};
-		C958FE191E4DDE4B00C5684A /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = C958FDF11E4DDE4B00C5684A /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = C958FDF81E4DDE4B00C5684A;
-			remoteInfo = GKitPhotoPick;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		C958FDF91E4DDE4B00C5684A /* GKitPhotoPick.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GKitPhotoPick.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -41,30 +32,20 @@
 		C958FE031E4DDE4B00C5684A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C958FE061E4DDE4B00C5684A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C958FE081E4DDE4B00C5684A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		C958FE0D1E4DDE4B00C5684A /* GKitPhotoPickTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GKitPhotoPickTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		C958FE111E4DDE4B00C5684A /* GKitPhotoPickTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GKitPhotoPickTests.swift; sourceTree = "<group>"; };
-		C958FE131E4DDE4B00C5684A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		C958FE181E4DDE4B00C5684A /* GKitPhotoPickUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GKitPhotoPickUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		C958FE1C1E4DDE4B00C5684A /* GKitPhotoPickUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GKitPhotoPickUITests.swift; sourceTree = "<group>"; };
-		C958FE1E1E4DDE4B00C5684A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C958FE2B1E4DDEF200C5684A /* AssetModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssetModel.swift; sourceTree = "<group>"; };
+		C958FE2C1E4DDEF200C5684A /* AssetTool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssetTool.swift; sourceTree = "<group>"; };
+		C958FE2D1E4DDEF200C5684A /* BigPhotoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BigPhotoCell.swift; sourceTree = "<group>"; };
+		C958FE2E1E4DDEF200C5684A /* CanimaCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CanimaCell.swift; sourceTree = "<group>"; };
+		C958FE2F1E4DDEF200C5684A /* CircleButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircleButton.swift; sourceTree = "<group>"; };
+		C958FE301E4DDEF200C5684A /* CircleLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircleLabel.swift; sourceTree = "<group>"; };
+		C958FE311E4DDEF200C5684A /* PhotoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoCell.swift; sourceTree = "<group>"; };
+		C958FE321E4DDEF200C5684A /* PhotoPickGroupVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoPickGroupVC.swift; sourceTree = "<group>"; };
+		C958FE331E4DDEF200C5684A /* PhotoPickVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoPickVC.swift; sourceTree = "<group>"; };
+		C958FE341E4DDEF200C5684A /* PhotoShowVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoShowVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		C958FDF61E4DDE4B00C5684A /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		C958FE0A1E4DDE4B00C5684A /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		C958FE151E4DDE4B00C5684A /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -77,9 +58,8 @@
 		C958FDF01E4DDE4B00C5684A = {
 			isa = PBXGroup;
 			children = (
-				C958FDFB1E4DDE4B00C5684A /* GKitPhotoPick */,
-				C958FE101E4DDE4B00C5684A /* GKitPhotoPickTests */,
-				C958FE1B1E4DDE4B00C5684A /* GKitPhotoPickUITests */,
+				C958FE2A1E4DDEF200C5684A /* Source */,
+				C958FDFB1E4DDE4B00C5684A /* Demo */,
 				C958FDFA1E4DDE4B00C5684A /* Products */,
 			);
 			sourceTree = "<group>";
@@ -88,13 +68,11 @@
 			isa = PBXGroup;
 			children = (
 				C958FDF91E4DDE4B00C5684A /* GKitPhotoPick.app */,
-				C958FE0D1E4DDE4B00C5684A /* GKitPhotoPickTests.xctest */,
-				C958FE181E4DDE4B00C5684A /* GKitPhotoPickUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		C958FDFB1E4DDE4B00C5684A /* GKitPhotoPick */ = {
+		C958FDFB1E4DDE4B00C5684A /* Demo */ = {
 			isa = PBXGroup;
 			children = (
 				C958FDFC1E4DDE4B00C5684A /* AppDelegate.swift */,
@@ -104,25 +82,24 @@
 				C958FE051E4DDE4B00C5684A /* LaunchScreen.storyboard */,
 				C958FE081E4DDE4B00C5684A /* Info.plist */,
 			);
-			path = GKitPhotoPick;
+			path = Demo;
 			sourceTree = "<group>";
 		};
-		C958FE101E4DDE4B00C5684A /* GKitPhotoPickTests */ = {
+		C958FE2A1E4DDEF200C5684A /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				C958FE111E4DDE4B00C5684A /* GKitPhotoPickTests.swift */,
-				C958FE131E4DDE4B00C5684A /* Info.plist */,
+				C958FE2B1E4DDEF200C5684A /* AssetModel.swift */,
+				C958FE2C1E4DDEF200C5684A /* AssetTool.swift */,
+				C958FE2D1E4DDEF200C5684A /* BigPhotoCell.swift */,
+				C958FE2E1E4DDEF200C5684A /* CanimaCell.swift */,
+				C958FE2F1E4DDEF200C5684A /* CircleButton.swift */,
+				C958FE301E4DDEF200C5684A /* CircleLabel.swift */,
+				C958FE311E4DDEF200C5684A /* PhotoCell.swift */,
+				C958FE321E4DDEF200C5684A /* PhotoPickGroupVC.swift */,
+				C958FE331E4DDEF200C5684A /* PhotoPickVC.swift */,
+				C958FE341E4DDEF200C5684A /* PhotoShowVC.swift */,
 			);
-			path = GKitPhotoPickTests;
-			sourceTree = "<group>";
-		};
-		C958FE1B1E4DDE4B00C5684A /* GKitPhotoPickUITests */ = {
-			isa = PBXGroup;
-			children = (
-				C958FE1C1E4DDE4B00C5684A /* GKitPhotoPickUITests.swift */,
-				C958FE1E1E4DDE4B00C5684A /* Info.plist */,
-			);
-			path = GKitPhotoPickUITests;
+			path = Source;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -145,42 +122,6 @@
 			productReference = C958FDF91E4DDE4B00C5684A /* GKitPhotoPick.app */;
 			productType = "com.apple.product-type.application";
 		};
-		C958FE0C1E4DDE4B00C5684A /* GKitPhotoPickTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = C958FE241E4DDE4B00C5684A /* Build configuration list for PBXNativeTarget "GKitPhotoPickTests" */;
-			buildPhases = (
-				C958FE091E4DDE4B00C5684A /* Sources */,
-				C958FE0A1E4DDE4B00C5684A /* Frameworks */,
-				C958FE0B1E4DDE4B00C5684A /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				C958FE0F1E4DDE4B00C5684A /* PBXTargetDependency */,
-			);
-			name = GKitPhotoPickTests;
-			productName = GKitPhotoPickTests;
-			productReference = C958FE0D1E4DDE4B00C5684A /* GKitPhotoPickTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
-		C958FE171E4DDE4B00C5684A /* GKitPhotoPickUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = C958FE271E4DDE4B00C5684A /* Build configuration list for PBXNativeTarget "GKitPhotoPickUITests" */;
-			buildPhases = (
-				C958FE141E4DDE4B00C5684A /* Sources */,
-				C958FE151E4DDE4B00C5684A /* Frameworks */,
-				C958FE161E4DDE4B00C5684A /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				C958FE1A1E4DDE4B00C5684A /* PBXTargetDependency */,
-			);
-			name = GKitPhotoPickUITests;
-			productName = GKitPhotoPickUITests;
-			productReference = C958FE181E4DDE4B00C5684A /* GKitPhotoPickUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -195,18 +136,6 @@
 						CreatedOnToolsVersion = 8.1;
 						DevelopmentTeam = R6P8BM5822;
 						ProvisioningStyle = Automatic;
-					};
-					C958FE0C1E4DDE4B00C5684A = {
-						CreatedOnToolsVersion = 8.1;
-						DevelopmentTeam = R6P8BM5822;
-						ProvisioningStyle = Automatic;
-						TestTargetID = C958FDF81E4DDE4B00C5684A;
-					};
-					C958FE171E4DDE4B00C5684A = {
-						CreatedOnToolsVersion = 8.1;
-						DevelopmentTeam = R6P8BM5822;
-						ProvisioningStyle = Automatic;
-						TestTargetID = C958FDF81E4DDE4B00C5684A;
 					};
 				};
 			};
@@ -224,8 +153,6 @@
 			projectRoot = "";
 			targets = (
 				C958FDF81E4DDE4B00C5684A /* GKitPhotoPick */,
-				C958FE0C1E4DDE4B00C5684A /* GKitPhotoPickTests */,
-				C958FE171E4DDE4B00C5684A /* GKitPhotoPickUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -241,20 +168,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		C958FE0B1E4DDE4B00C5684A /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		C958FE161E4DDE4B00C5684A /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -262,41 +175,22 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C958FE3E1E4DDEF200C5684A /* PhotoShowVC.swift in Sources */,
+				C958FE391E4DDEF200C5684A /* CircleButton.swift in Sources */,
+				C958FE3B1E4DDEF200C5684A /* PhotoCell.swift in Sources */,
+				C958FE361E4DDEF200C5684A /* AssetTool.swift in Sources */,
 				C958FDFF1E4DDE4B00C5684A /* ViewController.swift in Sources */,
+				C958FE3C1E4DDEF200C5684A /* PhotoPickGroupVC.swift in Sources */,
+				C958FE381E4DDEF200C5684A /* CanimaCell.swift in Sources */,
+				C958FE3D1E4DDEF200C5684A /* PhotoPickVC.swift in Sources */,
+				C958FE351E4DDEF200C5684A /* AssetModel.swift in Sources */,
 				C958FDFD1E4DDE4B00C5684A /* AppDelegate.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		C958FE091E4DDE4B00C5684A /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				C958FE121E4DDE4B00C5684A /* GKitPhotoPickTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		C958FE141E4DDE4B00C5684A /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				C958FE1D1E4DDE4B00C5684A /* GKitPhotoPickUITests.swift in Sources */,
+				C958FE3A1E4DDEF200C5684A /* CircleLabel.swift in Sources */,
+				C958FE371E4DDEF200C5684A /* BigPhotoCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		C958FE0F1E4DDE4B00C5684A /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = C958FDF81E4DDE4B00C5684A /* GKitPhotoPick */;
-			targetProxy = C958FE0E1E4DDE4B00C5684A /* PBXContainerItemProxy */;
-		};
-		C958FE1A1E4DDE4B00C5684A /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = C958FDF81E4DDE4B00C5684A /* GKitPhotoPick */;
-			targetProxy = C958FE191E4DDE4B00C5684A /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		C958FE001E4DDE4B00C5684A /* Main.storyboard */ = {
@@ -437,64 +331,6 @@
 			};
 			name = Release;
 		};
-		C958FE251E4DDE4B00C5684A /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				DEVELOPMENT_TEAM = R6P8BM5822;
-				INFOPLIST_FILE = GKitPhotoPickTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = cc.jat.GKitPhotoPickTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/GKitPhotoPick.app/GKitPhotoPick";
-			};
-			name = Debug;
-		};
-		C958FE261E4DDE4B00C5684A /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				DEVELOPMENT_TEAM = R6P8BM5822;
-				INFOPLIST_FILE = GKitPhotoPickTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = cc.jat.GKitPhotoPickTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/GKitPhotoPick.app/GKitPhotoPick";
-			};
-			name = Release;
-		};
-		C958FE281E4DDE4B00C5684A /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				DEVELOPMENT_TEAM = R6P8BM5822;
-				INFOPLIST_FILE = GKitPhotoPickUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = cc.jat.GKitPhotoPickUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
-				TEST_TARGET_NAME = GKitPhotoPick;
-			};
-			name = Debug;
-		};
-		C958FE291E4DDE4B00C5684A /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				DEVELOPMENT_TEAM = R6P8BM5822;
-				INFOPLIST_FILE = GKitPhotoPickUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = cc.jat.GKitPhotoPickUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
-				TEST_TARGET_NAME = GKitPhotoPick;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -512,22 +348,6 @@
 			buildConfigurations = (
 				C958FE221E4DDE4B00C5684A /* Debug */,
 				C958FE231E4DDE4B00C5684A /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-		};
-		C958FE241E4DDE4B00C5684A /* Build configuration list for PBXNativeTarget "GKitPhotoPickTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				C958FE251E4DDE4B00C5684A /* Debug */,
-				C958FE261E4DDE4B00C5684A /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-		};
-		C958FE271E4DDE4B00C5684A /* Build configuration list for PBXNativeTarget "GKitPhotoPickUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				C958FE281E4DDE4B00C5684A /* Debug */,
-				C958FE291E4DDE4B00C5684A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 		};
