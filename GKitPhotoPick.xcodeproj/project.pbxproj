@@ -22,9 +22,12 @@
 		C958FE3C1E4DDEF200C5684A /* PhotoPickGroupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C958FE321E4DDEF200C5684A /* PhotoPickGroupVC.swift */; };
 		C958FE3D1E4DDEF200C5684A /* PhotoPickVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C958FE331E4DDEF200C5684A /* PhotoPickVC.swift */; };
 		C958FE3E1E4DDEF200C5684A /* PhotoShowVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C958FE341E4DDEF200C5684A /* PhotoShowVC.swift */; };
+		FC3900114A8C5D9B992ED8C5 /* libPods-GKitPhotoPick.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6817F0E679243193DE7557F7 /* libPods-GKitPhotoPick.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		19B5F106A7B14A7742C32959 /* Pods-GKitPhotoPick.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GKitPhotoPick.release.xcconfig"; path = "Pods/Target Support Files/Pods-GKitPhotoPick/Pods-GKitPhotoPick.release.xcconfig"; sourceTree = "<group>"; };
+		6817F0E679243193DE7557F7 /* libPods-GKitPhotoPick.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-GKitPhotoPick.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C958FDF91E4DDE4B00C5684A /* GKitPhotoPick.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GKitPhotoPick.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C958FDFC1E4DDE4B00C5684A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C958FDFE1E4DDE4B00C5684A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -42,6 +45,8 @@
 		C958FE321E4DDEF200C5684A /* PhotoPickGroupVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoPickGroupVC.swift; sourceTree = "<group>"; };
 		C958FE331E4DDEF200C5684A /* PhotoPickVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoPickVC.swift; sourceTree = "<group>"; };
 		C958FE341E4DDEF200C5684A /* PhotoShowVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoShowVC.swift; sourceTree = "<group>"; };
+		C9CB610B1E4DE0FD00A9A6EC /* GKitPhotoPick-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GKitPhotoPick-Bridging-Header.h"; sourceTree = "<group>"; };
+		D408F87DCE06D2A566636E09 /* Pods-GKitPhotoPick.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GKitPhotoPick.debug.xcconfig"; path = "Pods/Target Support Files/Pods-GKitPhotoPick/Pods-GKitPhotoPick.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -49,18 +54,38 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FC3900114A8C5D9B992ED8C5 /* libPods-GKitPhotoPick.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		35851E7AC5BD825535525CE2 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				D408F87DCE06D2A566636E09 /* Pods-GKitPhotoPick.debug.xcconfig */,
+				19B5F106A7B14A7742C32959 /* Pods-GKitPhotoPick.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		5F8FF6FE7F8C9A17B3A13260 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				6817F0E679243193DE7557F7 /* libPods-GKitPhotoPick.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		C958FDF01E4DDE4B00C5684A = {
 			isa = PBXGroup;
 			children = (
 				C958FE2A1E4DDEF200C5684A /* Source */,
 				C958FDFB1E4DDE4B00C5684A /* Demo */,
 				C958FDFA1E4DDE4B00C5684A /* Products */,
+				35851E7AC5BD825535525CE2 /* Pods */,
+				5F8FF6FE7F8C9A17B3A13260 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -75,6 +100,7 @@
 		C958FDFB1E4DDE4B00C5684A /* Demo */ = {
 			isa = PBXGroup;
 			children = (
+				C9CB610B1E4DE0FD00A9A6EC /* GKitPhotoPick-Bridging-Header.h */,
 				C958FDFC1E4DDE4B00C5684A /* AppDelegate.swift */,
 				C958FDFE1E4DDE4B00C5684A /* ViewController.swift */,
 				C958FE001E4DDE4B00C5684A /* Main.storyboard */,
@@ -109,9 +135,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C958FE211E4DDE4B00C5684A /* Build configuration list for PBXNativeTarget "GKitPhotoPick" */;
 			buildPhases = (
+				D77DB62AEE51EA30A9F079C8 /* [CP] Check Pods Manifest.lock */,
 				C958FDF51E4DDE4B00C5684A /* Sources */,
 				C958FDF61E4DDE4B00C5684A /* Frameworks */,
 				C958FDF71E4DDE4B00C5684A /* Resources */,
+				3ECE5831884E2FF11467BAA7 /* [CP] Embed Pods Frameworks */,
+				F24C196EFB94D822D8E3B069 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -169,6 +198,54 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		3ECE5831884E2FF11467BAA7 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-GKitPhotoPick/Pods-GKitPhotoPick-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D77DB62AEE51EA30A9F079C8 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		F24C196EFB94D822D8E3B069 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-GKitPhotoPick/Pods-GKitPhotoPick-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		C958FDF51E4DDE4B00C5684A /* Sources */ = {
@@ -307,26 +384,30 @@
 		};
 		C958FE221E4DDE4B00C5684A /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D408F87DCE06D2A566636E09 /* Pods-GKitPhotoPick.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = R6P8BM5822;
-				INFOPLIST_FILE = GKitPhotoPick/Info.plist;
+				INFOPLIST_FILE = Demo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = cc.jat.GKitPhotoPick;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "$(SWIFT_MODULE_NAME)-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
 		C958FE231E4DDE4B00C5684A /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 19B5F106A7B14A7742C32959 /* Pods-GKitPhotoPick.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = R6P8BM5822;
-				INFOPLIST_FILE = GKitPhotoPick/Info.plist;
+				INFOPLIST_FILE = Demo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = cc.jat.GKitPhotoPick;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "$(SWIFT_MODULE_NAME)-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
@@ -350,6 +431,7 @@
 				C958FE231E4DDE4B00C5684A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

@@ -9,7 +9,7 @@
 import UIKit
 import AssetsLibrary
 
-public protocol PhotoPickDelegate {
+protocol PhotoPickDelegate {
     //返回keys数组，使用时调用 SDImageCache.shared().imageFromDiskCache(forKey: key)返回图片
     func photoPick(pickVC : PhotoPickVC, imageKeys : [String]) -> Void
     //返回缩略图数组
@@ -19,7 +19,7 @@ public protocol PhotoPickDelegate {
     func photoPick(pickVC : PhotoPickVC, datas : [NSData]) -> Void
 }
 
-public extension PhotoPickDelegate{
+extension PhotoPickDelegate{
     func photoPick(pickVC : PhotoPickVC, imageKeys : [String]) -> Void{}
     func photoPick(pickVC : PhotoPickVC, images : [UIImage]) -> Void{}
     
