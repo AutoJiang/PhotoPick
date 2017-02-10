@@ -1,0 +1,20 @@
+PODS:
+  - GKit/ImageBrowse (0.16.15):
+    - SDWebImage
+  - GKit/UIImageExtension (0.16.15)
+  - SDWebImage (3.8.2):
+    - SDWebImage/Core (= 3.8.2)
+  - SDWebImage/Core (3.8.2)
+
+DEPENDENCIES:
+  - GKit/ImageBrowse (= 0.16.15)
+  - GKit/UIImageExtension
+  - SDWebImage (= 3.8.2)
+
+SPEC CHECKSUMS:
+  GKit: dc43c61513db11607e5ed0abafb14c3e65c53356
+  SDWebImage: 098e97e6176540799c27e804c96653ee0833d13c
+
+PODFILE CHECKSUM: 5e6b10c140726b7e1121cb29715ccdef9fa13805
+
+COCOAPODS: 1.1.1
