@@ -7,5 +7,6 @@ target 'GKitPhotoPick' do
 
     pod 'SDWebImage', '3.8.2'
     pod 'GKit/ImageBrowse', '0.16.15'
-    pod 'GKit/UIImageExtension'
+    pod 'GKit/UIImageExtension', '0.16.15'
+
 end

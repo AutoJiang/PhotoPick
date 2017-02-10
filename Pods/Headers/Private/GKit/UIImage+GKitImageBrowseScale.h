@@ -1,0 +1,1 @@
+../../../GKit/Components/ImageBrowse/UIImage+GKitImageBrowseScale.h
