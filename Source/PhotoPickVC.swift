@@ -12,17 +12,15 @@ import AssetsLibrary
 public protocol PhotoPickDelegate: class {
     
     func photoPick(pickVC : PhotoPickVC, assetImages : [AssetImage]) -> Void
-    //返回缩略图数组
-    func photoPick(pickVC : PhotoPickVC, thumbnails : [UIImage]) -> Void //TODO 删除
     
     //TODO 添加取消回调
     //TODO 单张图片是否需要特殊
 }
 
 extension PhotoPickDelegate {
+    
     func photoPick(pickVC : PhotoPickVC, assetImages : [AssetImage]) -> Void {}
     
-    func photoPick(pickVC : PhotoPickVC, thumbnails : [UIImage]) -> Void {}
 }
 
 //TODO 明确定义对外提供的参数（JPG压缩率、图片最大分辨率、长微博图片规则、是否需要GIF、是否显示拍照、选择图片数量控制、单张图片是否可以编辑、是否显示序号）
@@ -37,13 +35,15 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
     
     private var cellSize: CGFloat
     
+    private let bottomBar = UIView()
+    
+    private lazy var library: ALAssetsLibrary = ALAssetsLibrary()
+    
     public weak var delegate: PhotoPickDelegate?
     
     public let config: PhotoPickConfig = PhotoPickConfig()
     
-    
-    private lazy var library: ALAssetsLibrary = ALAssetsLibrary()
-    
+
     var groups : [ALAssetsGroup]?
     
     var assetModels = [AssetModel]()
@@ -52,10 +52,7 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
 
     var isShowCamera = true
     
-    //底部栏
-    let tabBarView = UIView()
-    //被选照片
-    var photos = [AssetModel]() {
+    var selectedAssetModels = [AssetModel]() {
         didSet{
             updateLabel()
         }
@@ -78,7 +75,7 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
         self.init(isShowCamera: false)
         
         self.groups = group
-        self.photos = selectedPhotos
+        self.selectedAssetModels = selectedPhotos
         self.title = title
        // print(self.assetsGroups)
         
@@ -117,9 +114,9 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
         
         let y = self.view.frame.height - kBottomBarHeight
         let width = self.view.frame.width
-        tabBarView.frame = CGRect(x: 0, y: y, width: width, height: kBottomBarHeight)
-        tabBarView.backgroundColor = UIColor.black.withAlphaComponent(0.8)
-        self.view.addSubview(tabBarView)
+        bottomBar.frame = CGRect(x: 0, y: y, width: width, height: kBottomBarHeight)
+        bottomBar.backgroundColor = UIColor.black.withAlphaComponent(0.8)
+        self.view.addSubview(bottomBar)
         
         //按钮
         let scanBtn = UIButton(frame: CGRect(x: 12, y: 17, width: 38, height: 18))
@@ -127,7 +124,7 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
         scanBtn.titleLabel?.font = UIFont.systemFont(ofSize: 18)
         scanBtn.setTitleColor(UIColor.white, for: .normal)
         scanBtn.backgroundColor = UIColor.clear
-        tabBarView.addSubview(scanBtn)
+        bottomBar.addSubview(scanBtn)
         
         let confirmBtn = UIButton(frame: CGRect(x: width - 50, y: 17, width: 38, height: 18))
         confirmBtn.setTitle("确定", for: .normal)
@@ -135,7 +132,7 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
         confirmBtn.setTitleColor(UIColor.yellow, for: .normal)
         confirmBtn.backgroundColor = UIColor.clear
         confirmBtn.addTarget(self, action: #selector(confirm), for: .touchUpInside)
-        tabBarView.addSubview(confirmBtn)
+        bottomBar.addSubview(confirmBtn)
         
         self.showLbl = CircleLabel(frame: CGRect(x: self.view.frame.width - 80, y: 13, width: 25, height: 25))
         
@@ -163,14 +160,15 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
             self.navigationItem.leftBarButtonItem = leftBar
         }
     }
+    
     func openGroupPhotos() {
-        let gVC =  PhotoPickGroupVC(selectedPhotos: self.photos)
+        let gVC =  PhotoPickGroupVC(selectedPhotos: self.selectedAssetModels)
         gVC.cancelBack = { [unowned self] array in
-            self.photos = array
+            self.selectedAssetModels = array
             self.collectionView?.reloadData()
         }
         gVC.confirm = { [unowned self] array in
-            self.photos = array
+            self.selectedAssetModels = array
             self.confirm()
         }
         self.navigationController?.pushViewController(gVC, animated: true)
@@ -208,20 +206,20 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
                     return
                 }
                 let model = AssetModel(asset: r, isSelect: false)
-                self.assetModels.append(AssetModel(asset: r, isSelect: self.photos.contains(model)))
+                self.assetModels.append(AssetModel(asset: r, isSelect: self.selectedAssetModels.contains(model)))
             })
         }
     }
     
     func confirm(){
-        if let del = delegate {
+        if let delegate = delegate {
             
-            del.photoPick(pickVC: self, assetImages: assetImagesFromAssetModels(photos: photos))
-            photosDidSelected(photos, true)
+            delegate.photoPick(pickVC: self, assetImages: assetImagesFromAssetModels(photos: selectedAssetModels))
+            photosDidSelected(selectedAssetModels, true)
             //del.PhotoPick(pickVC: self, AssetModels: photos)
-//            del.PhotoPick(pickVC: self, images: changeImages(photos: self.photos))
-//            del.PhotoPick(pickVC: self, datas: changeImagesDatas(photos: self.photos))
-//            del.PhotoPick(pickVC: self, thumbnails: changeImagesThumbnails(photos: self.photos))
+//            del.PhotoPick(pickVC: self, images: changeImages(photos: self.selectedAssetModels))
+//            del.PhotoPick(pickVC: self, datas: changeImagesDatas(photos: self.selectedAssetModels))
+//            del.PhotoPick(pickVC: self, thumbnails: changeImagesThumbnails(photos: self.selectedAssetModels))
         }
         dismissVC()
     }
@@ -231,19 +229,19 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
     }
     
     func popVC() {
-        //self.delegate?.PhotoPick(pickVC: self, AssetModels: self.photos)
-        photosDidSelected(photos,false)
+        //self.delegate?.PhotoPick(pickVC: self, AssetModels: self.selectedAssetModels)
+        photosDidSelected(selectedAssetModels,false)
         self.navigationController?.popViewController(animated: true)
     }
     
     func updateLabel() {
-        guard self.photos.count > 0 else {
+        guard self.selectedAssetModels.count > 0 else {
             self.showLbl.removeFromSuperview()
             return
         }
         self.showLbl.addAnimate()
-        self.showLbl.text = "\(self.photos.count)"
-        self.tabBarView.addSubview(showLbl)
+        self.showLbl.text = "\(self.selectedAssetModels.count)"
+        self.bottomBar.addSubview(showLbl)
     }
 
     func assetImagesFromAssetModels(photos:[AssetModel]) -> [AssetImage]{
@@ -291,9 +289,9 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
         
         cell.clearCicle()
         let model = AssetModel(asset: asset, isSelect: false)
-        if photos.contains(model) {
-            let index = self.photos.index(of: model)
-            if index == (self.photos.count - 1) {
+        if selectedAssetModels.contains(model) {
+            let index = self.selectedAssetModels.index(of: model)
+            if index == (self.selectedAssetModels.count - 1) {
                 cell.showCircle(isAnimate: isAdd)
             }else{
                 cell.showCircle(isAnimate: false)
@@ -305,16 +303,16 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
         cell.selectBtn.isSelected = data.isSelect
         
         cell.btnEventBlock = { _  in
-            if !self.photos.contains(model) {
-                if self.photos.count < self.config.maxSelectImagesCount {
-                    self.photos.append(model)
+            if !self.selectedAssetModels.contains(model) {
+                if self.selectedAssetModels.count < self.config.maxSelectImagesCount {
+                    self.selectedAssetModels.append(model)
                     self.isAdd = true
                 }else{
                     self.isAdd = false
                 }
             }else{
-                let index = self.photos.index(of: model)
-                self.photos.remove(at: index!)
+                let index = self.selectedAssetModels.index(of: model)
+                self.selectedAssetModels.remove(at: index!)
                 self.isAdd = false
             }
             data.isSelect = !data.isSelect
@@ -339,14 +337,14 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
         }
         let bigPhotoShow = PhotoShowVC()
         bigPhotoShow.assets = self.assetModels
-        bigPhotoShow.photos = self.photos
+        bigPhotoShow.selectedAssetModels = self.selectedAssetModels
         bigPhotoShow.index = row
         bigPhotoShow.cancelBack = { [unowned self] array in
-            self.photos = array
+            self.selectedAssetModels = array
             self.collectionView?.reloadData()
         }
         bigPhotoShow.confirmBack = { [unowned self] array in
-            self.photos = array
+            self.selectedAssetModels = array
         }
         self.navigationController?.pushViewController(bigPhotoShow, animated: true)
         

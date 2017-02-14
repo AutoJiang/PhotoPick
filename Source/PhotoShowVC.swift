@@ -15,7 +15,7 @@ class PhotoShowVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
     var collectionView: UICollectionView?
     var showLbl = CircleLabel()
     var assets = [AssetModel]()
-    var photos = [AssetModel]()
+    var selectedAssetModels = [AssetModel]()
     var index  = 0
     //返回
     var cancelBack :([AssetModel])->Void = {_ in }
@@ -29,7 +29,7 @@ class PhotoShowVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
     let navBarView = UIView()
     
     //底部栏
-    let tabBarView = UIView()
+    let BottomBar = UIView()
     
     //选择圈圈
     var circleBtn = CircleButton()
@@ -65,9 +65,9 @@ class PhotoShowVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
     func createView(){
         let y = self.view.frame.height - tabH
         let width = self.view.frame.width
-        tabBarView.frame = CGRect(x: 0, y: y, width: width, height: tabH)
-        tabBarView.backgroundColor = UIColor.black.withAlphaComponent(0.8)
-        self.view.addSubview(tabBarView)
+        BottomBar.frame = CGRect(x: 0, y: y, width: width, height: tabH)
+        BottomBar.backgroundColor = UIColor.black.withAlphaComponent(0.8)
+        self.view.addSubview(BottomBar)
         
         //左下角确定按钮
         let confirmBtn = UIButton(frame: CGRect(x: width - 50, y: 17, width: 38, height: 18))
@@ -76,7 +76,7 @@ class PhotoShowVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         confirmBtn.setTitleColor(UIColor.yellow, for: .normal)
         confirmBtn.backgroundColor = UIColor.clear
         confirmBtn.addTarget(self, action: #selector(confirm), for: .touchUpInside)
-        tabBarView.addSubview(confirmBtn)
+        BottomBar.addSubview(confirmBtn)
         
         self.showLbl = CircleLabel(frame: CGRect(x: self.view.frame.width - 80, y: 13, width: 25, height: 25))
         
@@ -113,10 +113,10 @@ class PhotoShowVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         let element = assets[index]
         element.isSelect = !element.isSelect
         if element.isSelect {
-            self.photos.append(element)
+            self.selectedAssetModels.append(element)
         }else{
-            let i = self.photos.index(of: element)
-            self.photos.remove(at: i!)
+            let i = self.selectedAssetModels.index(of: element)
+            self.selectedAssetModels.remove(at: i!)
         }
         updateTitle(animate: true)
     }
@@ -124,11 +124,11 @@ class PhotoShowVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
     func popVC(){
         let _ = self.navigationController?.popViewController(animated: true)
         self.navigationController?.isNavigationBarHidden = false
-        self.cancelBack(self.photos)
+        self.cancelBack(self.selectedAssetModels)
     }
     
     func confirm() {
-        self.confirmBack(self.photos)
+        self.confirmBack(self.selectedAssetModels)
     }
     
     func updateTitle(animate:Bool){
@@ -137,7 +137,7 @@ class PhotoShowVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         let element = self.assets[index]
         if element.isSelect {
             circelLbl = CircleLabel(frame: circleBtn.frame)
-            circelLbl.text = "\(self.photos.index(of: element)!+1)"
+            circelLbl.text = "\(self.selectedAssetModels.index(of: element)!+1)"
             navBarView.addSubview(circelLbl)
             if animate {
                 circelLbl.addAnimate()

@@ -21,7 +21,7 @@ class PhotoPickGroupVC: UIViewController,UITableViewDelegate,UITableViewDataSour
     
     var groups = [ALAssetsGroup]()
     
-    var photos = [AssetModel]()
+    var selectedAssetModels = [AssetModel]()
     
     var cancelBack : ([AssetModel])-> Void = {_ in}
     
@@ -29,7 +29,7 @@ class PhotoPickGroupVC: UIViewController,UITableViewDelegate,UITableViewDataSour
     
     init(selectedPhotos:[AssetModel]) {
         super.init(nibName: nil, bundle: nil)
-        self.photos = selectedPhotos
+        self.selectedAssetModels = selectedPhotos
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -64,7 +64,7 @@ class PhotoPickGroupVC: UIViewController,UITableViewDelegate,UITableViewDataSour
     }
     
     func popVC() {
-        self.cancelBack(self.photos)
+        self.cancelBack(self.selectedAssetModels)
         let _ = self.navigationController?.popViewController(animated: true)
     }
 
@@ -97,12 +97,12 @@ class PhotoPickGroupVC: UIViewController,UITableViewDelegate,UITableViewDataSour
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let data = self.groups[indexPath.row]
-        let photoPick = PhotoPickVC(title: data.value(forProperty: ALAssetsGroupPropertyName) as! String, group: [data], selectedPhotos: self.photos)
+        let photoPick = PhotoPickVC(title: data.value(forProperty: ALAssetsGroupPropertyName) as! String, group: [data], selectedPhotos: self.selectedAssetModels)
         photoPick.delegate = self
         photoPick.photosDidSelected = { assetModels , isDone in
-            self.photos = assetModels
+            self.selectedAssetModels = assetModels
             if isDone {
-                self.confirm(self.photos)
+                self.confirm(self.selectedAssetModels)
             }
         }
         self.navigationController?.pushViewController(photoPick, animated: true)
@@ -111,8 +111,8 @@ class PhotoPickGroupVC: UIViewController,UITableViewDelegate,UITableViewDataSour
     
 //MARK - PhotoPickViewDelegate
 //    func photoPickView(pickVC: GKitPhotoPickVC, AssetModels: [AssetModel]) {
-//        self.photos = AssetModels
-//        self.confirm(self.photos)
+//        self.selectedAssetModels = AssetModels
+//        self.confirm(self.selectedAssetModels)
 //    }
 }
 
