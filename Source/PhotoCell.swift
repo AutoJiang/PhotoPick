@@ -13,7 +13,7 @@ class PhotoCell: UICollectionViewCell {
     static let identifier = "PhotoCell"
     
     //TODO 加注释
-    public var selectCallback: ((_:PhotoCell) -> Void) = {_ in}
+    public var selectChangeCallback: ((_:PhotoCell) -> Void) = {_ in}
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -26,7 +26,6 @@ class PhotoCell: UICollectionViewCell {
     
     public func bind(image: UIImage){
         iv.image = image
-        cellUnselect()
     }
     
     public func cellUnselect(){
@@ -59,7 +58,7 @@ class PhotoCell: UICollectionViewCell {
     
     private lazy var selectBtn: CircleButton = {
         let btn = CircleButton(frame: CGRect(x: self.frame.size.width - 28, y: 3, width: 25, height: 25))
-        btn.addTarget(self, action: #selector(PhotoCell.onClick), for: .touchUpInside)
+        btn.addTarget(self, action: #selector(PhotoCell.onSelectChange), for: .touchUpInside)
         return btn
     }()
     
@@ -72,8 +71,8 @@ class PhotoCell: UICollectionViewCell {
         return maskView
     }()
     
-    @objc private func onClick(){
-        self.selectCallback(self)
+    @objc private func onSelectChange(){
+        self.selectChangeCallback(self)
     }
     
     required init?(coder aDecoder: NSCoder) {

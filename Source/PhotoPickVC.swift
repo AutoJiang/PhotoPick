@@ -96,11 +96,8 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
         self.init(isShowCamera: false)
         
         self.groups = group
-        self.selectedPhotoModels = selectedPhotos
+        self.selectedPhotoModels = selectedPhotos //TODO 无需传递
         self.title = title
-       // print(self.assetsGroups)
-        
-        
     }
     
     public required init?(coder aDecoder: NSCoder) {
@@ -209,7 +206,7 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
     }
 
     func enumerateAssets(){
-        for var group :ALAssetsGroup in self.groups! {
+        for group: ALAssetsGroup in self.groups! {
             group.enumerateAssets(options: .reverse, using: { (result, index, stop) in
                 guard let r = result else{
                     //                    self.showImage()
@@ -250,6 +247,7 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
         self.bottomBar.addSubview(showLbl)
     }
     
+    //TODO 迁移到CameraCell
     // MARK: - UIImagePickerControllerDelegate
     public func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         if picker.sourceType == .camera {
@@ -272,35 +270,41 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
     
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if indexPath.row == 0 && isShowCamera {
-            return collectionView.dequeueReusableCell(withReuseIdentifier: CameraCell.identifier, for: indexPath)
-            //TODO 无需重用
+            let cell: CameraCell =  collectionView.dequeueReusableCell(withReuseIdentifier: CameraCell.identifier, for: indexPath) as! CameraCell
+            cell.host = self
+            return cell
         }
-        let cell :PhotoCell  = collectionView.dequeueReusableCell(withReuseIdentifier: PhotoCell.identifier, for: indexPath) as! PhotoCell
+        
+        let cell: PhotoCell = collectionView.dequeueReusableCell(withReuseIdentifier: PhotoCell.identifier, for: indexPath) as! PhotoCell
         
         let model: PhotoModel = photoModels[getPhotoRow(indexPath: indexPath)]
         cell.bind(image: model.image)
         if model.isSelect {
             let index = self.selectedPhotoModels.index(of: model)
-            cell.cellSelect(animated: false, index: "\(index!+1)")
+            cell.cellSelect(index: "\(index!+1)")
+        } else {
+            cell.cellUnselect()
         }
         
-        cell.selectCallback = {[weak self, weak cell] _  in
+        cell.selectChangeCallback = {[weak self] photoCell in
             guard let sSelf = self else {
                 return
             }
             
+            //取消选中
             if model.isSelect {
                 let index = sSelf.selectedPhotoModels.index(of: model)
                 sSelf.selectedPhotoModels.remove(at: index!)
-                cell?.cellUnselect()
+                photoCell.cellUnselect()
                 model.isSelect = false
                 sSelf.collectionView.reloadData()
-            } else {
-                if sSelf.selectedPhotoModels.count < sSelf.config.maxSelectImagesCount {
-                    sSelf.selectedPhotoModels.append(model)
-                    model.isSelect = true
-                    cell?.cellSelect(animated: true, index: "\(sSelf.selectedPhotoModels.count)")
-                }
+            }
+            
+            //选中
+            if sSelf.selectedPhotoModels.count < sSelf.config.maxSelectImagesCount {
+                sSelf.selectedPhotoModels.append(model)
+                model.isSelect = true
+                photoCell.cellSelect(animated: true, index: "\(sSelf.selectedPhotoModels.count)")
             }
         }
         return cell
@@ -309,6 +313,7 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         if indexPath.row == 0 && isShowCamera {
+            //TODO 迁移到CameraCell
             let controller = UIImagePickerController()
             controller.sourceType = .camera
             controller.delegate = self
@@ -316,18 +321,18 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
             return
         }
         
-        let bigPhotoShow = PhotoShowVC()
-        bigPhotoShow.assets = self.photoModels
-        bigPhotoShow.selectedPhotoModels = self.selectedPhotoModels
-        bigPhotoShow.index = getPhotoRow(indexPath: indexPath)
-        bigPhotoShow.cancelBack = { [unowned self] array in
-            self.selectedPhotoModels = array
+        let photoShowVC = PhotoShowVC()
+        photoShowVC.assets = self.photoModels //TODO 改成必填参数
+        photoShowVC.selectedPhotoModels = self.selectedPhotoModels //TODO 改成必填参数
+        photoShowVC.index = getPhotoRow(indexPath: indexPath) //TODO 改成必填参数
+        photoShowVC.cancelBack = { _ in
+//            self.selectedPhotoModels = array
             self.collectionView.reloadData()
         }
-        bigPhotoShow.confirmBack = { [unowned self] array in
-            self.selectedPhotoModels = array
+        photoShowVC.confirmBack = { _ in
+//            self.selectedPhotoModels = array
         }
-        self.navigationController?.pushViewController(bigPhotoShow, animated: true)
+        self.navigationController?.pushViewController(photoShowVC, animated: true)
         
     }
     
