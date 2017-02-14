@@ -293,7 +293,7 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
             , scale: 1.0, orientation: .up)
         cell.bind(image: image)
         
-        cell.clearCicle()
+        cell.cellUnselect()
         let model = PhotoModel(asset: asset, isSelect: false)
         if selectedPhotoModels.contains(model) {
             let index = self.selectedPhotoModels.index(of: model)
@@ -304,7 +304,7 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
             }
         }
         
-        cell.btnEventBlock = { _  in
+        cell.selectCallback = { _  in
             if !self.selectedPhotoModels.contains(model) {
                 if self.selectedPhotoModels.count < self.config.maxSelectImagesCount {
                     self.selectedPhotoModels.append(model)

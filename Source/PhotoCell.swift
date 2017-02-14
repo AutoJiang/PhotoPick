@@ -12,6 +12,8 @@ class PhotoCell: UICollectionViewCell {
     
     static let identifier = "PhotoCell"
     
+    var selectCallback: ((_:PhotoCell) -> Void) = {_ in}
+    
     private lazy var iv: UIImageView = {
         let v = UIImageView()
         v.frame = self.bounds
@@ -29,8 +31,6 @@ class PhotoCell: UICollectionViewCell {
         btn.addTarget(self, action: #selector(PhotoCell.onClick), for: .touchUpInside)
         return btn
     }()
-    
-    var btnEventBlock: ((_:PhotoCell) -> Void)?
     
     private lazy var ivMaskView: UIView = {
         let maskView:UIView = UIView(frame: self.bounds)
@@ -50,6 +50,12 @@ class PhotoCell: UICollectionViewCell {
         addSubview(indexLbl)
     }
     
+    public func bind(image: UIImage? = nil){
+        if let image = image {
+            iv.image = image
+        }
+    }
+    
     public func cellUnselect(){
         indexLbl.isHidden = true
         ivMaskView.isHidden = true
@@ -66,28 +72,8 @@ class PhotoCell: UICollectionViewCell {
         }
     }
     
-    public func bind(image: UIImage? = nil){
-        if let image = image {
-            iv.image = image
-        }
-    }
-    
-    func onClick(){
-        self.btnEventBlock!(self)
-        selectBtn.isSelected = !selectBtn.isSelected
-    }
-    
-    func showCircle(isAnimate:Bool){
-        ivMaskView.isHidden = false
-        indexLbl.isHidden = false
-        if isAnimate{
-            indexLbl.addAnimate()
-        }
-    }
-    
-    func clearCicle(){
-        indexLbl.isHidden = true
-        ivMaskView.isHidden = true
+    @objc private func onClick(){
+        self.selectCallback(self)
     }
     
     required init?(coder aDecoder: NSCoder) {
