@@ -303,7 +303,7 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
                 cell.showCircle(isAnimate: false)
             }
             
-            cell.indexLbl.text = "\(index!+1)"
+            cell.bind(index: "\(index!+1)")
         }
         
         cell.selectBtn.isSelected = data.isSelect

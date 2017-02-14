@@ -18,7 +18,11 @@ class PhotoCell: UICollectionViewCell {
         return iV
     }()
     
-    public var indexLbl = CircleLabel()
+    private lazy var indexLbl: CircleLabel = {
+        let v: CircleLabel = CircleLabel(frame: self.selectBtn.frame)
+        v.isHidden = true
+        return v
+    }()
     
     var selectBtn = CircleButton()
     
@@ -44,10 +48,21 @@ class PhotoCell: UICollectionViewCell {
         selectBtn = btn
         
         addSubview(ivMaskView)
+        addSubview(indexLbl)
     }
     
     public func bind(image:UIImage){
         iv.image = image
+    }
+    
+    public func bind(image: UIImage? = nil, index: String? = nil){
+        if let image = image {
+            iv.image = image
+        }
+        
+        if let index = index {
+            indexLbl.text = index
+        }
     }
     
     func bntOnclick(){
@@ -56,18 +71,15 @@ class PhotoCell: UICollectionViewCell {
     }
     
     func showCircle(isAnimate:Bool){
-        
         ivMaskView.isHidden = false
-        
-        indexLbl = CircleLabel(frame: selectBtn.frame) //TODO 改成成员变量
-        self.addSubview(indexLbl)
+        indexLbl.isHidden = false
         if isAnimate{
             indexLbl.addAnimate()
         }
     }
     
     func clearCicle(){
-        indexLbl.removeFromSuperview()
+        indexLbl.isHidden = true
         ivMaskView.isHidden = true
     }
     
