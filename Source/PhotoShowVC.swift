@@ -9,6 +9,7 @@
 import UIKit
 import AssetsLibrary
 
+//大图显示控制器
 class PhotoShowVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
     private let tabH: CGFloat = 50
     var collectionView: UICollectionView?

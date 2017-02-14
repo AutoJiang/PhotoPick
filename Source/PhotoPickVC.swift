@@ -10,21 +10,16 @@ import UIKit
 import AssetsLibrary
 
 protocol PhotoPickDelegate {
-    //返回keys数组，使用时调用 SDImageCache.shared().imageFromDiskCache(forKey: key)返回图片
-    func photoPick(pickVC : PhotoPickVC, imageKeys : [String]) -> Void
+    
+    func photoPick(pickVC : PhotoPickVC, assetImages : [AssetImage]) -> Void
     //返回缩略图数组
     func photoPick(pickVC : PhotoPickVC, thumbnails : [UIImage]) -> Void
-
-    func photoPick(pickVC : PhotoPickVC, images : [UIImage]) -> Void
-    func photoPick(pickVC : PhotoPickVC, datas : [NSData]) -> Void
 }
 
 extension PhotoPickDelegate{
-    func photoPick(pickVC : PhotoPickVC, imageKeys : [String]) -> Void{}
-    func photoPick(pickVC : PhotoPickVC, images : [UIImage]) -> Void{}
+    func photoPick(pickVC : PhotoPickVC, assetImages : [AssetImage]) -> Void{}
     
     func photoPick(pickVC : PhotoPickVC, thumbnails : [UIImage]) -> Void{}
-    func photoPick(pickVC : PhotoPickVC, datas : [NSData]) -> Void{}
 }
 
 class PhotoPickVC: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout , UIImagePickerControllerDelegate,UINavigationControllerDelegate{
@@ -219,10 +214,11 @@ class PhotoPickVC: UIViewController,UICollectionViewDelegate,UICollectionViewDat
     
     func confirm(){
         if let del = delegate {
-            del.photoPick(pickVC: self, imageKeys: changeImagesKeys(photos: photos))
+            
+            del.photoPick(pickVC: self, assetImages: assetImagesFromAssetModels(photos: photos))
             photosDidSelected(photos, true)
             //del.PhotoPick(pickVC: self, AssetModels: photos)
-//                del.PhotoPick(pickVC: self, images: changeImages(photos: self.photos))
+//            del.PhotoPick(pickVC: self, images: changeImages(photos: self.photos))
 //            del.PhotoPick(pickVC: self, datas: changeImagesDatas(photos: self.photos))
 //            del.PhotoPick(pickVC: self, thumbnails: changeImagesThumbnails(photos: self.photos))
         }
@@ -276,13 +272,8 @@ class PhotoPickVC: UIViewController,UICollectionViewDelegate,UICollectionViewDat
         return array
     }
     
-    func changeImagesKeys(photos:[AssetModel]) -> [String]{
-        var array = [String]()
-        for obj in photos {
-            let key = obj.asset.defaultRepresentation().url().absoluteString
-            array.append(key)
-        }
-        return array
+    func assetImagesFromAssetModels(photos:[AssetModel]) -> [AssetImage]{
+        return photos.map{ e in AssetImage(asset: e.asset)}
     }
     
 // MARK: - UIImagePickerControllerDelegate
@@ -291,7 +282,6 @@ class PhotoPickVC: UIViewController,UICollectionViewDelegate,UICollectionViewDat
             //图片存入相册
             let image = info[UIImagePickerControllerOriginalImage] as! UIImage
             UIImageWriteToSavedPhotosAlbum( image, nil, nil, nil);
-            delegate?.photoPick(pickVC: self, images: [image])
         }
         self.dismiss(animated: true, completion: nil)
     }
@@ -353,7 +343,7 @@ class PhotoPickVC: UIViewController,UICollectionViewDelegate,UICollectionViewDat
                 self.photos.remove(at: index!)
                 self.isAdd = false
             }
-            data.didSelected(selected:!data.isSelect)
+            data.isSelect = !data.isSelect
             
             self.collectionView?.reloadData()
         }

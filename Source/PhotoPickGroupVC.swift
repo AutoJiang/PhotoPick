@@ -8,7 +8,7 @@
 
 import UIKit
 import AssetsLibrary
-
+//相册列表
 class PhotoPickGroupVC: UIViewController,UITableViewDelegate,UITableViewDataSource,PhotoPickDelegate {
     
     let groupsCell = "groupsCell"

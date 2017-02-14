@@ -24,14 +24,4 @@ class AssetModel: NSObject {
         let b = self.asset.defaultRepresentation().url()
         return a?.absoluteString == b?.absoluteString
     }
-    
-    public func didSelected(selected:Bool) {
-        isSelect = selected
-        if isSelect {
-            let image = AssetTool.imageFromAsset(representation: asset.defaultRepresentation())
-            SDImageCache.shared().store(image, forKey: asset.defaultRepresentation().url().absoluteString)
-        }else{
-            SDImageCache.shared().removeImage(forKey: asset.defaultRepresentation().url().absoluteString)
-        }
-    }
 }

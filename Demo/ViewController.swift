@@ -28,7 +28,7 @@ class ViewController: UIViewController, PhotoPickDelegate {
         button.addTarget(self, action: #selector(buttonOnclick), for: .touchUpInside)
     }
     
-    func showImages(photos:Array<String>) {
+    func showImages(photos:Array<AssetImage>) {
         let view = UIView(frame: CGRect(x: 10, y: 100, width: 300, height: 300))
         self.view.addSubview(view);
         showView = view
@@ -42,8 +42,8 @@ class ViewController: UIViewController, PhotoPickDelegate {
                 let X = j * width
                 let Y = i * width
                 let imageV = UIImageView(frame: CGRect(x: X, y: Y, width: width, height: width))
-                let key = photos[index]
-                let image : UIImage = SDImageCache.shared().imageFromDiskCache(forKey: key);
+                let obj = photos[index]
+                let image : UIImage = obj.image();
                 imageV.image = image
                 imageV.contentMode = .scaleAspectFill
                 imageV.clipsToBounds = true
@@ -67,9 +67,8 @@ class ViewController: UIViewController, PhotoPickDelegate {
         }
     }
     
-    
-    func photoPickView(pickVC: PhotoPickVC, imageKeys: [String]) {
-        self.showImages(photos: imageKeys)
+    func photoPick(pickVC: PhotoPickVC, assetImages: [AssetImage]) {
+        self.showImages(photos: assetImages)
     }
 }
 
