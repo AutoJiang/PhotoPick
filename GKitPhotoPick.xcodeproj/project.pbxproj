@@ -120,13 +120,13 @@
 		C958FE2A1E4DDEF200C5684A /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				C958FE331E4DDEF200C5684A /* PhotoPickVC.swift */,
 				C958FE2C1E4DDEF200C5684A /* AssetTool.swift */,
 				C958FE2D1E4DDEF200C5684A /* BigPhotoCell.swift */,
 				C958FE2E1E4DDEF200C5684A /* CameraCell.swift */,
 				C958FE2F1E4DDEF200C5684A /* CircleButton.swift */,
 				C958FE301E4DDEF200C5684A /* CircleLabel.swift */,
 				C958FE321E4DDEF200C5684A /* PhotoPickGroupVC.swift */,
-				C958FE331E4DDEF200C5684A /* PhotoPickVC.swift */,
 				C958FE341E4DDEF200C5684A /* PhotoShowVC.swift */,
 				C978F1881E519C5E00C1F740 /* AssetImage.swift */,
 				C955C5601E52CAB2003AB844 /* PhotoPickConfig.swift */,
