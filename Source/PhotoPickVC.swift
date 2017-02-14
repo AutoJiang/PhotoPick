@@ -275,7 +275,7 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
         return isShowCamera ? photoModels.count + 1 : photoModels.count
     }
     
-    var isAdd = false
+    var isAdd = false //TODO 变量移到PhotoModel
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if indexPath.row == 0 && isShowCamera {
             return collectionView.dequeueReusableCell(withReuseIdentifier: CameraCell.identifier, for: indexPath)

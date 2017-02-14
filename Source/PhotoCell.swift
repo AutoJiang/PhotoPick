@@ -12,7 +12,11 @@ class PhotoCell: UICollectionViewCell {
     
     static let identifier = "PhotoCell"
     
-    private var imageV = UIImageView()
+    private lazy var iv: UIImageView = {
+        let iV = UIImageView() //TODO lazy var
+        iV.frame = self.bounds
+        return iV
+    }()
     
     public var indexLbl = CircleLabel()
     
@@ -20,23 +24,30 @@ class PhotoCell: UICollectionViewCell {
     
     var btnEventBlock: ((_:PhotoCell) -> Void)?
     
-    var menV = UIView()
+    private lazy var ivMaskView: UIView = {
+        let maskView:UIView = UIView(frame: self.bounds)
+        maskView.backgroundColor = UIColor.black
+        maskView.alpha = 0.3
+        maskView.isUserInteractionEnabled = false
+        maskView.isHidden = true
+        return maskView
+    }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        let iV = UIImageView()
-        iV.frame = self.bounds
-        addSubview(iV)
-        imageV = iV
+        
+        addSubview(iv)
         
         let btn = CircleButton(frame: CGRect(x: self.frame.size.width - 28, y: 3, width: 25, height: 25))
         btn.addTarget(self, action: #selector(PhotoCell.bntOnclick), for: .touchUpInside)
         self.addSubview(btn)
         selectBtn = btn
+        
+        addSubview(ivMaskView)
     }
     
     public func bind(image:UIImage){
-        imageV.image = image
+        iv.image = image
     }
     
     func bntOnclick(){
@@ -45,13 +56,10 @@ class PhotoCell: UICollectionViewCell {
     }
     
     func showCircle(isAnimate:Bool){
-        self.menV = UIView(frame: self.bounds)
-        menV.backgroundColor = UIColor.black
-        menV.alpha = 0.3
-        menV.isUserInteractionEnabled = false
-        self.addSubview(menV)
         
-        indexLbl = CircleLabel(frame: selectBtn.frame)
+        ivMaskView.isHidden = false
+        
+        indexLbl = CircleLabel(frame: selectBtn.frame) //TODO 改成成员变量
         self.addSubview(indexLbl)
         if isAnimate{
             indexLbl.addAnimate()
@@ -60,9 +68,8 @@ class PhotoCell: UICollectionViewCell {
     
     func clearCicle(){
         indexLbl.removeFromSuperview()
-        menV.removeFromSuperview()
+        ivMaskView.isHidden = true
     }
-    
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
