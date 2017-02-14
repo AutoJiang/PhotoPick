@@ -224,7 +224,7 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
     
     func confirm(){
         if let delegate = delegate {
-            delegate.photoPick(pickVC: self, assetImages: assetImagesFromPhotoModels(photos: selectedPhotoModels))
+            delegate.photoPick(pickVC: self, assetImages: PhotoModel.convertToAssetImages(photoModels: selectedPhotoModels))
             photosDidSelected(selectedPhotoModels, true)
         }
         dismissVC()
@@ -249,12 +249,8 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
         self.showLbl.text = "\(self.selectedPhotoModels.count)"
         self.bottomBar.addSubview(showLbl)
     }
-
-    func assetImagesFromPhotoModels(photos:[PhotoModel]) -> [AssetImage]{
-        return photos.map{ e in AssetImage(asset: e.asset)}
-    }
     
-// MARK: - UIImagePickerControllerDelegate
+    // MARK: - UIImagePickerControllerDelegate
     public func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         if picker.sourceType == .camera {
             //图片存入相册
@@ -264,9 +260,8 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
         self.dismiss(animated: true, completion: nil)
     }
     
-// MARK: - UICollectionViewDelegate
+    // MARK: - UICollectionViewDelegate
 
-    
     public func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
@@ -279,25 +274,20 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if indexPath.row == 0 && isShowCamera {
             return collectionView.dequeueReusableCell(withReuseIdentifier: CameraCell.identifier, for: indexPath)
+            //TODO 无需重用
         }
         let cell :PhotoCell  = collectionView.dequeueReusableCell(withReuseIdentifier: PhotoCell.identifier, for: indexPath) as! PhotoCell
         
-        var row = indexPath.row
-        if isShowCamera {
-            row -= 1
-        }
-        let photoModel : PhotoModel = photoModels[row]
-        
-        cell.bind(image: photoModel.image)
-
-        let asset = photoModel.asset
-        let model = PhotoModel(asset: asset, isSelect: false) //TODO PhotoModel被重新创建了
-        if selectedPhotoModels.contains(model) {
+        let model: PhotoModel = photoModels[getPhotoRow(indexPath: indexPath)]
+        cell.bind(image: model.image)
+        if model.isSelect {
             let index = self.selectedPhotoModels.index(of: model)
             if index == (self.selectedPhotoModels.count - 1) {
                 cell.cellSelect(animated: isAdd, index: "\(index!+1)")
-            }else{
+                print("kkkkkkkk")
+            } else {
                 cell.cellSelect(animated: false, index: "\(index!+1)")
+                print("66666666")
             }
         }
         
@@ -318,7 +308,7 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
                 sSelf.selectedPhotoModels.remove(at: index!)
                 sSelf.isAdd = false
             }
-            photoModel.isSelect = !photoModel.isSelect
+            model.isSelect = !model.isSelect
             
             sSelf.collectionView.reloadData()
         }
@@ -326,6 +316,7 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
     }
     
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
         if indexPath.row == 0 && isShowCamera {
             let controller = UIImagePickerController()
             controller.sourceType = .camera
@@ -334,14 +325,10 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
             return
         }
         
-        var row = indexPath.row
-        if isShowCamera {
-            row -= 1
-        }
         let bigPhotoShow = PhotoShowVC()
         bigPhotoShow.assets = self.photoModels
         bigPhotoShow.selectedPhotoModels = self.selectedPhotoModels
-        bigPhotoShow.index = row
+        bigPhotoShow.index = getPhotoRow(indexPath: indexPath)
         bigPhotoShow.cancelBack = { [unowned self] array in
             self.selectedPhotoModels = array
             self.collectionView.reloadData()
@@ -351,5 +338,9 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
         }
         self.navigationController?.pushViewController(bigPhotoShow, animated: true)
         
+    }
+    
+    private func getPhotoRow(indexPath: IndexPath) -> Int {
+        return isShowCamera ? indexPath.row - 1 : indexPath.row
     }
 }

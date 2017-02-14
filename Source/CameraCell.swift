@@ -10,7 +10,7 @@ import UIKit
 
 class CameraCell: UICollectionViewCell {
     
-    static let identifier = "CameraCell"
+    static let identifier = "CameraCell" //TODO 去掉重用
     
     override init(frame: CGRect) {
         super.init(frame: frame)

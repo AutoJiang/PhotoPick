@@ -28,4 +28,8 @@ class PhotoModel: NSObject {
         let b = self.asset.defaultRepresentation().url()
         return a?.absoluteString == b?.absoluteString
     }
+    
+    static func convertToAssetImages(photoModels: [PhotoModel]) -> [AssetImage] {
+        return photoModels.map{ AssetImage(asset: $0.asset)}
+    }
 }
