@@ -298,15 +298,11 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
         if selectedPhotoModels.contains(model) {
             let index = self.selectedPhotoModels.index(of: model)
             if index == (self.selectedPhotoModels.count - 1) {
-                cell.showCircle(isAnimate: isAdd)
+                cell.cellSelect(isAnimate: isAdd, index: "\(index!+1)")
             }else{
-                cell.showCircle(isAnimate: false)
+                cell.cellSelect(isAnimate: false, index: "\(index!+1)")
             }
-            
-            cell.bind(index: "\(index!+1)")
         }
-        
-        cell.selectBtn.isSelected = data.isSelect
         
         cell.btnEventBlock = { _  in
             if !self.selectedPhotoModels.contains(model) {

@@ -13,9 +13,9 @@ class PhotoCell: UICollectionViewCell {
     static let identifier = "PhotoCell"
     
     private lazy var iv: UIImageView = {
-        let iV = UIImageView() //TODO lazy var
-        iV.frame = self.bounds
-        return iV
+        let v = UIImageView()
+        v.frame = self.bounds
+        return v
     }()
     
     private lazy var indexLbl: CircleLabel = {
@@ -24,7 +24,11 @@ class PhotoCell: UICollectionViewCell {
         return v
     }()
     
-    var selectBtn = CircleButton()
+    private lazy var selectBtn: CircleButton = {
+        let btn = CircleButton(frame: CGRect(x: self.frame.size.width - 28, y: 3, width: 25, height: 25))
+        btn.addTarget(self, action: #selector(PhotoCell.onClick), for: .touchUpInside)
+        return btn
+    }()
     
     var btnEventBlock: ((_:PhotoCell) -> Void)?
     
@@ -41,31 +45,34 @@ class PhotoCell: UICollectionViewCell {
         super.init(frame: frame)
         
         addSubview(iv)
-        
-        let btn = CircleButton(frame: CGRect(x: self.frame.size.width - 28, y: 3, width: 25, height: 25))
-        btn.addTarget(self, action: #selector(PhotoCell.bntOnclick), for: .touchUpInside)
-        self.addSubview(btn)
-        selectBtn = btn
-        
+        addSubview(selectBtn)
         addSubview(ivMaskView)
         addSubview(indexLbl)
     }
     
-    public func bind(image:UIImage){
-        iv.image = image
+    public func cellUnselect(){
+        indexLbl.isHidden = true
+        ivMaskView.isHidden = true
     }
     
-    public func bind(image: UIImage? = nil, index: String? = nil){
-        if let image = image {
-            iv.image = image
-        }
-        
+    public func cellSelect(isAnimate:Bool = false, index: String? = nil){
+        ivMaskView.isHidden = false
+        indexLbl.isHidden = false
         if let index = index {
             indexLbl.text = index
         }
+        if isAnimate{
+            indexLbl.addAnimate()
+        }
     }
     
-    func bntOnclick(){
+    public func bind(image: UIImage? = nil){
+        if let image = image {
+            iv.image = image
+        }
+    }
+    
+    func onClick(){
         self.btnEventBlock!(self)
         selectBtn.isSelected = !selectBtn.isSelected
     }
