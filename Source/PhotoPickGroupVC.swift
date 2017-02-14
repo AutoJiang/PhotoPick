@@ -99,8 +99,8 @@ class PhotoPickGroupVC: UIViewController,UITableViewDelegate,UITableViewDataSour
         let data = self.groups[indexPath.row]
         let photoPick = PhotoPickVC(title: data.value(forProperty: ALAssetsGroupPropertyName) as! String, group: [data], selectedPhotos: self.selectedPhotoModels)
         photoPick.delegate = self
-        photoPick.photosDidSelected = { assetModels , isDone in
-            self.selectedPhotoModels = assetModels
+        photoPick.photosDidSelected = { photoModels , isDone in
+            self.selectedPhotoModels = photoModels
             if isDone {
                 self.confirm(self.selectedPhotoModels)
             }

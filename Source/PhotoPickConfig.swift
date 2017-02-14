@@ -24,6 +24,6 @@ public class PhotoPickConfig: NSObject {
     /// TODO
     public var maxShortSidePixel: Int = 720
     
-    
+    public var needShowCamera: Bool = true
     
 }
