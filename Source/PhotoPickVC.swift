@@ -33,17 +33,13 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
     
     private let kBottomBarHeight: CGFloat = 50
     
-    ///做多可选的图片数量
-    private let maximumNumberOfImages: Int
-    
-    ///JPG图片压缩系数
-    private let jpgQuality: CGFloat
-    
     private var cellColumnCount = 3
     
     private var cellSize: CGFloat
     
     public weak var delegate: PhotoPickDelegate?
+    
+    public let config: PhotoPickConfig = PhotoPickConfig()
     
     var groups : [ALAssetsGroup]?
     
@@ -66,9 +62,8 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
     
     /// 对外提供
     public init(isShowCanima : Bool) {
-        maximumNumberOfImages = 9
-        jpgQuality = 0.5
-        
+        config.maxSelectImagesCount = 9
+        config.jpgQuality = 0.5
         cellColumnCount = 3
         cellSize = (CGFloat(UIScreen.main.bounds.width) - CGFloat(cellColumnCount - 1) * kCellSpacing ) / CGFloat(cellColumnCount)
         self.isShowCanima = isShowCanima
@@ -305,7 +300,7 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
         
         cell.btnEventBlock = { _  in
             if !self.photos.contains(model) {
-                if self.photos.count < self.maximumNumberOfImages {
+                if self.photos.count < self.config.maxSelectImagesCount {
                     self.photos.append(model)
                     self.isAdd = true
                 }else{
