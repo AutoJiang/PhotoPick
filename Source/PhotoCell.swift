@@ -10,6 +10,8 @@ import UIKit
 
 class PhotoCell: UICollectionViewCell {
     
+    static let identifier = "PhotoCell"
+    
     private var imageV = UIImageView()
     
     public var indexLbl = CircleLabel()

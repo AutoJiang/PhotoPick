@@ -15,7 +15,7 @@
 		C958FE351E4DDEF200C5684A /* AssetModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C958FE2B1E4DDEF200C5684A /* AssetModel.swift */; };
 		C958FE361E4DDEF200C5684A /* AssetTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = C958FE2C1E4DDEF200C5684A /* AssetTool.swift */; };
 		C958FE371E4DDEF200C5684A /* BigPhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C958FE2D1E4DDEF200C5684A /* BigPhotoCell.swift */; };
-		C958FE381E4DDEF200C5684A /* CanimaCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C958FE2E1E4DDEF200C5684A /* CanimaCell.swift */; };
+		C958FE381E4DDEF200C5684A /* CameraCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C958FE2E1E4DDEF200C5684A /* CameraCell.swift */; };
 		C958FE391E4DDEF200C5684A /* CircleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C958FE2F1E4DDEF200C5684A /* CircleButton.swift */; };
 		C958FE3A1E4DDEF200C5684A /* CircleLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C958FE301E4DDEF200C5684A /* CircleLabel.swift */; };
 		C958FE3B1E4DDEF200C5684A /* PhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C958FE311E4DDEF200C5684A /* PhotoCell.swift */; };
@@ -39,7 +39,7 @@
 		C958FE2B1E4DDEF200C5684A /* AssetModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssetModel.swift; sourceTree = "<group>"; };
 		C958FE2C1E4DDEF200C5684A /* AssetTool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssetTool.swift; sourceTree = "<group>"; };
 		C958FE2D1E4DDEF200C5684A /* BigPhotoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BigPhotoCell.swift; sourceTree = "<group>"; };
-		C958FE2E1E4DDEF200C5684A /* CanimaCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CanimaCell.swift; sourceTree = "<group>"; };
+		C958FE2E1E4DDEF200C5684A /* CameraCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraCell.swift; sourceTree = "<group>"; };
 		C958FE2F1E4DDEF200C5684A /* CircleButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircleButton.swift; sourceTree = "<group>"; };
 		C958FE301E4DDEF200C5684A /* CircleLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircleLabel.swift; sourceTree = "<group>"; };
 		C958FE311E4DDEF200C5684A /* PhotoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoCell.swift; sourceTree = "<group>"; };
@@ -119,7 +119,7 @@
 				C958FE2B1E4DDEF200C5684A /* AssetModel.swift */,
 				C958FE2C1E4DDEF200C5684A /* AssetTool.swift */,
 				C958FE2D1E4DDEF200C5684A /* BigPhotoCell.swift */,
-				C958FE2E1E4DDEF200C5684A /* CanimaCell.swift */,
+				C958FE2E1E4DDEF200C5684A /* CameraCell.swift */,
 				C958FE2F1E4DDEF200C5684A /* CircleButton.swift */,
 				C958FE301E4DDEF200C5684A /* CircleLabel.swift */,
 				C958FE311E4DDEF200C5684A /* PhotoCell.swift */,
@@ -262,7 +262,7 @@
 				C958FDFF1E4DDE4B00C5684A /* ViewController.swift in Sources */,
 				C958FE3C1E4DDEF200C5684A /* PhotoPickGroupVC.swift in Sources */,
 				C978F1891E519C5E00C1F740 /* AssetImage.swift in Sources */,
-				C958FE381E4DDEF200C5684A /* CanimaCell.swift in Sources */,
+				C958FE381E4DDEF200C5684A /* CameraCell.swift in Sources */,
 				C958FE3D1E4DDEF200C5684A /* PhotoPickVC.swift in Sources */,
 				C958FE351E4DDEF200C5684A /* AssetModel.swift in Sources */,
 				C958FDFD1E4DDE4B00C5684A /* AppDelegate.swift in Sources */,

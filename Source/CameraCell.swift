@@ -1,5 +1,5 @@
 //
-//  CanimaCell.swift
+//  CameraCell.swift
 //  PhotoPick
 //
 //  Created by Auto Jiang on 2016/12/23.
@@ -8,7 +8,10 @@
 
 import UIKit
 
-class CanimaCell: UICollectionViewCell {
+class CameraCell: UICollectionViewCell {
+    
+    static let identifier = "CameraCell"
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         let title = UILabel(frame: frame)

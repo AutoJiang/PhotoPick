@@ -31,12 +31,8 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
     
     private let kCellSpacing: CGFloat = 3
     
-    //tabar高度
-    private let tabH :CGFloat = 50
+    private let kBottomBarHeight: CGFloat = 50
     
-    private let iPhotosCell = "photoCell"
-    
-    private let iCanimaCell = "canimaCell"
     //最大可选择个数
     private let maximumNumberOfImages = 999
     //图片压缩系数
@@ -116,13 +112,13 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
         cV.dataSource = self
         cV.backgroundColor = UIColor.white
         self.view.addSubview(cV)
-        cV.register(PhotoCell.self ,forCellWithReuseIdentifier: iPhotosCell)
-        cV.register(CanimaCell.self ,forCellWithReuseIdentifier: iCanimaCell)
+        cV.register(PhotoCell.self ,forCellWithReuseIdentifier: PhotoCell.identifier)
+        cV.register(CameraCell.self ,forCellWithReuseIdentifier: CameraCell.identifier)
         collectionView = cV
         
-        let y = self.view.frame.height - tabH
+        let y = self.view.frame.height - kBottomBarHeight
         let width = self.view.frame.width
-        tabBarView.frame = CGRect(x: 0, y: y, width: width, height: tabH)
+        tabBarView.frame = CGRect(x: 0, y: y, width: width, height: kBottomBarHeight)
         tabBarView.backgroundColor = UIColor.black.withAlphaComponent(0.8)
         self.view.addSubview(tabBarView)
         
@@ -306,9 +302,9 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
     var isAdd = false
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if indexPath.row == 0 && isShowCanima {
-            return collectionView.dequeueReusableCell(withReuseIdentifier: iCanimaCell, for: indexPath)
+            return collectionView.dequeueReusableCell(withReuseIdentifier: CameraCell.identifier, for: indexPath)
         }
-        let cell :PhotoCell  = collectionView.dequeueReusableCell(withReuseIdentifier: iPhotosCell, for: indexPath) as! PhotoCell
+        let cell :PhotoCell  = collectionView.dequeueReusableCell(withReuseIdentifier: PhotoCell.identifier, for: indexPath) as! PhotoCell
         
         var row = indexPath.row
         if isShowCanima {
