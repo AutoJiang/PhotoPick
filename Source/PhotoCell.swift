@@ -12,7 +12,38 @@ class PhotoCell: UICollectionViewCell {
     
     static let identifier = "PhotoCell"
     
-    var selectCallback: ((_:PhotoCell) -> Void) = {_ in}
+    //TODO 加注释
+    public var selectCallback: ((_:PhotoCell) -> Void) = {_ in}
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        
+        addSubview(iv)
+        addSubview(selectBtn)
+        addSubview(ivMaskView)
+        addSubview(indexLbl)
+    }
+    
+    public func bind(image: UIImage){
+        iv.image = image
+        cellUnselect()
+    }
+    
+    public func cellUnselect(){
+        indexLbl.isHidden = true
+        ivMaskView.isHidden = true
+    }
+    
+    public func cellSelect(animated:Bool = false, index: String? = nil){
+        ivMaskView.isHidden = false
+        indexLbl.isHidden = false
+        if let index = index {
+            indexLbl.text = index
+        }
+        if animated {
+            indexLbl.addAnimate()
+        }
+    }
     
     private lazy var iv: UIImageView = {
         let v = UIImageView()
@@ -40,37 +71,6 @@ class PhotoCell: UICollectionViewCell {
         maskView.isHidden = true
         return maskView
     }()
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        
-        addSubview(iv)
-        addSubview(selectBtn)
-        addSubview(ivMaskView)
-        addSubview(indexLbl)
-    }
-    
-    public func bind(image: UIImage? = nil){
-        if let image = image {
-            iv.image = image
-        }
-    }
-    
-    public func cellUnselect(){
-        indexLbl.isHidden = true
-        ivMaskView.isHidden = true
-    }
-    
-    public func cellSelect(isAnimate:Bool = false, index: String? = nil){
-        ivMaskView.isHidden = false
-        indexLbl.isHidden = false
-        if let index = index {
-            indexLbl.text = index
-        }
-        if isAnimate{
-            indexLbl.addAnimate()
-        }
-    }
     
     @objc private func onClick(){
         self.selectCallback(self)

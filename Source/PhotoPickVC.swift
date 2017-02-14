@@ -275,7 +275,7 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
         return isShowCamera ? photoModels.count + 1 : photoModels.count
     }
     
-    var isAdd = false //TODO 变量移到PhotoModel
+    var isAdd = false //TODO 变量移到PhotoModel, 改名needShowAnimation
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if indexPath.row == 0 && isShowCamera {
             return collectionView.dequeueReusableCell(withReuseIdentifier: CameraCell.identifier, for: indexPath)
@@ -286,40 +286,41 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
         if isShowCamera {
             row -= 1
         }
-        let data : PhotoModel = photoModels[row]
-        let asset = data.asset
+        let photoModel : PhotoModel = photoModels[row]
         
-        let image = UIImage(cgImage: asset.thumbnail().takeUnretainedValue()
-            , scale: 1.0, orientation: .up)
-        cell.bind(image: image)
-        
-        cell.cellUnselect()
-        let model = PhotoModel(asset: asset, isSelect: false)
+        cell.bind(image: photoModel.image)
+
+        let asset = photoModel.asset
+        let model = PhotoModel(asset: asset, isSelect: false) //TODO PhotoModel被重新创建了
         if selectedPhotoModels.contains(model) {
             let index = self.selectedPhotoModels.index(of: model)
             if index == (self.selectedPhotoModels.count - 1) {
-                cell.cellSelect(isAnimate: isAdd, index: "\(index!+1)")
+                cell.cellSelect(animated: isAdd, index: "\(index!+1)")
             }else{
-                cell.cellSelect(isAnimate: false, index: "\(index!+1)")
+                cell.cellSelect(animated: false, index: "\(index!+1)")
             }
         }
         
-        cell.selectCallback = { _  in
-            if !self.selectedPhotoModels.contains(model) {
-                if self.selectedPhotoModels.count < self.config.maxSelectImagesCount {
-                    self.selectedPhotoModels.append(model)
-                    self.isAdd = true
-                }else{
-                    self.isAdd = false
-                }
-            }else{
-                let index = self.selectedPhotoModels.index(of: model)
-                self.selectedPhotoModels.remove(at: index!)
-                self.isAdd = false
+        cell.selectCallback = {[weak self] _  in
+            guard let sSelf = self else {
+                return
             }
-            data.isSelect = !data.isSelect
             
-            self.collectionView.reloadData()
+            if !sSelf.selectedPhotoModels.contains(model) {
+                if sSelf.selectedPhotoModels.count < sSelf.config.maxSelectImagesCount {
+                    sSelf.selectedPhotoModels.append(model)
+                    sSelf.isAdd = true
+                } else {
+                    sSelf.isAdd = false
+                }
+            } else {
+                let index = sSelf.selectedPhotoModels.index(of: model)
+                sSelf.selectedPhotoModels.remove(at: index!)
+                sSelf.isAdd = false
+            }
+            photoModel.isSelect = !photoModel.isSelect
+            
+            sSelf.collectionView.reloadData()
         }
         return cell
     }

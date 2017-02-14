@@ -11,7 +11,11 @@ import AssetsLibrary
 
 class PhotoModel: NSObject {
     var asset : ALAsset
-    var isSelect : Bool
+    var isSelect : Bool = false
+    
+    var image: UIImage {
+        return UIImage(cgImage: asset.thumbnail().takeUnretainedValue(), scale: 1.0, orientation: .up)
+    }
     
     init(asset:ALAsset, isSelect:Bool) {
         self.asset = asset
