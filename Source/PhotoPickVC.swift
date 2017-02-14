@@ -41,6 +41,9 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
     
     public let config: PhotoPickConfig = PhotoPickConfig()
     
+    
+    private lazy var library: ALAssetsLibrary = ALAssetsLibrary()
+    
     var groups : [ALAssetsGroup]?
     
     var assetModels = [AssetModel]()
@@ -176,7 +179,7 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
     
     func searchPhotos() {
         self.groups = Array<ALAssetsGroup>()
-        ALAssetsLibrary().enumerateGroupsWithTypes(ALAssetsGroupSavedPhotos, usingBlock:{
+        library.enumerateGroupsWithTypes(ALAssetsGroupSavedPhotos, usingBlock:{
             group, stop in
             guard let g = group else {
                 if (self.groups?.count)! > 0 {
