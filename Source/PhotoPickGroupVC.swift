@@ -32,7 +32,6 @@ class PhotoPickGroupVC: UIViewController,UITableViewDelegate,UITableViewDataSour
         self.photos = selectedPhotos
     }
     
-    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -98,7 +97,7 @@ class PhotoPickGroupVC: UIViewController,UITableViewDelegate,UITableViewDataSour
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let data = self.groups[indexPath.row]
-        let photoPick = PhotoPickVC(title: data.value(forProperty: ALAssetsGroupPropertyName) as! String?, isShowCanima: false, group: [data], selectedPhotos: self.photos)
+        let photoPick = PhotoPickVC(title: data.value(forProperty: ALAssetsGroupPropertyName) as! String, group: [data], selectedPhotos: self.photos)
         photoPick.delegate = self
         photoPick.photosDidSelected = { assetModels , isDone in
             self.photos = assetModels

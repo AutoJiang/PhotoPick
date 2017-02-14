@@ -45,13 +45,6 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
     
     public weak var delegate: PhotoPickDelegate?
     
-    lazy var vidio : UIImagePickerController = {
-        let v = UIImagePickerController()
-        v.sourceType = .camera
-        v.delegate = self
-        return v
-    }()
-    let library = ALAssetsLibrary()
     var groups : [ALAssetsGroup]?
     
     var assets = [AssetModel]()
@@ -71,18 +64,24 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
     
     var photosDidSelected : ([AssetModel],_ isDone:Bool) -> Void = { _ in }
     
-    init(title:String? = "照片选择", isShowCanima : Bool , group:[ALAssetsGroup]?, selectedPhotos: [AssetModel]?=[AssetModel]()) {
+    /// 对外提供
+    public init(isShowCanima : Bool) {
         maximumNumberOfImages = 9
         jpgQuality = 0.5
+        
         cellColumnCount = 3
         cellSize = (CGFloat(UIScreen.main.bounds.width) - CGFloat(cellColumnCount - 1) * kCellSpacing ) / CGFloat(cellColumnCount)
-        
-        super.init(nibName: nil, bundle: nil)
-        self.title = title
         self.isShowCanima = isShowCanima
-        self.groups = group
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    /// 相册页面初始化
+    convenience init(title:String? = "照片选择", group:[ALAssetsGroup], selectedPhotos:[AssetModel]){
+        self.init(isShowCanima: false)
         
-        self.photos = selectedPhotos!
+        self.groups = group
+        self.photos = selectedPhotos
+        self.title = title
     }
     
     public required init?(coder aDecoder: NSCoder) {
@@ -179,7 +178,7 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
     
     func searchPhotos() {
         self.groups = Array<ALAssetsGroup>()
-        library.enumerateGroupsWithTypes(ALAssetsGroupSavedPhotos, usingBlock:{
+        ALAssetsLibrary().enumerateGroupsWithTypes(ALAssetsGroupSavedPhotos, usingBlock:{
             group, stop in
             guard let g = group else {
                 if (self.groups?.count)! > 0 {
@@ -326,7 +325,10 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
     
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if indexPath.row == 0 && isShowCanima {
-            self.present(self.vidio, animated: true, completion: nil)
+            let controller = UIImagePickerController()
+            controller.sourceType = .camera
+            controller.delegate = self
+            self.present(controller, animated: true, completion: nil)
             return
         }
         

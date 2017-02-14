@@ -58,7 +58,7 @@ class ViewController: UIViewController, PhotoPickDelegate {
     }
     
     func buttonOnclick(){
-        let pv =  PhotoPickVC(isShowCanima: true, group: nil)
+        let pv =  PhotoPickVC(isShowCanima: true)
         let nav = UINavigationController(rootViewController: pv)
         self.present(nav, animated: true, completion: nil)
         pv.delegate = self
