@@ -33,21 +33,19 @@ class ViewController: UIViewController, PhotoPickDelegate {
         self.view.addSubview(view);
         showView = view
         let width = 100
-        for var i in 0...2 {
-            for var j in 0...2 {
-                let index = i * 3 + j
-                if  index >= photos.count{
+        for row in 0...2 {
+            for col in 0...2 {
+                let index = row * 3 + col
+                if  index >= photos.count {
                     break
                 }
-                let X = j * width
-                let Y = i * width
-                let imageV = UIImageView(frame: CGRect(x: X, y: Y, width: width, height: width))
-                let obj = photos[index]
-                let image : UIImage = obj.image();
-                imageV.image = image
-                imageV.contentMode = .scaleAspectFill
-                imageV.clipsToBounds = true
-                view.addSubview(imageV)
+
+                let iv = UIImageView(frame: CGRect(x: col * width, y: row * width, width: width, height: width))
+                let image : UIImage = photos[index].image();
+                iv.image = image
+                iv.contentMode = .scaleAspectFill
+                iv.clipsToBounds = true
+                view.addSubview(iv)
             }
         }
     }
