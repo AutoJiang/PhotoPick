@@ -270,7 +270,6 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
         return isShowCamera ? photoModels.count + 1 : photoModels.count
     }
     
-    var isAdd = false //TODO 变量移到PhotoModel, 改名needShowAnimation
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if indexPath.row == 0 && isShowCamera {
             return collectionView.dequeueReusableCell(withReuseIdentifier: CameraCell.identifier, for: indexPath)
@@ -282,35 +281,27 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
         cell.bind(image: model.image)
         if model.isSelect {
             let index = self.selectedPhotoModels.index(of: model)
-            if index == (self.selectedPhotoModels.count - 1) {
-                cell.cellSelect(animated: isAdd, index: "\(index!+1)")
-                print("kkkkkkkk")
-            } else {
-                cell.cellSelect(animated: false, index: "\(index!+1)")
-                print("66666666")
-            }
+            cell.cellSelect(animated: false, index: "\(index!+1)")
         }
         
-        cell.selectCallback = {[weak self] _  in
+        cell.selectCallback = {[weak self, weak cell] _  in
             guard let sSelf = self else {
                 return
             }
             
-            if !sSelf.selectedPhotoModels.contains(model) {
-                if sSelf.selectedPhotoModels.count < sSelf.config.maxSelectImagesCount {
-                    sSelf.selectedPhotoModels.append(model)
-                    sSelf.isAdd = true
-                } else {
-                    sSelf.isAdd = false
-                }
-            } else {
+            if model.isSelect {
                 let index = sSelf.selectedPhotoModels.index(of: model)
                 sSelf.selectedPhotoModels.remove(at: index!)
-                sSelf.isAdd = false
+                cell?.cellUnselect()
+                model.isSelect = false
+                sSelf.collectionView.reloadData()
+            } else {
+                if sSelf.selectedPhotoModels.count < sSelf.config.maxSelectImagesCount {
+                    sSelf.selectedPhotoModels.append(model)
+                    model.isSelect = true
+                    cell?.cellSelect(animated: true, index: "\(sSelf.selectedPhotoModels.count)")
+                }
             }
-            model.isSelect = !model.isSelect
-            
-            sSelf.collectionView.reloadData()
         }
         return cell
     }
