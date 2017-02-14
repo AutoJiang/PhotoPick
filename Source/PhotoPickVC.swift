@@ -13,18 +13,24 @@ protocol PhotoPickDelegate {
     
     func photoPick(pickVC : PhotoPickVC, assetImages : [AssetImage]) -> Void
     //返回缩略图数组
-    func photoPick(pickVC : PhotoPickVC, thumbnails : [UIImage]) -> Void
+    func photoPick(pickVC : PhotoPickVC, thumbnails : [UIImage]) -> Void //TODO 删除
+    
+    //TODO 添加取消回调
+    //TODO 单张图片是否需要特殊
 }
 
 extension PhotoPickDelegate{
-    func photoPick(pickVC : PhotoPickVC, assetImages : [AssetImage]) -> Void{}
+    func photoPick(pickVC : PhotoPickVC, assetImages : [AssetImage]) -> Void {}
     
-    func photoPick(pickVC : PhotoPickVC, thumbnails : [UIImage]) -> Void{}
+    func photoPick(pickVC : PhotoPickVC, thumbnails : [UIImage]) -> Void {}
 }
 
-class PhotoPickVC: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout , UIImagePickerControllerDelegate,UINavigationControllerDelegate{
-    //间距
-    private let SPACING :CGFloat = 3
+//TODO 明确定义对外提供的参数（JPG压缩率、图片最大分辨率、长微博图片规则、是否需要GIF、是否显示拍照、选择图片数量控制、单张图片是否可以编辑）
+
+public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    private let kCellSpacing: CGFloat = 3
+    
     //tabar高度
     private let tabH :CGFloat = 50
     
@@ -80,15 +86,15 @@ class PhotoPickVC: UIViewController,UICollectionViewDelegate,UICollectionViewDat
         if !isShowCanima {
             self.COUNT = 4
         }
-        PW = (CGFloat(UIScreen.main.bounds.width) - CGFloat(COUNT - 1) * SPACING ) / CGFloat(COUNT)
+        PW = (CGFloat(UIScreen.main.bounds.width) - CGFloat(COUNT - 1) * kCellSpacing ) / CGFloat(COUNT)
         self.photos = selectedPhotos!
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    public required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func viewDidLoad() {
+    public override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.gray
         self.createView()
@@ -103,8 +109,8 @@ class PhotoPickVC: UIViewController,UICollectionViewDelegate,UICollectionViewDat
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         layout.itemSize = CGSize(width: PW, height: PW)
-        layout.minimumLineSpacing = SPACING
-        layout.minimumInteritemSpacing = SPACING
+        layout.minimumLineSpacing = kCellSpacing
+        layout.minimumInteritemSpacing = kCellSpacing
         let cV = UICollectionView(frame: self.view.frame, collectionViewLayout: layout)
         cV.delegate = self
         cV.dataSource = self
@@ -277,7 +283,7 @@ class PhotoPickVC: UIViewController,UICollectionViewDelegate,UICollectionViewDat
     }
     
 // MARK: - UIImagePickerControllerDelegate
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+    public func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         if picker.sourceType == .camera {
             //图片存入相册
             let image = info[UIImagePickerControllerOriginalImage] as! UIImage
@@ -289,16 +295,16 @@ class PhotoPickVC: UIViewController,UICollectionViewDelegate,UICollectionViewDat
 // MARK: - UICollectionViewDelegate
 
     
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
+    public func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
     
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return isShowCanima ? assets.count + 1 : assets.count
     }
     
     var isAdd = false
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if indexPath.row == 0 && isShowCanima {
             return collectionView.dequeueReusableCell(withReuseIdentifier: iCanimaCell, for: indexPath)
         }
@@ -350,7 +356,7 @@ class PhotoPickVC: UIViewController,UICollectionViewDelegate,UICollectionViewDat
         return cell
     }
     
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if indexPath.row == 0 && isShowCanima {
             self.present(self.vidio, animated: true, completion: nil)
             return
