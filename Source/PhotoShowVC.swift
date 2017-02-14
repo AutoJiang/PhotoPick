@@ -14,14 +14,14 @@ class PhotoShowVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
     private let tabH: CGFloat = 50
     var collectionView: UICollectionView?
     var showLbl = CircleLabel()
-    var assets = [AssetModel]()
-    var selectedAssetModels = [AssetModel]()
+    var assets = [PhotoModel]()
+    var selectedPhotoModels = [PhotoModel]()
     var index  = 0
     //返回
-    var cancelBack :([AssetModel])->Void = {_ in }
+    var cancelBack :([PhotoModel])->Void = {_ in }
     
     //确认
-    var confirmBack:([AssetModel])->Void = {_ in }
+    var confirmBack:([PhotoModel])->Void = {_ in }
     //进度条
     let titleLbl = UILabel()
     
@@ -113,10 +113,10 @@ class PhotoShowVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         let element = assets[index]
         element.isSelect = !element.isSelect
         if element.isSelect {
-            self.selectedAssetModels.append(element)
+            self.selectedPhotoModels.append(element)
         }else{
-            let i = self.selectedAssetModels.index(of: element)
-            self.selectedAssetModels.remove(at: i!)
+            let i = self.selectedPhotoModels.index(of: element)
+            self.selectedPhotoModels.remove(at: i!)
         }
         updateTitle(animate: true)
     }
@@ -124,11 +124,11 @@ class PhotoShowVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
     func popVC(){
         let _ = self.navigationController?.popViewController(animated: true)
         self.navigationController?.isNavigationBarHidden = false
-        self.cancelBack(self.selectedAssetModels)
+        self.cancelBack(self.selectedPhotoModels)
     }
     
     func confirm() {
-        self.confirmBack(self.selectedAssetModels)
+        self.confirmBack(self.selectedPhotoModels)
     }
     
     func updateTitle(animate:Bool){
@@ -137,7 +137,7 @@ class PhotoShowVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         let element = self.assets[index]
         if element.isSelect {
             circelLbl = CircleLabel(frame: circleBtn.frame)
-            circelLbl.text = "\(self.selectedAssetModels.index(of: element)!+1)"
+            circelLbl.text = "\(self.selectedPhotoModels.index(of: element)!+1)"
             navBarView.addSubview(circelLbl)
             if animate {
                 circelLbl.addAnimate()
@@ -157,7 +157,7 @@ class PhotoShowVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell :BigPhotoCell  = collectionView.dequeueReusableCell(withReuseIdentifier: "bigCell", for: indexPath) as! BigPhotoCell
-        let data : AssetModel = assets[indexPath.row]
+        let data : PhotoModel = assets[indexPath.row]
         let asset = data.asset
         cell.bind(model: asset)
         return cell

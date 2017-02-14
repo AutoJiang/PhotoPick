@@ -46,19 +46,19 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
 
     var groups : [ALAssetsGroup]?
     
-    var assetModels = [AssetModel]()
+    var assetModels = [PhotoModel]()
     var collectionView : UICollectionView?
     var showLbl = CircleLabel()
 
     var isShowCamera = true
     
-    var selectedAssetModels = [AssetModel]() {
+    var selectedPhotoModels = [PhotoModel]() {
         didSet{
             updateLabel()
         }
     }
     
-    var photosDidSelected : ([AssetModel],_ isDone:Bool) -> Void = { _ in }
+    var photosDidSelected : ([PhotoModel],_ isDone:Bool) -> Void = { _ in }
     
     /// 对外提供
     public init(isShowCamera : Bool) {
@@ -71,11 +71,11 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
     }
     
     /// 相册页面初始化
-    convenience init(title:String? = "照片选择", group:[ALAssetsGroup], selectedPhotos:[AssetModel]){
+    convenience init(title:String? = "照片选择", group:[ALAssetsGroup], selectedPhotos:[PhotoModel]){
         self.init(isShowCamera: false)
         
         self.groups = group
-        self.selectedAssetModels = selectedPhotos
+        self.selectedPhotoModels = selectedPhotos
         self.title = title
        // print(self.assetsGroups)
         
@@ -162,13 +162,13 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
     }
     
     func openGroupPhotos() {
-        let gVC =  PhotoPickGroupVC(selectedPhotos: self.selectedAssetModels)
+        let gVC =  PhotoPickGroupVC(selectedPhotos: self.selectedPhotoModels)
         gVC.cancelBack = { [unowned self] array in
-            self.selectedAssetModels = array
+            self.selectedPhotoModels = array
             self.collectionView?.reloadData()
         }
         gVC.confirm = { [unowned self] array in
-            self.selectedAssetModels = array
+            self.selectedPhotoModels = array
             self.confirm()
         }
         self.navigationController?.pushViewController(gVC, animated: true)
@@ -205,8 +205,8 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
                     self.collectionView?.reloadData()
                     return
                 }
-                let model = AssetModel(asset: r, isSelect: false)
-                self.assetModels.append(AssetModel(asset: r, isSelect: self.selectedAssetModels.contains(model)))
+                let model = PhotoModel(asset: r, isSelect: false)
+                self.assetModels.append(PhotoModel(asset: r, isSelect: self.selectedPhotoModels.contains(model)))
             })
         }
     }
@@ -214,12 +214,12 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
     func confirm(){
         if let delegate = delegate {
             
-            delegate.photoPick(pickVC: self, assetImages: assetImagesFromAssetModels(photos: selectedAssetModels))
-            photosDidSelected(selectedAssetModels, true)
-            //del.PhotoPick(pickVC: self, AssetModels: photos)
-//            del.PhotoPick(pickVC: self, images: changeImages(photos: self.selectedAssetModels))
-//            del.PhotoPick(pickVC: self, datas: changeImagesDatas(photos: self.selectedAssetModels))
-//            del.PhotoPick(pickVC: self, thumbnails: changeImagesThumbnails(photos: self.selectedAssetModels))
+            delegate.photoPick(pickVC: self, assetImages: assetImagesFromPhotoModels(photos: selectedPhotoModels))
+            photosDidSelected(selectedPhotoModels, true)
+            //del.PhotoPick(pickVC: self, PhotoModels: photos)
+//            del.PhotoPick(pickVC: self, images: changeImages(photos: self.selectedPhotoModels))
+//            del.PhotoPick(pickVC: self, datas: changeImagesDatas(photos: self.selectedPhotoModels))
+//            del.PhotoPick(pickVC: self, thumbnails: changeImagesThumbnails(photos: self.selectedPhotoModels))
         }
         dismissVC()
     }
@@ -229,22 +229,22 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
     }
     
     func popVC() {
-        //self.delegate?.PhotoPick(pickVC: self, AssetModels: self.selectedAssetModels)
-        photosDidSelected(selectedAssetModels,false)
+        //self.delegate?.PhotoPick(pickVC: self, PhotoModels: self.selectedPhotoModels)
+        photosDidSelected(selectedPhotoModels,false)
         self.navigationController?.popViewController(animated: true)
     }
     
     func updateLabel() {
-        guard self.selectedAssetModels.count > 0 else {
+        guard self.selectedPhotoModels.count > 0 else {
             self.showLbl.removeFromSuperview()
             return
         }
         self.showLbl.addAnimate()
-        self.showLbl.text = "\(self.selectedAssetModels.count)"
+        self.showLbl.text = "\(self.selectedPhotoModels.count)"
         self.bottomBar.addSubview(showLbl)
     }
 
-    func assetImagesFromAssetModels(photos:[AssetModel]) -> [AssetImage]{
+    func assetImagesFromPhotoModels(photos:[PhotoModel]) -> [AssetImage]{
         return photos.map{ e in AssetImage(asset: e.asset)}
     }
     
@@ -280,7 +280,7 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
         if isShowCamera {
             row -= 1
         }
-        let data : AssetModel = assetModels[row]
+        let data : PhotoModel = assetModels[row]
         let asset = data.asset
         
         let image = UIImage(cgImage: asset.thumbnail().takeUnretainedValue()
@@ -288,10 +288,10 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
         cell.bind(image: image)
         
         cell.clearCicle()
-        let model = AssetModel(asset: asset, isSelect: false)
-        if selectedAssetModels.contains(model) {
-            let index = self.selectedAssetModels.index(of: model)
-            if index == (self.selectedAssetModels.count - 1) {
+        let model = PhotoModel(asset: asset, isSelect: false)
+        if selectedPhotoModels.contains(model) {
+            let index = self.selectedPhotoModels.index(of: model)
+            if index == (self.selectedPhotoModels.count - 1) {
                 cell.showCircle(isAnimate: isAdd)
             }else{
                 cell.showCircle(isAnimate: false)
@@ -303,16 +303,16 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
         cell.selectBtn.isSelected = data.isSelect
         
         cell.btnEventBlock = { _  in
-            if !self.selectedAssetModels.contains(model) {
-                if self.selectedAssetModels.count < self.config.maxSelectImagesCount {
-                    self.selectedAssetModels.append(model)
+            if !self.selectedPhotoModels.contains(model) {
+                if self.selectedPhotoModels.count < self.config.maxSelectImagesCount {
+                    self.selectedPhotoModels.append(model)
                     self.isAdd = true
                 }else{
                     self.isAdd = false
                 }
             }else{
-                let index = self.selectedAssetModels.index(of: model)
-                self.selectedAssetModels.remove(at: index!)
+                let index = self.selectedPhotoModels.index(of: model)
+                self.selectedPhotoModels.remove(at: index!)
                 self.isAdd = false
             }
             data.isSelect = !data.isSelect
@@ -337,14 +337,14 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
         }
         let bigPhotoShow = PhotoShowVC()
         bigPhotoShow.assets = self.assetModels
-        bigPhotoShow.selectedAssetModels = self.selectedAssetModels
+        bigPhotoShow.selectedPhotoModels = self.selectedPhotoModels
         bigPhotoShow.index = row
         bigPhotoShow.cancelBack = { [unowned self] array in
-            self.selectedAssetModels = array
+            self.selectedPhotoModels = array
             self.collectionView?.reloadData()
         }
         bigPhotoShow.confirmBack = { [unowned self] array in
-            self.selectedAssetModels = array
+            self.selectedPhotoModels = array
         }
         self.navigationController?.pushViewController(bigPhotoShow, animated: true)
         

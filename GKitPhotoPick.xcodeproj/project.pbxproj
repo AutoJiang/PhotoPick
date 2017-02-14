@@ -13,7 +13,7 @@
 		C958FE021E4DDE4B00C5684A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C958FE001E4DDE4B00C5684A /* Main.storyboard */; };
 		C958FE041E4DDE4B00C5684A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C958FE031E4DDE4B00C5684A /* Assets.xcassets */; };
 		C958FE071E4DDE4B00C5684A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C958FE051E4DDE4B00C5684A /* LaunchScreen.storyboard */; };
-		C958FE351E4DDEF200C5684A /* AssetModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C958FE2B1E4DDEF200C5684A /* AssetModel.swift */; };
+		C958FE351E4DDEF200C5684A /* PhotoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C958FE2B1E4DDEF200C5684A /* PhotoModel.swift */; };
 		C958FE361E4DDEF200C5684A /* AssetTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = C958FE2C1E4DDEF200C5684A /* AssetTool.swift */; };
 		C958FE371E4DDEF200C5684A /* BigPhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C958FE2D1E4DDEF200C5684A /* BigPhotoCell.swift */; };
 		C958FE381E4DDEF200C5684A /* CameraCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C958FE2E1E4DDEF200C5684A /* CameraCell.swift */; };
@@ -23,6 +23,7 @@
 		C958FE3C1E4DDEF200C5684A /* PhotoPickGroupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C958FE321E4DDEF200C5684A /* PhotoPickGroupVC.swift */; };
 		C958FE3D1E4DDEF200C5684A /* PhotoPickVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C958FE331E4DDEF200C5684A /* PhotoPickVC.swift */; };
 		C958FE3E1E4DDEF200C5684A /* PhotoShowVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C958FE341E4DDEF200C5684A /* PhotoShowVC.swift */; };
+		C971D3F31E52DC76006D721E /* PhotoGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = C971D3F21E52DC76006D721E /* PhotoGroup.swift */; };
 		C978F1891E519C5E00C1F740 /* AssetImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C978F1881E519C5E00C1F740 /* AssetImage.swift */; };
 		FC3900114A8C5D9B992ED8C5 /* libPods-GKitPhotoPick.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6817F0E679243193DE7557F7 /* libPods-GKitPhotoPick.a */; };
 /* End PBXBuildFile section */
@@ -38,7 +39,7 @@
 		C958FE031E4DDE4B00C5684A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C958FE061E4DDE4B00C5684A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C958FE081E4DDE4B00C5684A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		C958FE2B1E4DDEF200C5684A /* AssetModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssetModel.swift; sourceTree = "<group>"; };
+		C958FE2B1E4DDEF200C5684A /* PhotoModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoModel.swift; sourceTree = "<group>"; };
 		C958FE2C1E4DDEF200C5684A /* AssetTool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssetTool.swift; sourceTree = "<group>"; };
 		C958FE2D1E4DDEF200C5684A /* BigPhotoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BigPhotoCell.swift; sourceTree = "<group>"; };
 		C958FE2E1E4DDEF200C5684A /* CameraCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraCell.swift; sourceTree = "<group>"; };
@@ -48,6 +49,7 @@
 		C958FE321E4DDEF200C5684A /* PhotoPickGroupVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoPickGroupVC.swift; sourceTree = "<group>"; };
 		C958FE331E4DDEF200C5684A /* PhotoPickVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoPickVC.swift; sourceTree = "<group>"; };
 		C958FE341E4DDEF200C5684A /* PhotoShowVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoShowVC.swift; sourceTree = "<group>"; };
+		C971D3F21E52DC76006D721E /* PhotoGroup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoGroup.swift; sourceTree = "<group>"; };
 		C978F1881E519C5E00C1F740 /* AssetImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssetImage.swift; sourceTree = "<group>"; };
 		C9CB610B1E4DE0FD00A9A6EC /* GKitPhotoPick-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GKitPhotoPick-Bridging-Header.h"; sourceTree = "<group>"; };
 		D408F87DCE06D2A566636E09 /* Pods-GKitPhotoPick.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GKitPhotoPick.debug.xcconfig"; path = "Pods/Target Support Files/Pods-GKitPhotoPick/Pods-GKitPhotoPick.debug.xcconfig"; sourceTree = "<group>"; };
@@ -118,18 +120,19 @@
 		C958FE2A1E4DDEF200C5684A /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				C958FE2B1E4DDEF200C5684A /* AssetModel.swift */,
 				C958FE2C1E4DDEF200C5684A /* AssetTool.swift */,
 				C958FE2D1E4DDEF200C5684A /* BigPhotoCell.swift */,
 				C958FE2E1E4DDEF200C5684A /* CameraCell.swift */,
 				C958FE2F1E4DDEF200C5684A /* CircleButton.swift */,
 				C958FE301E4DDEF200C5684A /* CircleLabel.swift */,
-				C958FE311E4DDEF200C5684A /* PhotoCell.swift */,
 				C958FE321E4DDEF200C5684A /* PhotoPickGroupVC.swift */,
 				C958FE331E4DDEF200C5684A /* PhotoPickVC.swift */,
 				C958FE341E4DDEF200C5684A /* PhotoShowVC.swift */,
 				C978F1881E519C5E00C1F740 /* AssetImage.swift */,
 				C955C5601E52CAB2003AB844 /* PhotoPickConfig.swift */,
+				C958FE311E4DDEF200C5684A /* PhotoCell.swift */,
+				C958FE2B1E4DDEF200C5684A /* PhotoModel.swift */,
+				C971D3F21E52DC76006D721E /* PhotoGroup.swift */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -261,6 +264,7 @@
 				C958FE3E1E4DDEF200C5684A /* PhotoShowVC.swift in Sources */,
 				C958FE391E4DDEF200C5684A /* CircleButton.swift in Sources */,
 				C958FE3B1E4DDEF200C5684A /* PhotoCell.swift in Sources */,
+				C971D3F31E52DC76006D721E /* PhotoGroup.swift in Sources */,
 				C958FE361E4DDEF200C5684A /* AssetTool.swift in Sources */,
 				C958FDFF1E4DDE4B00C5684A /* ViewController.swift in Sources */,
 				C955C5611E52CAB2003AB844 /* PhotoPickConfig.swift in Sources */,
@@ -268,7 +272,7 @@
 				C978F1891E519C5E00C1F740 /* AssetImage.swift in Sources */,
 				C958FE381E4DDEF200C5684A /* CameraCell.swift in Sources */,
 				C958FE3D1E4DDEF200C5684A /* PhotoPickVC.swift in Sources */,
-				C958FE351E4DDEF200C5684A /* AssetModel.swift in Sources */,
+				C958FE351E4DDEF200C5684A /* PhotoModel.swift in Sources */,
 				C958FDFD1E4DDE4B00C5684A /* AppDelegate.swift in Sources */,
 				C958FE3A1E4DDEF200C5684A /* CircleLabel.swift in Sources */,
 				C958FE371E4DDEF200C5684A /* BigPhotoCell.swift in Sources */,

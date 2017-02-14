@@ -9,7 +9,7 @@
 import UIKit
 import AssetsLibrary
 
-class AssetModel: NSObject {
+class PhotoModel: NSObject {
     var asset : ALAsset
     var isSelect : Bool
     
@@ -19,7 +19,7 @@ class AssetModel: NSObject {
     }
 
     override func isEqual(_ object: Any?) -> Bool {
-        let obj = object as! AssetModel
+        let obj = object as! PhotoModel
         let a = obj.asset.defaultRepresentation().url()
         let b = self.asset.defaultRepresentation().url()
         return a?.absoluteString == b?.absoluteString

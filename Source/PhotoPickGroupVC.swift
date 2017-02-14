@@ -21,15 +21,15 @@ class PhotoPickGroupVC: UIViewController,UITableViewDelegate,UITableViewDataSour
     
     var groups = [ALAssetsGroup]()
     
-    var selectedAssetModels = [AssetModel]()
+    var selectedPhotoModels = [PhotoModel]()
     
-    var cancelBack : ([AssetModel])-> Void = {_ in}
+    var cancelBack : ([PhotoModel])-> Void = {_ in}
     
-    var confirm :([AssetModel])-> Void = {_ in}
+    var confirm :([PhotoModel])-> Void = {_ in}
     
-    init(selectedPhotos:[AssetModel]) {
+    init(selectedPhotos:[PhotoModel]) {
         super.init(nibName: nil, bundle: nil)
-        self.selectedAssetModels = selectedPhotos
+        self.selectedPhotoModels = selectedPhotos
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -64,7 +64,7 @@ class PhotoPickGroupVC: UIViewController,UITableViewDelegate,UITableViewDataSour
     }
     
     func popVC() {
-        self.cancelBack(self.selectedAssetModels)
+        self.cancelBack(self.selectedPhotoModels)
         let _ = self.navigationController?.popViewController(animated: true)
     }
 
@@ -97,12 +97,12 @@ class PhotoPickGroupVC: UIViewController,UITableViewDelegate,UITableViewDataSour
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let data = self.groups[indexPath.row]
-        let photoPick = PhotoPickVC(title: data.value(forProperty: ALAssetsGroupPropertyName) as! String, group: [data], selectedPhotos: self.selectedAssetModels)
+        let photoPick = PhotoPickVC(title: data.value(forProperty: ALAssetsGroupPropertyName) as! String, group: [data], selectedPhotos: self.selectedPhotoModels)
         photoPick.delegate = self
         photoPick.photosDidSelected = { assetModels , isDone in
-            self.selectedAssetModels = assetModels
+            self.selectedPhotoModels = assetModels
             if isDone {
-                self.confirm(self.selectedAssetModels)
+                self.confirm(self.selectedPhotoModels)
             }
         }
         self.navigationController?.pushViewController(photoPick, animated: true)
@@ -110,9 +110,9 @@ class PhotoPickGroupVC: UIViewController,UITableViewDelegate,UITableViewDataSour
     }
     
 //MARK - PhotoPickViewDelegate
-//    func photoPickView(pickVC: GKitPhotoPickVC, AssetModels: [AssetModel]) {
-//        self.selectedAssetModels = AssetModels
-//        self.confirm(self.selectedAssetModels)
+//    func photoPickView(pickVC: GKitPhotoPickVC, PhotoModels: [PhotoModel]) {
+//        self.selectedPhotoModels = PhotoModels
+//        self.confirm(self.selectedPhotoModels)
 //    }
 }
 
