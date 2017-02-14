@@ -43,11 +43,11 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
     
     var groups : [ALAssetsGroup]?
     
-    var assets = [AssetModel]()
+    var assetModels = [AssetModel]()
     var collectionView : UICollectionView?
     var showLbl = CircleLabel()
 
-    var isShowCanima = true
+    var isShowCamera = true
     
     //底部栏
     let tabBarView = UIView()
@@ -61,22 +61,25 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
     var photosDidSelected : ([AssetModel],_ isDone:Bool) -> Void = { _ in }
     
     /// 对外提供
-    public init(isShowCanima : Bool) {
+    public init(isShowCamera : Bool) {
         config.maxSelectImagesCount = 9
         config.jpgQuality = 0.5
         cellColumnCount = 3
         cellSize = (CGFloat(UIScreen.main.bounds.width) - CGFloat(cellColumnCount - 1) * kCellSpacing ) / CGFloat(cellColumnCount)
-        self.isShowCanima = isShowCanima
+        //self.isShowCamera = isShowCamera
         super.init(nibName: nil, bundle: nil)
     }
     
     /// 相册页面初始化
     convenience init(title:String? = "照片选择", group:[ALAssetsGroup], selectedPhotos:[AssetModel]){
-        self.init(isShowCanima: false)
+        self.init(isShowCamera: false)
         
         self.groups = group
         self.photos = selectedPhotos
         self.title = title
+       // print(self.assetsGroups)
+        
+        
     }
     
     public required init?(coder aDecoder: NSCoder) {
@@ -133,7 +136,7 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
         
         self.showLbl = CircleLabel(frame: CGRect(x: self.view.frame.width - 80, y: 13, width: 25, height: 25))
         
-        if isShowCanima {
+        if isShowCamera {
             let btnL = UIButton(frame: CGRect(x: 0, y: 0, width: 50, height: 30))
             btnL.setTitle("取消", for: .normal)
             btnL.setTitleColor(UIColor.black, for: .normal)
@@ -202,7 +205,7 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
                     return
                 }
                 let model = AssetModel(asset: r, isSelect: false)
-                self.assets.append(AssetModel(asset: r, isSelect: self.photos.contains(model)))
+                self.assetModels.append(AssetModel(asset: r, isSelect: self.photos.contains(model)))
             })
         }
     }
@@ -262,21 +265,21 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
     }
     
     public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return isShowCanima ? assets.count + 1 : assets.count
+        return isShowCamera ? assetModels.count + 1 : assetModels.count
     }
     
     var isAdd = false
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if indexPath.row == 0 && isShowCanima {
+        if indexPath.row == 0 && isShowCamera {
             return collectionView.dequeueReusableCell(withReuseIdentifier: CameraCell.identifier, for: indexPath)
         }
         let cell :PhotoCell  = collectionView.dequeueReusableCell(withReuseIdentifier: PhotoCell.identifier, for: indexPath) as! PhotoCell
         
         var row = indexPath.row
-        if isShowCanima {
+        if isShowCamera {
             row -= 1
         }
-        let data : AssetModel = assets[row]
+        let data : AssetModel = assetModels[row]
         let asset = data.asset
         
         let image = UIImage(cgImage: asset.thumbnail().takeUnretainedValue()
@@ -319,7 +322,7 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
     }
     
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if indexPath.row == 0 && isShowCanima {
+        if indexPath.row == 0 && isShowCamera {
             let controller = UIImagePickerController()
             controller.sourceType = .camera
             controller.delegate = self
@@ -328,11 +331,11 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
         }
         
         var row = indexPath.row
-        if isShowCanima {
+        if isShowCamera {
             row -= 1
         }
         let bigPhotoShow = PhotoShowVC()
-        bigPhotoShow.assets = self.assets
+        bigPhotoShow.assets = self.assetModels
         bigPhotoShow.photos = self.photos
         bigPhotoShow.index = row
         bigPhotoShow.cancelBack = { [unowned self] array in
