@@ -8,7 +8,8 @@
 
 import UIKit
 import AssetsLibrary
-class AssetImage: NSObject {
+
+public class AssetImage: NSObject {
     private var asset : ALAsset
     private let maxSidePixels : CGFloat = 1280
     private let minStretchSidePixels : CGFloat = 440

@@ -9,7 +9,7 @@
 import UIKit
 import AssetsLibrary
 
-protocol PhotoPickDelegate {
+public protocol PhotoPickDelegate: class {
     
     func photoPick(pickVC : PhotoPickVC, assetImages : [AssetImage]) -> Void
     //返回缩略图数组
@@ -19,13 +19,13 @@ protocol PhotoPickDelegate {
     //TODO 单张图片是否需要特殊
 }
 
-extension PhotoPickDelegate{
+extension PhotoPickDelegate {
     func photoPick(pickVC : PhotoPickVC, assetImages : [AssetImage]) -> Void {}
     
     func photoPick(pickVC : PhotoPickVC, thumbnails : [UIImage]) -> Void {}
 }
 
-//TODO 明确定义对外提供的参数（JPG压缩率、图片最大分辨率、长微博图片规则、是否需要GIF、是否显示拍照、选择图片数量控制、单张图片是否可以编辑）
+//TODO 明确定义对外提供的参数（JPG压缩率、图片最大分辨率、长微博图片规则、是否需要GIF、是否显示拍照、选择图片数量控制、单张图片是否可以编辑、是否显示序号）
 
 public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
@@ -33,21 +33,18 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
     
     private let kBottomBarHeight: CGFloat = 50
     
-    //最大可选择个数
-    private let maximumNumberOfImages = 999
-    //图片压缩系数
-    private let quality : CGFloat = 0.5
+    ///做多可选的图片数量
+    private let maximumNumberOfImages: Int
     
-    private let maxSidePixels : CGFloat = 1280
+    ///JPG图片压缩系数
+    private let jpgQuality: CGFloat
     
-    private let minStretchSidePixels : CGFloat = 440
-    //列数
-    private var COUNT = 3
+    private var cellColumnCount = 3
     
-    //cell宽高
-    private var PW :CGFloat = 50
+    private var cellSize: CGFloat
     
-    var delegate : PhotoPickDelegate?
+    public weak var delegate: PhotoPickDelegate?
+    
     lazy var vidio : UIImagePickerController = {
         let v = UIImagePickerController()
         v.sourceType = .camera
@@ -75,14 +72,16 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
     var photosDidSelected : ([AssetModel],_ isDone:Bool) -> Void = { _ in }
     
     init(title:String? = "照片选择", isShowCanima : Bool , group:[ALAssetsGroup]?, selectedPhotos: [AssetModel]?=[AssetModel]()) {
+        maximumNumberOfImages = 9
+        jpgQuality = 0.5
+        cellColumnCount = 3
+        cellSize = (CGFloat(UIScreen.main.bounds.width) - CGFloat(cellColumnCount - 1) * kCellSpacing ) / CGFloat(cellColumnCount)
+        
         super.init(nibName: nil, bundle: nil)
         self.title = title
         self.isShowCanima = isShowCanima
         self.groups = group
-        if !isShowCanima {
-            self.COUNT = 4
-        }
-        PW = (CGFloat(UIScreen.main.bounds.width) - CGFloat(COUNT - 1) * kCellSpacing ) / CGFloat(COUNT)
+        
         self.photos = selectedPhotos!
     }
     
@@ -104,7 +103,7 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
     func createView(){
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
-        layout.itemSize = CGSize(width: PW, height: PW)
+        layout.itemSize = CGSize(width: cellSize, height: cellSize)
         layout.minimumLineSpacing = kCellSpacing
         layout.minimumInteritemSpacing = kCellSpacing
         let cV = UICollectionView(frame: self.view.frame, collectionViewLayout: layout)
@@ -246,34 +245,7 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
         self.showLbl.text = "\(self.photos.count)"
         self.tabBarView.addSubview(showLbl)
     }
-//MARK: - 图片处理
-    func changeImages(photos:[AssetModel]) -> [UIImage] {
-        var array = [UIImage]()
-        for obj in photos {
-            let image = AssetTool.imageFromAsset(representation: obj.asset.defaultRepresentation())
-      //          UIImage(cgImage: obj.asset.defaultRepresentation().fullResolutionImage().takeUnretainedValue(), scale: 1.0 , orientation: obj.asset.defaultRepresentation().orientation())
-            array.append(image.gkit_scale(toMaxSidePixels: maxSidePixels, minStretchSidePixels: minStretchSidePixels))
-        }
-        return array
-    }
-    
-    func changeImagesDatas(photos:[ALAsset]) -> [NSData]{
-        var array = [NSData]()
-        for obj in photos {
-            let image = UIImage(cgImage: obj.defaultRepresentation().fullResolutionImage().takeUnretainedValue(), scale: 1.0 , orientation: .up)
-            array.append(image.gkit_compressToJpeg(withQuality: quality, maxSidePixels: maxSidePixels, minStretchSidePixels: minStretchSidePixels) as NSData)
-        }
-        return array
-    }
-    func changeImagesThumbnails(photos:[ALAsset]) -> [UIImage] {
-        var array = [UIImage]()
-        for obj in photos {
-            let image = UIImage(cgImage: obj.thumbnail().takeUnretainedValue(), scale: 1.0 , orientation: .up)
-            array.append(image)
-        }
-        return array
-    }
-    
+
     func assetImagesFromAssetModels(photos:[AssetModel]) -> [AssetImage]{
         return photos.map{ e in AssetImage(asset: e.asset)}
     }
