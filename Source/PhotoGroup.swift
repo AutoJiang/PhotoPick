@@ -17,7 +17,7 @@ struct PhotoGroup {
 }
 
 class PhotoGroupManager {
-    //TODO singleton
+    //TODO: singleton
     
     func findAllGroups(callback: ([PhotoGroup]) -> Void){
         

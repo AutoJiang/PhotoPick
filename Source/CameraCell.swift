@@ -10,7 +10,7 @@ import UIKit
 
 class CameraCell: UICollectionViewCell {
     
-    static let identifier = "CameraCell" //TODO 去掉重用
+    static let identifier = "CameraCell" //TODO: 去掉重用
     
     var host: UIViewController?
 
