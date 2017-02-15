@@ -21,15 +21,13 @@ class PhotoPickGroupVC: UIViewController,UITableViewDelegate,UITableViewDataSour
     
     var groups = [ALAssetsGroup]()
     
-    var selectedPhotoModels = [PhotoModel]()
     
     var cancelBack : ([PhotoModel])-> Void = {_ in}
     
-    var confirm :([PhotoModel])-> Void = {_ in}
+    var confirm :([AssetImage])-> Void = {_ in}
     
-    init(selectedPhotos:[PhotoModel]) {
+    init() {
         super.init(nibName: nil, bundle: nil)
-        self.selectedPhotoModels = selectedPhotos
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -54,19 +52,8 @@ class PhotoPickGroupVC: UIViewController,UITableViewDelegate,UITableViewDataSour
         }, failureBlock: { error in
             
         })
-        
-        let btnL = UIButton(frame: CGRect(x: 0, y: 0, width: 50, height: 30))
-        btnL.setTitle("返回", for: .normal)
-        btnL.setTitleColor(UIColor.black, for: .normal)
-        btnL.addTarget(self, action: #selector(popVC), for: .touchUpInside)
-        let leftBar = UIBarButtonItem(customView: btnL)
-        self.navigationItem.leftBarButtonItem = leftBar
     }
     
-    func popVC() {
-        self.cancelBack(self.selectedPhotoModels)
-        let _ = self.navigationController?.popViewController(animated: true)
-    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -97,14 +84,8 @@ class PhotoPickGroupVC: UIViewController,UITableViewDelegate,UITableViewDataSour
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let data = self.groups[indexPath.row]
-        let photoPick = PhotoPickVC(title: data.value(forProperty: ALAssetsGroupPropertyName) as! String, group: [data], selectedPhotos: self.selectedPhotoModels)
+        let photoPick = PhotoPickVC(title: data.value(forProperty: ALAssetsGroupPropertyName) as! String, group: [data], maxSelectImagesCount: 4)
         photoPick.delegate = self
-        photoPick.photosDidSelected = { photoModels , isDone in
-            self.selectedPhotoModels = photoModels
-            if isDone {
-                self.confirm(self.selectedPhotoModels)
-            }
-        }
         self.navigationController?.pushViewController(photoPick, animated: true)
         return
     }
@@ -114,6 +95,9 @@ class PhotoPickGroupVC: UIViewController,UITableViewDelegate,UITableViewDataSour
 //        self.selectedPhotoModels = PhotoModels
 //        self.confirm(self.selectedPhotoModels)
 //    }
+    func photoPick(pickVC: PhotoPickVC, assetImages: [AssetImage]) {
+        self.confirm(assetImages);
+    }
 }
 
 class GroupCell: UITableViewCell {

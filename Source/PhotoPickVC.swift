@@ -64,7 +64,7 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
         return cV
     }()
     
-    var showLbl = CircleLabel() // TODO: 改名
+    var circleLbl = CircleLabel()
 
     let isShowCamera :Bool
     
@@ -82,8 +82,6 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
         }
     }
     
-    var photosDidSelected : ([PhotoModel],_ isDone:Bool) -> Void = { _ in } //TODO: 去除
-    
     /// 对外提供
     public init(isShowCamera : Bool = true, maxSelectImagesCount:Int = 9, cellColumnCount:Int = 3) {
         config.maxSelectImagesCount = maxSelectImagesCount
@@ -95,11 +93,10 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
     }
     
     /// 相册页面初始化
-    convenience init(title:String? = "照片选择", group:[ALAssetsGroup], selectedPhotos:[PhotoModel], maxSelectImagesCount:Int = 9){ //TODO: title直接根据group决定
+    convenience init(title:String? = "照片选择", group:[ALAssetsGroup], maxSelectImagesCount:Int = 9){ //TODO: title直接根据group决定
         self.init(isShowCamera:false,maxSelectImagesCount: maxSelectImagesCount, cellColumnCount : 4)
         self.groups = group
         sourceType = .group
-        self.selectedPhotoModels = selectedPhotos //TODO: 无需传递
         self.title = title
     }
     
@@ -142,16 +139,16 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
         confirmBtn.titleLabel?.font = UIFont.systemFont(ofSize: 18)
         confirmBtn.setTitleColor(UIColor.yellow, for: .normal)
         confirmBtn.backgroundColor = UIColor.clear
-        confirmBtn.addTarget(self, action: #selector(confirm), for: .touchUpInside)
+        confirmBtn.addTarget(self, action: #selector(confirmOnClick), for: .touchUpInside)
         bottomBar.addSubview(confirmBtn)
         
-        self.showLbl = CircleLabel(frame: CGRect(x: self.view.frame.width - 80, y: 13, width: 25, height: 25))
+        self.circleLbl = CircleLabel(frame: CGRect(x: self.view.frame.width - 80, y: 13, width: 25, height: 25))
         
         if sourceType == .all {
             let btnL = UIButton(frame: CGRect(x: 0, y: 0, width: 50, height: 30))
             btnL.setTitle("取消", for: .normal)
             btnL.setTitleColor(UIColor.black, for: .normal)
-            btnL.addTarget(self, action: #selector(dismissVC), for: .touchUpInside)
+            btnL.addTarget(self, action: #selector(concelBtnOnClick), for: .touchUpInside)
             let leftBar = UIBarButtonItem(customView: btnL)
             self.navigationItem.leftBarButtonItem = leftBar
             
@@ -166,14 +163,14 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
     }
     
     func openGroupPhotoVC() {
-        let groupVC =  PhotoPickGroupVC(selectedPhotos: self.selectedPhotoModels)
+        let groupVC =  PhotoPickGroupVC()
         groupVC.cancelBack = { [unowned self] array in
             self.selectedPhotoModels = array
             self.collectionView.reloadData()
         }
-        groupVC.confirm = { [unowned self] array in
-            self.selectedPhotoModels = array
-            self.confirm()
+        groupVC.confirm = { [unowned self] aassetImages in
+            self.performPickDelegate(assetImages: aassetImages)
+            self.dismissVC(isCancel: false)
         }
         self.navigationController?.pushViewController(groupVC, animated: true)
     }
@@ -215,35 +212,42 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
         }
     }
     
-    func confirm(){
+    func performPickDelegate(assetImages:[AssetImage]){
         if let delegate = delegate {
-            delegate.photoPick(pickVC: self, assetImages: PhotoModel.convertToAssetImages(photoModels: selectedPhotoModels))
-            photosDidSelected(selectedPhotoModels, true)
+            delegate.photoPick(pickVC: self, assetImages: assetImages)
         }
-        dismissVC()
     }
     
-    func dismissVC() {
-        self.dismiss(animated: true, completion: nil)
+    func performCancelDelegate(){
         if let delegate = delegate {
             delegate.photoPickCancel(pickVC: self)
         }
     }
     
-    func popVC() {
-        //self.delegate?.PhotoPick(pickVC: self, PhotoModels: self.selectedPhotoModels)
-        photosDidSelected(selectedPhotoModels,false)
-        let _ = self.navigationController?.popViewController(animated: true)
+    func confirmOnClick(){
+        performPickDelegate(assetImages: PhotoModel.convertToAssetImages(photoModels: selectedPhotoModels))
+        dismissVC(isCancel: false)
+    }
+    
+    func concelBtnOnClick() {
+        dismissVC(isCancel: true)
+    }
+    
+    func dismissVC(isCancel:Bool) {
+        self.dismiss(animated: true, completion: nil)
+        if isCancel {
+            performCancelDelegate()
+        }
     }
     
     func reloadLabel() {
         guard self.selectedPhotoModels.count > 0 else {
-            self.showLbl.removeFromSuperview()
+            self.circleLbl.removeFromSuperview()
             return
         }
-        self.showLbl.addAnimate()
-        self.showLbl.text = "\(self.selectedPhotoModels.count)"
-        self.bottomBar.addSubview(showLbl)
+        self.circleLbl.addAnimate()
+        self.circleLbl.text = "\(self.selectedPhotoModels.count)"
+        self.bottomBar.addSubview(circleLbl)
     }
     
     //TODO: 迁移到CameraCell

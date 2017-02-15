@@ -13,12 +13,14 @@ struct PhotoGroup {
     
     var assetModel: [PhotoModel]
     var assetGroup: ALAssetsGroup
-    var name: String = ""
+    
+    func name() -> String {
+        return assetGroup.value(forProperty: ALAssetsGroupPropertyName) as! String
+    }
 }
 
 class PhotoGroupManager {
     //TODO: singleton
-    
     func findAllGroups(callback: ([PhotoGroup]) -> Void){
         
     }
