@@ -12,7 +12,7 @@ class PhotoCell: UICollectionViewCell {
     
     static let identifier = "PhotoCell"
     
-    //TODO: 加注释
+    //cell状态改变回调
     public var selectChangeCallback: ((_:PhotoCell) -> Void) = {_ in}
     
     override init(frame: CGRect) {

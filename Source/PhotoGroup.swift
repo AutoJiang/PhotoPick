@@ -27,8 +27,6 @@ class PhotoGroup {
 class PhotoGroupManager {
     //TODO: singleton
     private let library: ALAssetsLibrary = ALAssetsLibrary()
-    //private var groups = Array<PhotoGroup>()
-    private var photoModels = [PhotoModel]()
     
     private func findAllGroups(groupType: UInt32, groupsCallback: @escaping ([PhotoGroup]) -> Void){
         var groups = Array<PhotoGroup>()
@@ -52,7 +50,6 @@ class PhotoGroupManager {
         })
     }
 
-    
     func findGroupGroupAll(groupsCallback: @escaping ([PhotoGroup]) -> Void){
         findAllGroups(groupType: ALAssetsGroupAll, groupsCallback: groupsCallback)
     }

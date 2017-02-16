@@ -26,7 +26,7 @@ extension PhotoPickDelegate {
 
 //TODO: 明确定义对外提供的参数（JPG压缩率、图片最大分辨率、长微博图片规则、是否需要GIF、是否显示拍照、选择图片数量控制、单张图片是否可以编辑、是否显示序号）
 
-public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
     
     private let kCellSpacing: CGFloat = 3
 
@@ -44,7 +44,7 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
     
     let mgr = PhotoGroupManager()
 
-    var groups : [PhotoGroup]? //TODO: 去除
+    var groups : [PhotoGroup]?
     
     private lazy var collectionView : UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -72,10 +72,15 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
     
     var sourceType: SourceType = .all
     
-    var photoModels = [PhotoModel]()
+    var photoModels = [PhotoModel](){
+        didSet{
+            collectionView.reloadData()
+        }
+    }
     var selectedPhotoModels = [PhotoModel]() {
         didSet{
             reloadLabel()
+            collectionView.reloadData()
         }
     }
     
@@ -165,7 +170,6 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
         let groupVC =  PhotoPickGroupVC()
         groupVC.cancelBack = { [unowned self] array in
             self.selectedPhotoModels = array
-            self.collectionView.reloadData()
         }
         groupVC.confirm = { [unowned self] aassetImages in
             self.performPickDelegate(assetImages: aassetImages)
@@ -178,14 +182,12 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
     func searchAllPhotos() {
         mgr.findAllPhotoModels { [unowned self] (models) in
             self.photoModels = models
-            self.collectionView .reloadData()
         }
     }
     
     func searchByGroup() {
         mgr.findAllPhotoModelsByGroups(by: self.groups!, callback: { [unowned self] (models) in
             self.photoModels = models
-            self.collectionView.reloadData()
         })
     }
     
@@ -257,6 +259,9 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if indexPath.row == 0 && isShowCamera {
             let cell: CameraCell =  collectionView.dequeueReusableCell(withReuseIdentifier: CameraCell.identifier, for: indexPath) as! CameraCell
+            cell.doneTakePhoto = { [unowned self] in
+                self.dismissVC(isCancel: false)
+            }
             cell.host = self
             return cell
         }
@@ -282,7 +287,6 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
                 sSelf.selectedPhotoModels.remove(at: index!)
                 photoCell.cellUnselect()
                 model.isSelect = false
-                sSelf.collectionView.reloadData()
             }
             
             //选中
@@ -300,7 +304,6 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
         let photoShowVC = PhotoShowVC(assets: allAssets, selectedPhotoModels: selectedPhotoModels, index: index)
         photoShowVC.cancelBack = { array in
             self.selectedPhotoModels = array
-            self.collectionView.reloadData()
         }
         photoShowVC.confirmBack = { array in
             self.selectedPhotoModels = array
@@ -311,11 +314,6 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
     
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if indexPath.row == 0 && isShowCamera {
-            //TODO: 迁移到CameraCell
-            let controller = UIImagePickerController()
-            controller.sourceType = .camera
-            controller.delegate = self
-            self.present(controller, animated: true, completion: nil)
             return
         }
         goPhoShowVC(allAssets: photoModels, selectedPhotoModels: selectedPhotoModels, index: getPhotoRow(indexPath: indexPath))

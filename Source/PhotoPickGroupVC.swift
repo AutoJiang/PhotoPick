@@ -13,15 +13,15 @@ class PhotoPickGroupVC: UIViewController,UITableViewDelegate,UITableViewDataSour
     
     let groupsCell = "groupsCell"
     
-    let cellHeight : CGFloat = 60
+    let cellHeight: CGFloat = 60
     
     var tableView = UITableView()
     
     var groups = [PhotoGroup]()
     
-    var cancelBack : ([PhotoModel])-> Void = {_ in}
+    var cancelBack: ([PhotoModel])-> Void = {_ in}
     
-    var confirm :([AssetImage])-> Void = {_ in}
+    var confirm:([AssetImage])-> Void = {_ in}
     
     let mgr = PhotoGroupManager()
     
@@ -107,8 +107,6 @@ class GroupCell: UITableViewCell {
         self.textLabel?.text = model.value(forProperty: ALAssetsGroupPropertyName) as? String
         self.imageView?.image = UIImage(cgImage: model.posterImage().takeUnretainedValue()
             , scale: 1.0, orientation: .up)
-//        self.subtitle.text = "/(\(model.numberOfAssets())/)"
-//        self.subtitle.frame = CGRect(x:(self.textLabel?.frame)!.maxX, y: 20, width: 100, height: 20)
         self.detailTextLabel?.text = "(\(model.numberOfAssets()))"
     }
     

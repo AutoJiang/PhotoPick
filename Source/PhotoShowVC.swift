@@ -22,6 +22,7 @@ class PhotoShowVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
     
     //确认
     var confirmBack: ([PhotoModel])->Void = {_ in }
+    
     //进度条
     let titleLbl = UILabel()
     
@@ -91,7 +92,6 @@ class PhotoShowVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         BottomBar.addSubview(confirmBtn)
         
         self.showLbl = CircleLabel(frame: CGRect(x: self.view.frame.width - 80, y: 13, width: 25, height: 25))
-        
         
         self.navBarView.frame = CGRect(x: 0, y: 0, width: width, height: 64)
         navBarView.backgroundColor = UIColor.black.withAlphaComponent(0.8)
