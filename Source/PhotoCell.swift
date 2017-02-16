@@ -17,7 +17,6 @@ class PhotoCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
         addSubview(iv)
         addSubview(selectBtn)
         addSubview(ivMaskView)
@@ -57,7 +56,7 @@ class PhotoCell: UICollectionViewCell {
     }()
     
     private lazy var selectBtn: CircleButton = {
-        let btn = CircleButton(frame: CGRect(x: self.frame.size.width - 28, y: 3, width: 25, height: 25))
+        let btn = CircleButton(frame: CGRect(x: self.frame.size.width - 30, y: 2, width: 28, height: 28))
         btn.addTarget(self, action: #selector(PhotoCell.onSelectChange), for: .touchUpInside)
         return btn
     }()

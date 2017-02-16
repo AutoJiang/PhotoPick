@@ -14,14 +14,14 @@ class PhotoShowVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
     private let tabH: CGFloat = 50
     var collectionView: UICollectionView?
     var showLbl = CircleLabel()
-    var assets = [PhotoModel]()
-    var selectedPhotoModels = [PhotoModel]()
-    var index  = 0
+    var assets: [PhotoModel]
+    var selectedPhotoModels: [PhotoModel]
+    var index: Int
     //返回
-    var cancelBack :([PhotoModel])->Void = {_ in }
+    var cancelBack: ([PhotoModel])->Void = {_ in }
     
     //确认
-    var confirmBack:([PhotoModel])->Void = {_ in }
+    var confirmBack: ([PhotoModel])->Void = {_ in }
     //进度条
     let titleLbl = UILabel()
     
@@ -36,6 +36,18 @@ class PhotoShowVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
     
     //弹出圆圈
     var circelLbl = CircleLabel()
+    
+    
+    init(assets: [PhotoModel], selectedPhotoModels: [PhotoModel], index: Int) {
+        self.assets = assets
+        self.selectedPhotoModels = selectedPhotoModels
+        self.index = index
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -93,7 +105,6 @@ class PhotoShowVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         dismissBtn.backgroundColor = UIColor.clear
         dismissBtn.addTarget(self, action: #selector(popVC), for: .touchUpInside)
         navBarView.addSubview(dismissBtn)
-        
         
         //选择圈圈
         circleBtn = CircleButton(frame:CGRect(x: width - 38 , y: 30, width: 28, height: 28))

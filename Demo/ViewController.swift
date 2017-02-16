@@ -56,7 +56,7 @@ class ViewController: UIViewController, PhotoPickDelegate {
     }
     
     func buttonOnclick(){
-        let pv =  PhotoPickVC(maxSelectImagesCount:1)
+        let pv =  PhotoPickVC(maxSelectImagesCount:9)
         let nav = UINavigationController(rootViewController: pv)
         self.present(nav, animated: true, completion: nil)
         pv.delegate = self

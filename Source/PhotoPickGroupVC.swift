@@ -17,14 +17,13 @@ class PhotoPickGroupVC: UIViewController,UITableViewDelegate,UITableViewDataSour
     
     var tableView = UITableView()
     
-    let library = ALAssetsLibrary()
-    
-    var groups = [ALAssetsGroup]()
-    
+    var groups = [PhotoGroup]()
     
     var cancelBack : ([PhotoModel])-> Void = {_ in}
     
     var confirm :([AssetImage])-> Void = {_ in}
+    
+    let mgr = PhotoGroupManager()
     
     init() {
         super.init(nibName: nil, bundle: nil)
@@ -43,15 +42,10 @@ class PhotoPickGroupVC: UIViewController,UITableViewDelegate,UITableViewDataSour
         
         self.navigationItem.title = "照片"
         
-        library.enumerateGroupsWithTypes(ALAssetsGroupAll, usingBlock: { group,stop in
-            if let g = group {
-                self.groups.append(g)
-            }else{
-                self.tableView.reloadData()
-            }
-        }, failureBlock: { error in
-            
-        })
+        mgr.findGroupGroupAll { [unowned self] (groups) in
+            self.groups = groups
+            self.tableView.reloadData()
+        }
     }
     
 
@@ -77,24 +71,19 @@ class PhotoPickGroupVC: UIViewController,UITableViewDelegate,UITableViewDataSour
         if cell == nil{
             cell = GroupCell(style: .value1, reuseIdentifier: groupsCell)
         }
-        let data = groups[indexPath.row]
-        cell?.bind(model: data)
+        let group = groups[indexPath.row]
+        cell?.bind(model: group.assetGroup)
         return cell!
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let data = self.groups[indexPath.row]
-        let photoPick = PhotoPickVC(title: data.value(forProperty: ALAssetsGroupPropertyName) as! String, group: [data], maxSelectImagesCount: 4)
+        let group = self.groups[indexPath.row]
+        let photoPick = PhotoPickVC(group: group, maxSelectImagesCount: 4)
         photoPick.delegate = self
         self.navigationController?.pushViewController(photoPick, animated: true)
         return
     }
     
-//MARK - PhotoPickViewDelegate
-//    func photoPickView(pickVC: GKitPhotoPickVC, PhotoModels: [PhotoModel]) {
-//        self.selectedPhotoModels = PhotoModels
-//        self.confirm(self.selectedPhotoModels)
-//    }
     func photoPick(pickVC: PhotoPickVC, assetImages: [AssetImage]) {
         self.confirm(assetImages);
     }
