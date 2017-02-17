@@ -33,8 +33,6 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
     
     private let cellSize: CGFloat
     
-    private let bottomBar = UIView()
-    
     public weak var delegate: PhotoPickDelegate?
     
     public let config: PhotoPickConfig = PhotoPickConfig()
@@ -58,7 +56,7 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
         return cV
     }()
     
-    private var circleLbl = CircleLabel()
+    private lazy var bottomBar: BottomBar = BottomBar()
 
     private let isShowCamera :Bool
     
@@ -115,30 +113,13 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
     private func createView(){
         view.addSubview(collectionView)
 
-        let y = self.view.frame.height - kBottomBarHeight
-        let width = self.view.frame.width
-        bottomBar.frame = CGRect(x: 0, y: y, width: width, height: kBottomBarHeight)
-        bottomBar.backgroundColor = UIColor.black.withAlphaComponent(0.8)
-        self.view.addSubview(bottomBar)
-        
-        //按钮
-        let scanBtn = UIButton(frame: CGRect(x: 12, y: 17, width: 38, height: 18))
-        scanBtn.setTitle("预览", for: .normal)
-        scanBtn.titleLabel?.font = UIFont.systemFont(ofSize: 18)
-        scanBtn.setTitleColor(UIColor.white, for: .normal)
-        scanBtn.backgroundColor = UIColor.clear
-        scanBtn.addTarget(self, action: #selector(scanBtnOnClick), for: .touchUpInside)
-        bottomBar.addSubview(scanBtn)
-        
-        let confirmBtn = UIButton(frame: CGRect(x: width - 50, y: 17, width: 38, height: 18))
-        confirmBtn.setTitle("确定", for: .normal)
-        confirmBtn.titleLabel?.font = UIFont.systemFont(ofSize: 18)
-        confirmBtn.setTitleColor(UIColor.yellow, for: .normal)
-        confirmBtn.backgroundColor = UIColor.clear
-        confirmBtn.addTarget(self, action: #selector(confirmOnClick), for: .touchUpInside)
-        bottomBar.addSubview(confirmBtn)
-        
-        self.circleLbl = CircleLabel(frame: CGRect(x: self.view.frame.width - 80, y: 13, width: 25, height: 25))
+        view.addSubview(bottomBar)
+        bottomBar.goShowPage = {[unowned self] in
+            self.goPhotoShowVC(allAssets: self.selectedPhotoModels, selectedPhotoModels: self.selectedPhotoModels, index: 0)
+        }
+        bottomBar.onConfirm = {[unowned self] in
+            self.confirmOnClick()
+        }
         
         if sourceType == .all {
             let btnL = UIButton(frame: CGRect(x: 0, y: 0, width: 50, height: 30))
@@ -203,7 +184,7 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
         }
     }
     
-    @objc private func confirmOnClick(){
+    private func confirmOnClick(){
         performPickDelegate(assetImages: PhotoModel.convertToPickedPhotos(photoModels: selectedPhotoModels))
         dismissVC(isCancel: false)
     }
@@ -218,20 +199,9 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
             performCancelDelegate()
         }
     }
-    
-    @objc private func scanBtnOnClick(){
-        goPhoShowVC(allAssets: selectedPhotoModels, selectedPhotoModels: selectedPhotoModels, index: 0)
-    }
-    
-    
-   private func reloadLabel() {
-        guard self.selectedPhotoModels.count > 0 else {
-            self.circleLbl.removeFromSuperview()
-            return
-        }
-        self.circleLbl.addAnimate()
-        self.circleLbl.text = "\(self.selectedPhotoModels.count)"
-        self.bottomBar.addSubview(circleLbl)
+
+    private func reloadLabel() {
+        bottomBar.setPickedPhotoCount(count: selectedPhotoModels.count)
     }
     
     // MARK: - UICollectionViewDelegate
@@ -293,10 +263,10 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
         if indexPath.row == 0 && isShowCamera {
             return
         }
-        goPhoShowVC(allAssets: photoModels, selectedPhotoModels: selectedPhotoModels, index: getPhotoRow(indexPath: indexPath))
+        goPhotoShowVC(allAssets: photoModels, selectedPhotoModels: selectedPhotoModels, index: getPhotoRow(indexPath: indexPath))
     }
     
-    private func goPhoShowVC(allAssets: [PhotoModel], selectedPhotoModels: [PhotoModel], index: Int )
+    private func goPhotoShowVC(allAssets: [PhotoModel], selectedPhotoModels: [PhotoModel], index: Int )
     {
         let photoShowVC = PhotoShowVC(assets: allAssets, selectedPhotoModels: selectedPhotoModels, index: index, maxSelectImagesCount:config.maxSelectImagesCount)
         photoShowVC.cancelBack = { array in
