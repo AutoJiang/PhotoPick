@@ -26,8 +26,6 @@ extension PhotoPickDelegate {
 public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
     
     private let kCellSpacing: CGFloat = 3
-
-    private let kBottomBarHeight: CGFloat = 50
     
     private let cellColumnCount: Int
     
@@ -39,8 +37,6 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
     
     private let groupManager = PhotoGroupManager()
 
-    private var groups : [PhotoGroup]?
-    
     private lazy var collectionView : UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
@@ -62,7 +58,7 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
     
     enum SourceType {
         case all
-        case group
+        case group(photoGroup: PhotoGroup) //分组内显示照片列表时始终没有拍照功能
     }
     
     private var sourceType: SourceType = .all
@@ -81,22 +77,21 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
     }
     
     /// 对外提供
-    public init(isShowCamera : Bool = true, maxSelectImagesCount:Int = 9, cellColumnCount:Int = 3) {
+    public init(isShowCamera: Bool = true, maxSelectImagesCount: Int = 9, cellColumnCount: Int = 3) {
         config.maxSelectImagesCount = maxSelectImagesCount
         config.jpgQuality = 0.5
         self.cellColumnCount = cellColumnCount
         cellSize = (CGFloat(UIScreen.main.bounds.width) - CGFloat(self.cellColumnCount - 1) * kCellSpacing ) / CGFloat(self.cellColumnCount)
         self.isShowCamera = isShowCamera
         super.init(nibName: nil, bundle: nil)
-        self.title = "照片选择"
+        title = "照片选择"
     }
     
     /// 相册页面初始化
-    convenience init(group:PhotoGroup, maxSelectImagesCount:Int = 9){ //TODO: title直接根据group决定
-        self.init(isShowCamera:false,maxSelectImagesCount: maxSelectImagesCount, cellColumnCount : 4)
-        self.groups = [group]
-        sourceType = .group
-        self.title =  group.name()
+    convenience init(group: PhotoGroup, maxSelectImagesCount: Int = 9){
+        self.init(isShowCamera: false, maxSelectImagesCount: maxSelectImagesCount, cellColumnCount : 4)
+        sourceType = .group(photoGroup: group)
+        title = group.name()
     }
     
     public required init?(coder aDecoder: NSCoder) {
@@ -106,13 +101,9 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
     public override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.gray
-        createView()
-        loadData()
-    }
-
-    private func createView(){
+        
         view.addSubview(collectionView)
-
+        
         view.addSubview(bottomBar)
         bottomBar.goShowPage = {[unowned self] in
             self.goPhotoShowVC(allAssets: self.selectedPhotoModels, selectedPhotoModels: self.selectedPhotoModels, index: 0)
@@ -121,7 +112,8 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
             self.confirmOnClick()
         }
         
-        if sourceType == .all {
+        switch sourceType {
+        case .all:
             let btnL = UIButton(frame: CGRect(x: 0, y: 0, width: 50, height: 30))
             btnL.setTitle("取消", for: .normal)
             btnL.setTitleColor(UIColor.black, for: .normal)
@@ -136,41 +128,31 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
             
             let rightBar = UIBarButtonItem(customView: btnR)
             self.navigationItem.rightBarButtonItem = rightBar
+            
+            groupManager.findAllPhotoModels { [unowned self] (models) in
+                self.photoModels = models
+            }
+            
+        case let .group(photoGroup: group):
+            groupManager.findAllPhotoModelsByGroup(by: group, callback: { [unowned self] (models) in
+                self.photoModels = models
+            })
         }
+
     }
     
+    // 打开相册列表
     @objc private func openGroupPhotoVC() {
         let groupVC =  PhotoPickGroupVC()
         groupVC.cancelBack = { [unowned self] array in
             self.selectedPhotoModels = array
         }
-        groupVC.confirm = { [unowned self] aassetImages in
+        groupVC.confirmDismiss = { [unowned self] aassetImages in
             self.performPickDelegate(assetImages: aassetImages)
             self.dismissVC(isCancel: false)
         }
         self.navigationController?.pushViewController(groupVC, animated: true)
     }
-    
-    private func loadData()  {
-        if groups == nil{
-            self.searchAllPhotos()
-        } else {
-            self.searchByGroup()
-        }
-    }
-    
-    private func searchAllPhotos() {
-        groupManager.findAllPhotoModels { [unowned self] (models) in
-            self.photoModels = models
-        }
-    }
-    
-    private func searchByGroup() {
-        groupManager.findAllPhotoModelsByGroups(by: self.groups!, callback: { [unowned self] (models) in
-            self.photoModels = models
-        })
-    }
-    
     
     private func performPickDelegate(assetImages:[PickedPhoto]){
         if let delegate = delegate {

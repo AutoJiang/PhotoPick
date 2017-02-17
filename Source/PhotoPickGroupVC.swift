@@ -21,7 +21,7 @@ class PhotoPickGroupVC: UIViewController,UITableViewDelegate,UITableViewDataSour
     
     var cancelBack: ([PhotoModel])-> Void = {_ in}
     
-    var confirm:([PickedPhoto])-> Void = {_ in}
+    var confirmDismiss:([PickedPhoto])-> Void = {_ in}
     
     private let mgr = PhotoGroupManager()
     
@@ -80,7 +80,7 @@ class PhotoPickGroupVC: UIViewController,UITableViewDelegate,UITableViewDataSour
     }
 //MARK: PhotoPickDelegate
     func photoPick(pickVC: PhotoPickVC, assetImages: [PickedPhoto]) {
-        self.confirm(assetImages);
+        self.confirmDismiss(assetImages);
     }
 }
 

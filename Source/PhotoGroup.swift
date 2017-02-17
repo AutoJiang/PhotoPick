@@ -54,24 +54,24 @@ class PhotoGroupManager {
         findAllGroups(groupType: ALAssetsGroupAll, groupsCallback: groupsCallback)
     }
     
-    func findAllPhotoModelsByGroups(by groups: [PhotoGroup], callback: @escaping ([PhotoModel]) -> Void){
+    func findAllPhotoModelsByGroup(by group: PhotoGroup, callback: @escaping ([PhotoModel]) -> Void){
         var photoModels = [PhotoModel]()
-        for group: PhotoGroup in groups {
-            group.assetGroup.enumerateAssets(options: .reverse, using: { (result, index, stop) in
-                guard let r = result else{
-                    callback(photoModels)
-                    return
-                }
-                let model = PhotoModel(asset: r, isSelect: false)
-                photoModels.append(model)
-            })
-        }
+        group.assetGroup.enumerateAssets(options: .reverse, using: { (result, index, stop) in
+            guard let r = result else{
+                callback(photoModels)
+                return
+            }
+            let model = PhotoModel(asset: r, isSelect: false)
+            photoModels.append(model)
+        })
     }
     
     func findAllPhotoModels(callback: @escaping ([PhotoModel]) -> Void){
-        findAllGroups(groupType: ALAssetsGroupSavedPhotos, groupsCallback: { [unowned self]
+        findAllGroups(groupType: ALAssetsGroupSavedPhotos, groupsCallback: {[unowned self]
             groups in
-            self.findAllPhotoModelsByGroups(by: groups, callback: callback)
+            for group in groups {
+                self.findAllPhotoModelsByGroup(by: group, callback: callback)
+            }
         })
     }
     /*
