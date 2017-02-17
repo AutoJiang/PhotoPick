@@ -21,15 +21,13 @@ extension PhotoPickDelegate {
     
 }
 
-//TODO: 明确定义对外提供的参数（JPG压缩率、图片最大分辨率、长微博图片规则、是否需要GIF、是否显示拍照、选择图片数量控制、单张图片是否可以编辑、是否显示序号）
-
 public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
     
     private static let kCellSpacing: CGFloat = 3
     
     public weak var delegate: PhotoPickDelegate?
     
-    public let config: PhotoPickConfig = PhotoPickConfig.shared
+    private let config: PhotoPickConfig = PhotoPickConfig.shared
     
     private let groupManager = PhotoGroupManager()
 
@@ -50,7 +48,7 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
     
     private lazy var bottomBar: BottomBar = BottomBar()
     
-    enum SourceType {
+    private enum SourceType {
         case all
         case group(photoGroup: PhotoGroup) //分组内显示照片列表时始终没有拍照功能
         
@@ -125,21 +123,7 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
         
         switch sourceType {
         case .all:
-            let btnL = UIButton(frame: CGRect(x: 0, y: 0, width: 50, height: 30))
-            btnL.setTitle("取消", for: .normal)
-            btnL.setTitleColor(UIColor.black, for: .normal)
-            btnL.addTarget(self, action: #selector(concelBtnOnClick), for: .touchUpInside)
-            let leftBar = UIBarButtonItem(customView: btnL)
-            self.navigationItem.leftBarButtonItem = leftBar
-            
-            let btnR = UIButton(frame: CGRect(x: 0, y: 0, width: 50, height: 30))
-            btnR.setTitle("相册", for: .normal)
-            btnR.setTitleColor(UIColor.black, for: .normal)
-            btnR.addTarget(self, action: #selector(openGroupPhotoVC), for: .touchUpInside)
-            
-            let rightBar = UIBarButtonItem(customView: btnR)
-            self.navigationItem.rightBarButtonItem = rightBar
-            
+            setupNavBarForSourceTypeAll()
             groupManager.findAllPhotoModels { [unowned self] (models) in
                 self.photoModels = models
             }
@@ -149,7 +133,23 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
                 self.photoModels = models
             })
         }
-
+    }
+    
+    private func setupNavBarForSourceTypeAll(){
+        let btnL = UIButton(frame: CGRect(x: 0, y: 0, width: 50, height: 30))
+        btnL.setTitle("取消", for: .normal)
+        btnL.setTitleColor(UIColor.black, for: .normal)
+        btnL.addTarget(self, action: #selector(concelBtnOnClick), for: .touchUpInside)
+        let leftBar = UIBarButtonItem(customView: btnL)
+        self.navigationItem.leftBarButtonItem = leftBar
+        
+        let btnR = UIButton(frame: CGRect(x: 0, y: 0, width: 50, height: 30))
+        btnR.setTitle("相册", for: .normal)
+        btnR.setTitleColor(UIColor.black, for: .normal)
+        btnR.addTarget(self, action: #selector(openGroupPhotoVC), for: .touchUpInside)
+        
+        let rightBar = UIBarButtonItem(customView: btnR)
+        self.navigationItem.rightBarButtonItem = rightBar
     }
     
     // 打开相册列表
