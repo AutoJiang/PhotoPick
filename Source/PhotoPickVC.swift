@@ -7,12 +7,10 @@
 //
 
 import UIKit
-import AssetsLibrary
 
 public protocol PhotoPickDelegate: class {
     
     func photoPick(pickVC: PhotoPickVC, assetImages: [AssetImage]) -> Void
-    
     func photoPickCancel(pickVC: PhotoPickVC) -> Void
     //TODO: 单张图片是否需要特殊
 }
@@ -42,9 +40,9 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
     
     public let config: PhotoPickConfig = PhotoPickConfig()
     
-    let mgr = PhotoGroupManager()
+    private let mgr = PhotoGroupManager()
 
-    var groups : [PhotoGroup]?
+    private var groups : [PhotoGroup]?
     
     private lazy var collectionView : UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -61,23 +59,24 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
         return cV
     }()
     
-    var circleLbl = CircleLabel()
+    private var circleLbl = CircleLabel()
 
-    let isShowCamera :Bool
+    private let isShowCamera :Bool
     
     enum SourceType {
         case all
         case group
     }
     
-    var sourceType: SourceType = .all
+    private var sourceType: SourceType = .all
     
-    var photoModels = [PhotoModel](){
+    private var photoModels = [PhotoModel](){
         didSet{
             collectionView.reloadData()
         }
     }
-    var selectedPhotoModels = [PhotoModel]() {
+    
+    private var selectedPhotoModels = [PhotoModel]() {
         didSet{
             reloadLabel()
             collectionView.reloadData()
@@ -109,18 +108,12 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
     
     public override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = UIColor.gray
-        self.createView()
-        
-        //TODO: 移到
-        if groups == nil{
-            self.searchAllPhotos()
-        } else {
-            self.searchByGroup()
-        }
+        view.backgroundColor = UIColor.gray
+        createView()
+        loadData()
     }
 
-    func createView(){
+    private func createView(){
         view.addSubview(collectionView)
 
         let y = self.view.frame.height - kBottomBarHeight
@@ -166,7 +159,7 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
         }
     }
     
-    func openGroupPhotoVC() {
+    @objc private func openGroupPhotoVC() {
         let groupVC =  PhotoPickGroupVC()
         groupVC.cancelBack = { [unowned self] array in
             self.selectedPhotoModels = array
@@ -178,54 +171,61 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
         self.navigationController?.pushViewController(groupVC, animated: true)
     }
     
+    private func loadData()  {
+        if groups == nil{
+            self.searchAllPhotos()
+        } else {
+            self.searchByGroup()
+        }
+    }
     
-    func searchAllPhotos() {
+    private func searchAllPhotos() {
         mgr.findAllPhotoModels { [unowned self] (models) in
             self.photoModels = models
         }
     }
     
-    func searchByGroup() {
+    private func searchByGroup() {
         mgr.findAllPhotoModelsByGroups(by: self.groups!, callback: { [unowned self] (models) in
             self.photoModels = models
         })
     }
     
     
-    func performPickDelegate(assetImages:[AssetImage]){
+    private func performPickDelegate(assetImages:[AssetImage]){
         if let delegate = delegate {
             delegate.photoPick(pickVC: self, assetImages: assetImages)
         }
     }
     
-    func performCancelDelegate(){
+    private func performCancelDelegate(){
         if let delegate = delegate {
             delegate.photoPickCancel(pickVC: self)
         }
     }
     
-    func confirmOnClick(){
+    @objc private func confirmOnClick(){
         performPickDelegate(assetImages: PhotoModel.convertToAssetImages(photoModels: selectedPhotoModels))
         dismissVC(isCancel: false)
     }
     
-    func concelBtnOnClick() {
+    @objc private func concelBtnOnClick() {
         dismissVC(isCancel: true)
     }
     
-    func dismissVC(isCancel:Bool) {
+    private func dismissVC(isCancel:Bool) {
         self.dismiss(animated: true, completion: nil)
         if isCancel {
             performCancelDelegate()
         }
     }
     
-    func scanBtnOnClick(){
+    @objc private func scanBtnOnClick(){
         goPhoShowVC(allAssets: selectedPhotoModels, selectedPhotoModels: selectedPhotoModels, index: 0)
     }
     
     
-    func reloadLabel() {
+   private func reloadLabel() {
         guard self.selectedPhotoModels.count > 0 else {
             self.circleLbl.removeFromSuperview()
             return
@@ -233,17 +233,6 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
         self.circleLbl.addAnimate()
         self.circleLbl.text = "\(self.selectedPhotoModels.count)"
         self.bottomBar.addSubview(circleLbl)
-    }
-    
-    //TODO: 迁移到CameraCell
-    // MARK: - UIImagePickerControllerDelegate
-    public func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        if picker.sourceType == .camera {
-            //图片存入相册
-            let image = info[UIImagePickerControllerOriginalImage] as! UIImage
-            UIImageWriteToSavedPhotosAlbum( image, nil, nil, nil);
-        }
-        self.dismiss(animated: true, completion: nil)
     }
     
     // MARK: - UICollectionViewDelegate
@@ -259,7 +248,9 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if indexPath.row == 0 && isShowCamera {
             let cell: CameraCell =  collectionView.dequeueReusableCell(withReuseIdentifier: CameraCell.identifier, for: indexPath) as! CameraCell
-            cell.doneTakePhoto = { [unowned self] in
+            cell.doneTakePhoto = { [unowned self] models  in
+                self.performPickDelegate(assetImages: models)
+                self.dismissVC(isCancel: false)
                 self.dismissVC(isCancel: false)
             }
             cell.host = self
@@ -299,9 +290,16 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
         return cell
     }
     
-    func goPhoShowVC(allAssets: [PhotoModel], selectedPhotoModels: [PhotoModel], index: Int )
+    public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if indexPath.row == 0 && isShowCamera {
+            return
+        }
+        goPhoShowVC(allAssets: photoModels, selectedPhotoModels: selectedPhotoModels, index: getPhotoRow(indexPath: indexPath))
+    }
+    
+    private func goPhoShowVC(allAssets: [PhotoModel], selectedPhotoModels: [PhotoModel], index: Int )
     {
-        let photoShowVC = PhotoShowVC(assets: allAssets, selectedPhotoModels: selectedPhotoModels, index: index)
+        let photoShowVC = PhotoShowVC(assets: allAssets, selectedPhotoModels: selectedPhotoModels, index: index, maxSelectImagesCount:config.maxSelectImagesCount)
         photoShowVC.cancelBack = { array in
             self.selectedPhotoModels = array
         }
@@ -310,13 +308,6 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
             self.confirmOnClick()
         }
         self.navigationController?.pushViewController(photoShowVC, animated: true)
-    }
-    
-    public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if indexPath.row == 0 && isShowCamera {
-            return
-        }
-        goPhoShowVC(allAssets: photoModels, selectedPhotoModels: selectedPhotoModels, index: getPhotoRow(indexPath: indexPath))
     }
     
     private func getPhotoRow(indexPath: IndexPath) -> Int {

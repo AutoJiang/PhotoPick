@@ -41,7 +41,7 @@ class ViewController: UIViewController, PhotoPickDelegate {
                 }
 
                 let iv = UIImageView(frame: CGRect(x: col * width, y: row * width, width: width, height: width))
-                let image : UIImage = photos[index].image();
+                let image : UIImage = photos[index].image;
                 iv.image = image
                 iv.contentMode = .scaleAspectFill
                 iv.clipsToBounds = true

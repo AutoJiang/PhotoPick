@@ -7,16 +7,15 @@
 //
 
 import UIKit
-import AssetsLibrary
 
 //大图显示控制器
 class PhotoShowVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
     private let tabH: CGFloat = 50
-    var collectionView: UICollectionView?
-    var showLbl = CircleLabel()
-    var assets: [PhotoModel]
-    var selectedPhotoModels: [PhotoModel]
-    var index: Int
+    private var collectionView: UICollectionView?
+    private var showLbl = CircleLabel()
+    private var assets: [PhotoModel]
+    private var selectedPhotoModels: [PhotoModel]
+    private var index: Int
     //返回
     var cancelBack: ([PhotoModel])->Void = {_ in }
     
@@ -24,25 +23,27 @@ class PhotoShowVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
     var confirmBack: ([PhotoModel])->Void = {_ in }
     
     //进度条
-    let titleLbl = UILabel()
+    private let titleLbl = UILabel()
     
     //头部栏
-    let navBarView = UIView()
+    private let navBarView = UIView()
     
     //底部栏
-    let BottomBar = UIView()
+    private let BottomBar = UIView()
     
     //选择圈圈
-    var circleBtn = CircleButton()
+    private var circleBtn = CircleButton()
     
     //弹出圆圈
-    var circelLbl = CircleLabel()
+    private var circelLbl = CircleLabel()
     
+    private let maxSelectImagesCount: Int
     
-    init(assets: [PhotoModel], selectedPhotoModels: [PhotoModel], index: Int) {
+    init(assets: [PhotoModel], selectedPhotoModels: [PhotoModel], index: Int, maxSelectImagesCount: Int ) {
         self.assets = assets
         self.selectedPhotoModels = selectedPhotoModels
         self.index = index
+        self.maxSelectImagesCount = maxSelectImagesCount
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -75,7 +76,7 @@ class PhotoShowVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         self.createView()
     }
     
-    func createView(){
+    private func createView(){
         let y = self.view.frame.height - tabH
         let width = self.view.frame.width
         BottomBar.frame = CGRect(x: 0, y: y, width: width, height: tabH)
@@ -120,7 +121,10 @@ class PhotoShowVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         view.addSubview(titleLbl)
     }
         
-    func selectEvent() {
+    @objc private func selectEvent() {
+        if selectedPhotoModels.count >= maxSelectImagesCount {
+            return
+        }
         let element = assets[index]
         element.isSelect = !element.isSelect
         if element.isSelect {
@@ -132,17 +136,17 @@ class PhotoShowVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         updateTitle(animate: true)
     }
     
-    func popVC(){
+    @objc private func popVC(){
         let _ = self.navigationController?.popViewController(animated: true)
         self.navigationController?.isNavigationBarHidden = false
         self.cancelBack(self.selectedPhotoModels)
     }
     
-    func confirm() {
+    @objc private func confirm() {
         self.confirmBack(self.selectedPhotoModels)
     }
     
-    func updateTitle(animate:Bool){
+    private func updateTitle(animate:Bool){
         circelLbl.removeFromSuperview()
         self.titleLbl.text = "\(index+1)/\(self.assets.count)"
         let element = self.assets[index]
@@ -169,8 +173,7 @@ class PhotoShowVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell :BigPhotoCell  = collectionView.dequeueReusableCell(withReuseIdentifier: "bigCell", for: indexPath) as! BigPhotoCell
         let data : PhotoModel = assets[indexPath.row]
-        let asset = data.asset
-        cell.bind(model: asset)
+        cell.bind(model: data)
         return cell
     }
     

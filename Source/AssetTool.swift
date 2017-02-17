@@ -10,7 +10,7 @@ import UIKit
 import AssetsLibrary
 class AssetTool{
     //转化UIimage
-    public class func imageFromAsset(representation:ALAssetRepresentation) -> UIImage {
+    public static func imageFromAsset(representation:ALAssetRepresentation) -> UIImage {
         let buffer = UnsafeMutablePointer<UInt8>.allocate(capacity: Int(representation.size()))
         var error : NSError?
         let length = representation.getBytes(buffer, fromOffset: Int64(0), length: Int(representation.size()), error: &error)

@@ -10,21 +10,34 @@ import UIKit
 import AssetsLibrary
 
 public class AssetImage: NSObject {
-    private var asset : ALAsset
+    private var asset : ALAsset?
+    private var privateImage: UIImage?
     private let maxSidePixels : CGFloat = 1280
     private let minStretchSidePixels : CGFloat = 440
+    
+    //原图
+    public var image: UIImage {
+        get{
+            if let privateImage = privateImage {
+                return privateImage
+            }
+            
+            return AssetTool.imageFromAsset(representation: asset!.defaultRepresentation())
+        }
+    }
+    //返回压缩图 compress
+    public var compressedImage:UIImage{
+        get{
+            return self.image.gkit_scale(toMaxSidePixels: maxSidePixels, minStretchSidePixels: minStretchSidePixels)
+        }
+    }
     
     init(asset : ALAsset) {
         self.asset = asset
     }
-    //返回原图
-    func image() -> UIImage {
-        return AssetTool.imageFromAsset(representation: asset.defaultRepresentation())
+    
+    init(image: UIImage) {
+        self.privateImage = image
     }
     
-    //返回压缩图 compress
-    func imageWithCompress() -> UIImage {
-        let image = self.image()
-        return image.gkit_scale(toMaxSidePixels: maxSidePixels, minStretchSidePixels: minStretchSidePixels)
-    }
 }

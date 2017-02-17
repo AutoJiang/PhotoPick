@@ -74,4 +74,16 @@ class PhotoGroupManager {
             self.findAllPhotoModelsByGroups(by: groups, callback: callback)
         })
     }
+    /*
+    func assetForURL(url:String, callback: @escaping (PhotoModel) -> Void){
+
+        library.asset(for: URL(string: url), resultBlock: { asset in
+            if let asset = asset {
+                let model = PhotoModel(asset: asset, isSelect: true)
+                callback(model)
+            }
+        }
+            , failureBlock: ALAssetsLibraryAccessFailureBlock!)
+    }
+    */
 }

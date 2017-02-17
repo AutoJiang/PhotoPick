@@ -7,23 +7,23 @@
 //
 
 import UIKit
-import AssetsLibrary
+
 //相册列表
 class PhotoPickGroupVC: UIViewController,UITableViewDelegate,UITableViewDataSource,PhotoPickDelegate {
     
-    let groupsCell = "groupsCell"
+    private let groupsCell = "groupsCell"
     
-    let cellHeight: CGFloat = 60
+    private let cellHeight: CGFloat = 60
     
-    var tableView = UITableView()
+    private var tableView = UITableView()
     
-    var groups = [PhotoGroup]()
+    private var groups = [PhotoGroup]()
     
     var cancelBack: ([PhotoModel])-> Void = {_ in}
     
     var confirm:([AssetImage])-> Void = {_ in}
     
-    let mgr = PhotoGroupManager()
+    private let mgr = PhotoGroupManager()
     
     init() {
         super.init(nibName: nil, bundle: nil)
@@ -47,13 +47,8 @@ class PhotoPickGroupVC: UIViewController,UITableViewDelegate,UITableViewDataSour
             self.tableView.reloadData()
         }
     }
-    
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
+//MARK: UITableViewDataSourceDelegate
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -72,7 +67,7 @@ class PhotoPickGroupVC: UIViewController,UITableViewDelegate,UITableViewDataSour
             cell = GroupCell(style: .value1, reuseIdentifier: groupsCell)
         }
         let group = groups[indexPath.row]
-        cell?.bind(model: group.assetGroup)
+        cell?.bind(model: group)
         return cell!
     }
     
@@ -83,7 +78,7 @@ class PhotoPickGroupVC: UIViewController,UITableViewDelegate,UITableViewDataSour
         self.navigationController?.pushViewController(photoPick, animated: true)
         return
     }
-    
+//MARK: PhotoPickDelegate
     func photoPick(pickVC: PhotoPickVC, assetImages: [AssetImage]) {
         self.confirm(assetImages);
     }
@@ -103,11 +98,11 @@ class GroupCell: UITableViewCell {
         self.addSubview(subtitle)
     }
     
-    func bind(model:ALAssetsGroup){
-        self.textLabel?.text = model.value(forProperty: ALAssetsGroupPropertyName) as? String
-        self.imageView?.image = UIImage(cgImage: model.posterImage().takeUnretainedValue()
+    func bind(model:PhotoGroup){
+        self.textLabel?.text = model.name()
+        self.imageView?.image = UIImage(cgImage: model.assetGroup.posterImage().takeUnretainedValue()
             , scale: 1.0, orientation: .up)
-        self.detailTextLabel?.text = "(\(model.numberOfAssets()))"
+        self.detailTextLabel?.text = "(\(model.assetGroup.numberOfAssets()))"
     }
     
     required init?(coder aDecoder: NSCoder) {

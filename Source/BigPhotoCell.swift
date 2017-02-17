@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import AssetsLibrary
 
 class BigPhotoCell: UICollectionViewCell,UIAccelerometerDelegate{
     
@@ -18,8 +17,8 @@ class BigPhotoCell: UICollectionViewCell,UIAccelerometerDelegate{
         self.contentView.addSubview(zoomScrollView);
     }
     
-    func bind(model:ALAsset){
-        guard let representation = model.defaultRepresentation() else {
+    func bind(model:PhotoModel){
+        guard let representation = model.asset.defaultRepresentation() else {
             return ;
         }
         self.zoomScrollView.frame = CGRect(x: 0, y: 0, width: self.frame.size.width, height: self.frame.size.height)
