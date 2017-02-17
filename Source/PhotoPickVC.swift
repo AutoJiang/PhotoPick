@@ -12,12 +12,11 @@ public protocol PhotoPickDelegate: class {
     
     func photoPick(pickVC: PhotoPickVC, assetImages: [PickedPhoto]) -> Void
     func photoPickCancel(pickVC: PhotoPickVC) -> Void
-    //TODO: 单张图片是否需要特殊
+
 }
 
 extension PhotoPickDelegate {
     
-    func photoPick(pickVC : PhotoPickVC, assetImages : [PickedPhoto]) -> Void {}
     func photoPickCancel(pickVC: PhotoPickVC) -> Void {}
     
 }
@@ -40,7 +39,7 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
     
     public let config: PhotoPickConfig = PhotoPickConfig()
     
-    private let mgr = PhotoGroupManager()
+    private let groupManager = PhotoGroupManager()
 
     private var groups : [PhotoGroup]?
     
@@ -180,13 +179,13 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
     }
     
     private func searchAllPhotos() {
-        mgr.findAllPhotoModels { [unowned self] (models) in
+        groupManager.findAllPhotoModels { [unowned self] (models) in
             self.photoModels = models
         }
     }
     
     private func searchByGroup() {
-        mgr.findAllPhotoModelsByGroups(by: self.groups!, callback: { [unowned self] (models) in
+        groupManager.findAllPhotoModelsByGroups(by: self.groups!, callback: { [unowned self] (models) in
             self.photoModels = models
         })
     }

@@ -10,7 +10,7 @@ import UIKit
 
 class BigPhotoCell: UICollectionViewCell,UIAccelerometerDelegate{
     
-    public var zoomScrollView = GKitImageBrowseZoomScrollView()
+    public var zoomScrollView = PhotoZoomScrollView()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
