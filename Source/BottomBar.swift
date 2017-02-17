@@ -16,7 +16,7 @@ class BottomBar: UIView {
     
     var onConfirm = {}
     
-    func setPickedPhotoCount(count: Int){
+    func updatePickedPhotoCount(count: Int){
         if count == 0 {
             indexLbl.isHidden = true
             return

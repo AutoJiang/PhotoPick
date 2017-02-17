@@ -71,7 +71,8 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
     
     private var selectedPhotoModels = [PhotoModel]() {
         didSet{
-            reloadLabel()
+            bottomBar.updatePickedPhotoCount(count: selectedPhotoModels.count)
+            
             collectionView.reloadData()
         }
     }
@@ -92,10 +93,6 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
         self.init(isShowCamera: false, maxSelectImagesCount: maxSelectImagesCount, cellColumnCount : 4)
         sourceType = .group(photoGroup: group)
         title = group.name()
-    }
-    
-    public required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
     
     public override func viewDidLoad() {
@@ -181,10 +178,6 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
             performCancelDelegate()
         }
     }
-
-    private func reloadLabel() {
-        bottomBar.setPickedPhotoCount(count: selectedPhotoModels.count)
-    }
     
     // MARK: - UICollectionViewDelegate
 
@@ -248,8 +241,7 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
         goPhotoShowVC(allAssets: photoModels, selectedPhotoModels: selectedPhotoModels, index: getPhotoRow(indexPath: indexPath))
     }
     
-    private func goPhotoShowVC(allAssets: [PhotoModel], selectedPhotoModels: [PhotoModel], index: Int )
-    {
+    private func goPhotoShowVC(allAssets: [PhotoModel], selectedPhotoModels: [PhotoModel], index: Int) {
         let photoShowVC = PhotoShowVC(assets: allAssets, selectedPhotoModels: selectedPhotoModels, index: index, maxSelectImagesCount:config.maxSelectImagesCount)
         photoShowVC.cancelBack = { array in
             self.selectedPhotoModels = array
@@ -263,5 +255,9 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
     
     private func getPhotoRow(indexPath: IndexPath) -> Int {
         return isShowCamera ? indexPath.row - 1 : indexPath.row
+    }
+    
+    public required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }
