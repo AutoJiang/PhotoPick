@@ -10,14 +10,14 @@ import UIKit
 
 public protocol PhotoPickDelegate: class {
     
-    func photoPick(pickVC: PhotoPickVC, assetImages: [AssetImage]) -> Void
+    func photoPick(pickVC: PhotoPickVC, assetImages: [PickedPhoto]) -> Void
     func photoPickCancel(pickVC: PhotoPickVC) -> Void
     //TODO: 单张图片是否需要特殊
 }
 
 extension PhotoPickDelegate {
     
-    func photoPick(pickVC : PhotoPickVC, assetImages : [AssetImage]) -> Void {}
+    func photoPick(pickVC : PhotoPickVC, assetImages : [PickedPhoto]) -> Void {}
     func photoPickCancel(pickVC: PhotoPickVC) -> Void {}
     
 }
@@ -192,7 +192,7 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
     }
     
     
-    private func performPickDelegate(assetImages:[AssetImage]){
+    private func performPickDelegate(assetImages:[PickedPhoto]){
         if let delegate = delegate {
             delegate.photoPick(pickVC: self, assetImages: assetImages)
         }
@@ -205,7 +205,7 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
     }
     
     @objc private func confirmOnClick(){
-        performPickDelegate(assetImages: PhotoModel.convertToAssetImages(photoModels: selectedPhotoModels))
+        performPickDelegate(assetImages: PhotoModel.convertToPickedPhotos(photoModels: selectedPhotoModels))
         dismissVC(isCancel: false)
     }
     

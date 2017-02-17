@@ -28,7 +28,7 @@ class ViewController: UIViewController, PhotoPickDelegate {
         button.addTarget(self, action: #selector(buttonOnclick), for: .touchUpInside)
     }
     
-    func showImages(photos:Array<AssetImage>) {
+    func showImages(photos:[PickedPhoto]) {
         let view = UIView(frame: CGRect(x: 10, y: 100, width: 300, height: 300))
         self.view.addSubview(view);
         showView = view
@@ -65,7 +65,7 @@ class ViewController: UIViewController, PhotoPickDelegate {
         }
     }
     
-    func photoPick(pickVC: PhotoPickVC, assetImages: [AssetImage]) {
+    func photoPick(pickVC: PhotoPickVC, assetImages: [PickedPhoto]) {
         self.showImages(photos: assetImages)
     }
 }

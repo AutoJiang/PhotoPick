@@ -14,7 +14,7 @@ class CameraCell: UICollectionViewCell, UIImagePickerControllerDelegate, UINavig
     
     var host: UIViewController?
     
-    var doneTakePhoto: ([AssetImage]) -> Void = {_ in }
+    var doneTakePhoto: ([PickedPhoto]) -> Void = {_ in }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -51,9 +51,7 @@ class CameraCell: UICollectionViewCell, UIImagePickerControllerDelegate, UINavig
             //图片存入相册
             //UIImageWriteToSavedPhotosAlbum( image, nil, nil, nil);
             
-            let assetUrl = info[UIImagePickerControllerReferenceURL]
-            //PhotoGroupManager().assetForURL(assetUrl)
-            let assetimage = AssetImage(image: image)
+            let assetimage = PickedPhoto(image: image)
             doneTakePhoto([assetimage])
             
         }

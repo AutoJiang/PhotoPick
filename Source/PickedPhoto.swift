@@ -1,5 +1,5 @@
 //
-//  AssetImage.swift
+//  PickedPhoto.swift
 //  GKitPhotoPick
 //
 //  Created by Auto Jiang on 2017/2/13.
@@ -9,7 +9,7 @@
 import UIKit
 import AssetsLibrary
 
-public class AssetImage: NSObject {
+public class PickedPhoto: NSObject {
     private var asset : ALAsset?
     private var privateImage: UIImage?
     private let maxSidePixels : CGFloat = 1280

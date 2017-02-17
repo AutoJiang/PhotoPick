@@ -29,7 +29,7 @@ class PhotoModel: NSObject {
         return a?.absoluteString == b?.absoluteString
     }
     
-    static func convertToAssetImages(photoModels: [PhotoModel]) -> [AssetImage] {
-        return photoModels.map{ AssetImage(asset: $0.asset)}
+    static func convertToPickedPhotos(photoModels: [PhotoModel]) -> [PickedPhoto] {
+        return photoModels.map{ PickedPhoto(asset: $0.asset)}
     }
 }
