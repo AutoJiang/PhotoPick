@@ -25,24 +25,20 @@ extension PhotoPickDelegate {
 
 public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
     
-    private let kCellSpacing: CGFloat = 3
-    
-    private let cellColumnCount: Int
-    
-    private let cellSize: CGFloat
+    private static let kCellSpacing: CGFloat = 3
     
     public weak var delegate: PhotoPickDelegate?
     
-    public let config: PhotoPickConfig = PhotoPickConfig()
+    public let config: PhotoPickConfig = PhotoPickConfig.shared
     
     private let groupManager = PhotoGroupManager()
 
     private lazy var collectionView : UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
-        layout.itemSize = CGSize(width: self.cellSize, height: self.cellSize)
-        layout.minimumLineSpacing = self.kCellSpacing
-        layout.minimumInteritemSpacing = self.kCellSpacing
+        layout.itemSize = CGSize(width: self.sourceType.cellSize, height: self.sourceType.cellSize)
+        layout.minimumLineSpacing = PhotoPickVC.kCellSpacing
+        layout.minimumInteritemSpacing = PhotoPickVC.kCellSpacing
         let cV = UICollectionView(frame: self.view.frame, collectionViewLayout: layout)
         cV.delegate = self
         cV.dataSource = self
@@ -53,12 +49,32 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
     }()
     
     private lazy var bottomBar: BottomBar = BottomBar()
-
-    private let isShowCamera :Bool
     
     enum SourceType {
         case all
         case group(photoGroup: PhotoGroup) //分组内显示照片列表时始终没有拍照功能
+        
+        var hasCamera: Bool {
+            switch self {
+            case .group(photoGroup: _):
+                return false
+            case .all:
+                return PhotoPickConfig.shared.needShowCamera
+            }
+        }
+        
+        var cellColumnCount: Int {
+            switch self {
+            case .group(photoGroup: _):
+                return 4
+            case .all:
+                return 3
+            }
+        }
+        
+        var cellSize: CGFloat {
+            return (CGFloat(UIScreen.main.bounds.width) - CGFloat(cellColumnCount - 1) * PhotoPickVC.kCellSpacing ) / CGFloat(cellColumnCount)
+        }
     }
     
     private var sourceType: SourceType = .all
@@ -78,20 +94,18 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
     }
     
     /// 对外提供
-    public init(isShowCamera: Bool = true, maxSelectImagesCount: Int = 9, cellColumnCount: Int = 3) {
+    public init(isShowCamera: Bool = true, maxSelectImagesCount: Int = 9) {
         config.maxSelectImagesCount = maxSelectImagesCount
         config.jpgQuality = 0.5
-        self.cellColumnCount = cellColumnCount
-        cellSize = (CGFloat(UIScreen.main.bounds.width) - CGFloat(self.cellColumnCount - 1) * kCellSpacing ) / CGFloat(self.cellColumnCount)
-        self.isShowCamera = isShowCamera
+        config.needShowCamera = isShowCamera
         super.init(nibName: nil, bundle: nil)
         title = "照片选择"
     }
     
     /// 相册页面初始化
-    convenience init(group: PhotoGroup, maxSelectImagesCount: Int = 9){
-        self.init(isShowCamera: false, maxSelectImagesCount: maxSelectImagesCount, cellColumnCount : 4)
+    init(group: PhotoGroup){
         sourceType = .group(photoGroup: group)
+        super.init(nibName: nil, bundle: nil)
         title = group.name()
     }
     
@@ -186,11 +200,11 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
     }
     
     public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return isShowCamera ? photoModels.count + 1 : photoModels.count
+        return sourceType.hasCamera ? photoModels.count + 1 : photoModels.count
     }
     
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if indexPath.row == 0 && isShowCamera {
+        if indexPath.row == 0 && sourceType.hasCamera {
             let cell: CameraCell =  collectionView.dequeueReusableCell(withReuseIdentifier: CameraCell.identifier, for: indexPath) as! CameraCell
             cell.doneTakePhoto = { [unowned self] models  in
                 self.performPickDelegate(assetImages: models)
@@ -235,7 +249,7 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
     }
     
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if indexPath.row == 0 && isShowCamera {
+        if indexPath.row == 0 && sourceType.hasCamera {
             return
         }
         goPhotoShowVC(allAssets: photoModels, selectedPhotoModels: selectedPhotoModels, index: getPhotoRow(indexPath: indexPath))
@@ -254,7 +268,7 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
     }
     
     private func getPhotoRow(indexPath: IndexPath) -> Int {
-        return isShowCamera ? indexPath.row - 1 : indexPath.row
+        return sourceType.hasCamera ? indexPath.row - 1 : indexPath.row
     }
     
     public required init?(coder aDecoder: NSCoder) {

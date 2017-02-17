@@ -12,6 +12,11 @@ import Foundation
 
 public class PhotoPickConfig: NSObject {
     
+    //单例
+    private override init(){}
+    
+    public static let shared = PhotoPickConfig()
+    
     /// 最多可选图片数量(默认1)
     public var maxSelectImagesCount: Int = 1
     
@@ -24,6 +29,20 @@ public class PhotoPickConfig: NSObject {
     /// TODO:
     public var maxShortSidePixel: Int = 720
     
+    /// 是否需要显示摄像头(默认: true)
     public var needShowCamera: Bool = true
+    
+    /// 是否需要GIF(默认: true)
+    public var needGIF: Bool = true
+    
+    /// 是否允许编辑(只有单张图片时才有效)
+    public var enableEdit: Bool = false
+    
+    /// 允许编辑时图片未撑满全屏需要填充背景颜色
+    public var editFillColor: UIColor = UIColor.black
+    
+    /// 是否需要
+    public var needShowOrder: Bool = true
+    
     
 }

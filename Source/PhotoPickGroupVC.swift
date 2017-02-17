@@ -73,12 +73,13 @@ class PhotoPickGroupVC: UIViewController,UITableViewDelegate,UITableViewDataSour
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let group = self.groups[indexPath.row]
-        let photoPick = PhotoPickVC(group: group, maxSelectImagesCount: 4)
+        let photoPick = PhotoPickVC(group: group)
         photoPick.delegate = self
         self.navigationController?.pushViewController(photoPick, animated: true)
         return
     }
-//MARK: PhotoPickDelegate
+    
+    //MARK: PhotoPickDelegate
     func photoPick(pickVC: PhotoPickVC, assetImages: [PickedPhoto]) {
         self.confirmDismiss(assetImages);
     }
