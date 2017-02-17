@@ -42,9 +42,9 @@ class PhotoPickGroupVC: UIViewController,UITableViewDelegate,UITableViewDataSour
         
         self.navigationItem.title = "照片"
         
-        mgr.findGroupGroupAll { [unowned self] (groups) in
-            self.groups = groups
-            self.tableView.reloadData()
+        mgr.findGroupGroupAll { [weak self] (groups) in
+            self?.groups = groups
+            self?.tableView.reloadData()
         }
     }
 
