@@ -38,20 +38,29 @@ public class PickedPhoto: NSObject {
         }
     }
     
-    /// TODO
+    ///是否为gif图
     public var isGIF: Bool {
-        return false
+        get{
+            return asset?.defaultRepresentation().filename().components(separatedBy: ".").last == "GIF"
+        }
     }
     
-    ///创建一个图片文件路径，创建后由外部自行删除
-    public func newAnImageFile() -> String {
-        return ""
+    ///若是gif, 使用Data数据流传输到服务器
+    public var gifData: Data {
+        get{
+            if let asset = asset{
+                return AssetTool.dataFromAsset(representation: (asset.defaultRepresentation())!)
+            }
+            return UIImagePNGRepresentation(privateImage!)!
+        }
     }
     
+    ///相册获取的图片
     init(asset : ALAsset) {
         self.asset = asset
     }
     
+    ///用于拍照时获取的图片
     init(image: UIImage) {
         self.privateImage = image
     }

@@ -46,6 +46,7 @@ class ViewController: UIViewController, PhotoPickDelegate {
                 iv.contentMode = .scaleAspectFill
                 iv.clipsToBounds = true
                 view.addSubview(iv)
+                print(photos[index].isGIF)
             }
         }
     }
