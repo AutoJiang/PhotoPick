@@ -14,7 +14,7 @@ public protocol PhotoPickDelegate: class {
     func photoPickCancel(pickVC: PhotoPickVC) -> Void
 }
 
-extension PhotoPickDelegate {
+public extension PhotoPickDelegate {
     
     func photoPickCancel(pickVC: PhotoPickVC) -> Void {}
     
