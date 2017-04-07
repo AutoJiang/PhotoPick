@@ -73,14 +73,6 @@ EOM
       ;;
   esac
 }
-if [[ "$CONFIGURATION" == "Debug" ]]; then
-  install_resource "GKit/Components/ImageBrowse/Resource/mss_browseLoading@2x.png"
-  install_resource "GKit/Components/ImageBrowse/Resource/mss_browseLoading@3x.png"
-fi
-if [[ "$CONFIGURATION" == "Release" ]]; then
-  install_resource "GKit/Components/ImageBrowse/Resource/mss_browseLoading@2x.png"
-  install_resource "GKit/Components/ImageBrowse/Resource/mss_browseLoading@3x.png"
-fi
 
 mkdir -p "${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}"
 rsync -avr --copy-links --no-relative --exclude '*/.svn/*' --files-from="$RESOURCES_TO_COPY" / "${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}"

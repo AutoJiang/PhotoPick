@@ -20,6 +20,8 @@ public class PickedPhoto: NSObject {
     private let maxSidePixels : CGFloat = 1280
     private let minStretchSidePixels : CGFloat = 440
     
+    static let path = "/Documents/PhotoPick/"
+    
     ///原图
     public var originalImage: UIImage {
         get{
@@ -27,14 +29,14 @@ public class PickedPhoto: NSObject {
                 return privateImage
             }
             
-            return AssetTool.imageFromAsset(representation: asset!.defaultRepresentation())
+            return AssetTool.imageFromAsset(representation: asset!.defaultRepresentation())!
         }
     }
     
     ///返回压缩图 compress
-    public var image: UIImage {
+    public var image: UIImage? {
         get{
-            return self.originalImage.gkit_scale(toMaxSidePixels: maxSidePixels, minStretchSidePixels: minStretchSidePixels)
+            return originalImage.scaleToMaxSidePixels(maxSidePixels: maxSidePixels, minStretchSidePixels: minStretchSidePixels)
         }
     }
     
@@ -46,12 +48,38 @@ public class PickedPhoto: NSObject {
     }
     
     ///若是gif, 使用Data数据流传输到服务器
-    public var gifData: Data {
+    public var data: Data {
         get{
             if let asset = asset{
                 return AssetTool.dataFromAsset(representation: (asset.defaultRepresentation())!)
             }
             return UIImagePNGRepresentation(privateImage!)!
+        }
+    }
+    
+    public var name: String {
+        get{
+            if let asset = asset{
+                return asset.defaultRepresentation().filename()
+            }
+            let date = Date(timeIntervalSinceNow: 0)
+            return "\(date.timeIntervalSince1970)"
+        }
+    }
+    
+    public var imagePath: String {
+        get{
+            let fileManager = FileManager.default
+            let directPath = NSHomeDirectory() + PickedPhoto.path
+            if !fileManager.fileExists(atPath: directPath){
+                do {
+                    try fileManager.createDirectory(atPath: directPath, withIntermediateDirectories: true, attributes: nil)
+                } catch {
+                }
+            }
+            let imagePath: String = directPath + name
+            fileManager.createFile(atPath: imagePath, contents: data, attributes: nil)
+            return imagePath
         }
     }
     
@@ -65,4 +93,12 @@ public class PickedPhoto: NSObject {
         self.privateImage = image
     }
     
+    static func clearDisk(){
+        let fileManager = FileManager.default
+        let imagesPath: String = NSHomeDirectory() + PickedPhoto.path
+            do {
+                try fileManager.removeItem(atPath: imagesPath)
+            } catch {
+        }
+    }
 }

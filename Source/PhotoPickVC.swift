@@ -12,7 +12,6 @@ public protocol PhotoPickDelegate: class {
     
     func photoPick(pickVC: PhotoPickVC, assetImages: [PickedPhoto]) -> Void
     func photoPickCancel(pickVC: PhotoPickVC) -> Void
-
 }
 
 extension PhotoPickDelegate {
@@ -167,6 +166,7 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
     
     private func performPickDelegate(assetImages:[PickedPhoto]){
         if let delegate = delegate {
+//            PickedPhoto.clearDisk()
             delegate.photoPick(pickVC: self, assetImages: assetImages)
         }
     }
