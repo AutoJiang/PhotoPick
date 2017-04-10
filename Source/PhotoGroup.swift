@@ -25,7 +25,7 @@ class PhotoGroup {
 }
 
 class PhotoGroupManager {
-    //TODO: singleton
+
     private let library: ALAssetsLibrary = ALAssetsLibrary()
     
     private func findAllGroups(groupType: UInt32, groupsCallback: @escaping ([PhotoGroup]) -> Void){

@@ -12,7 +12,7 @@ class CameraCell: UICollectionViewCell, UIImagePickerControllerDelegate, UINavig
     
     static let identifier = "CameraCell"
     
-    var host: UIViewController?
+    weak var host: UIViewController?
     
     var doneTakePhoto: ([PickedPhoto]) -> Void = {_ in }
     

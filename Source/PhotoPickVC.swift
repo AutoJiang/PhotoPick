@@ -120,6 +120,7 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
             self.confirmOnClick()
         }
         
+        // 获取数据
         switch sourceType {
         case .all:
             setupNavBarForSourceTypeAll()
@@ -132,6 +133,11 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
                 self.photoModels = models
             })
         }
+        
+        /// 注册通知，监听系统图片发生变化时，进行数据更新
+//        NotificationCenter.default.addObserver(self, selector: #selector(assetsLibraryChanged), name: NSNotification.Name.ALAssetsLibraryChanged, object: nil)
+
+
     }
     
     private func setupNavBarForSourceTypeAll(){
@@ -187,10 +193,11 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
     }
     
     private func dismissVC(isCancel:Bool) {
-        self.dismiss(animated: true, completion: nil)
+        
         if isCancel {
             performCancelDelegate()
         }
+        self.dismiss(animated: true, completion: nil)
     }
     
     // MARK: - UICollectionViewDelegate
@@ -226,23 +233,20 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
             cell.cellUnselect()
         }
         
-        cell.selectChangeCallback = {[weak self] photoCell in
-            guard let sSelf = self else {
-                return
-            }
+        cell.selectChangeCallback = {[unowned self] photoCell in
             //取消选中
             if model.isSelect {
-                let index = sSelf.selectedPhotoModels.index(of: model)
-                sSelf.selectedPhotoModels.remove(at: index!)
+                let index = self.selectedPhotoModels.index(of: model)
+                self.selectedPhotoModels.remove(at: index!)
                 photoCell.cellUnselect()
                 model.isSelect = false
             }
             
             //选中
-            else if sSelf.selectedPhotoModels.count < sSelf.config.maxSelectImagesCount {
-                sSelf.selectedPhotoModels.append(model)
+            else if self.selectedPhotoModels.count < self.config.maxSelectImagesCount {
+                self.selectedPhotoModels.append(model)
                 model.isSelect = true
-                photoCell.cellSelect(animated: true, index: "\(sSelf.selectedPhotoModels.count)")
+                photoCell.cellSelect(animated: true, index: "\(self.selectedPhotoModels.count)")
             }
         }
         return cell
@@ -257,10 +261,10 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
     
     private func goPhotoShowVC(allAssets: [PhotoModel], selectedPhotoModels: [PhotoModel], index: Int) {
         let photoShowVC = PhotoShowVC(assets: allAssets, selectedPhotoModels: selectedPhotoModels, index: index, maxSelectImagesCount:config.maxSelectImagesCount)
-        photoShowVC.cancelBack = { array in
+        photoShowVC.cancelBack = { [unowned self] array in
             self.selectedPhotoModels = array
         }
-        photoShowVC.confirmBack = { array in
+        photoShowVC.confirmBack = { [unowned self] array in
             self.selectedPhotoModels = array
             self.confirmOnClick()
         }
@@ -271,7 +275,26 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
         return sourceType.hasCamera ? indexPath.row - 1 : indexPath.row
     }
     
+    
+    @objc private func assetsLibraryChanged(notification: Notification){
+        switch sourceType {
+        case .all:
+            groupManager.findAllPhotoModels { [unowned self] (models) in
+                self.photoModels = models
+            }
+        case let .group(photoGroup: group):
+            groupManager.findAllPhotoModelsByGroup(by: group, callback: { [unowned self] (models) in
+                self.photoModels = models
+            })
+        }
+    }
+    
     public required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    deinit {
+//        NotificationCenter.default.removeObserver(self)
+    }
+    
 }
