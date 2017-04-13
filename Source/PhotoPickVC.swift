@@ -8,13 +8,13 @@
 
 import UIKit
 
-public protocol PhotoPickDelegate: class {
+protocol PhotoPickVCDelegate: class {
     
     func photoPick(pickVC: PhotoPickVC, assetImages: [PickedPhoto]) -> Void
     func photoPickCancel(pickVC: PhotoPickVC) -> Void
 }
 
-public extension PhotoPickDelegate {
+extension PhotoPickVCDelegate {
     
     func photoPickCancel(pickVC: PhotoPickVC) -> Void {}
     
@@ -24,12 +24,12 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
     
     private static let kCellSpacing: CGFloat = 3
     
-    public weak var delegate: PhotoPickDelegate?
+    weak var delegate: PhotoPickVCDelegate?
     
     private let config: PhotoPickConfig = PhotoPickConfig.shared
     
     private let groupManager = PhotoGroupManager()
-
+    
     private lazy var collectionView : UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
@@ -85,7 +85,6 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
     private var selectedPhotoModels = [PhotoModel]() {
         didSet{
             bottomBar.updatePickedPhotoCount(count: selectedPhotoModels.count)
-            
             collectionView.reloadData()
         }
     }
@@ -136,9 +135,10 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
         
         /// 注册通知，监听系统图片发生变化时，进行数据更新
 //        NotificationCenter.default.addObserver(self, selector: #selector(assetsLibraryChanged), name: NSNotification.Name.ALAssetsLibraryChanged, object: nil)
-
-
+//        NotificationCenter.default.addObserver(self, selector: #selector(willEnterForeground), name: NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
     }
+    
+    
     
     private func setupNavBarForSourceTypeAll(){
         let btnL = UIButton(frame: CGRect(x: 0, y: 0, width: 50, height: 30))
@@ -172,7 +172,6 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
     
     private func performPickDelegate(assetImages:[PickedPhoto]){
         if let delegate = delegate {
-//            PickedPhoto.clearDisk()
             delegate.photoPick(pickVC: self, assetImages: assetImages)
         }
     }
@@ -275,26 +274,11 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
         return sourceType.hasCamera ? indexPath.row - 1 : indexPath.row
     }
     
-    
-    @objc private func assetsLibraryChanged(notification: Notification){
-        switch sourceType {
-        case .all:
-            groupManager.findAllPhotoModels { [unowned self] (models) in
-                self.photoModels = models
-            }
-        case let .group(photoGroup: group):
-            groupManager.findAllPhotoModelsByGroup(by: group, callback: { [unowned self] (models) in
-                self.photoModels = models
-            })
-        }
-    }
-    
     public required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    deinit {
+//    deinit {
 //        NotificationCenter.default.removeObserver(self)
-    }
-    
+//    }
 }

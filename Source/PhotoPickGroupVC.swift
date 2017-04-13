@@ -9,7 +9,7 @@
 import UIKit
 
 //相册列表
-class PhotoPickGroupVC: UIViewController,UITableViewDelegate,UITableViewDataSource,PhotoPickDelegate {
+class PhotoPickGroupVC: UIViewController,UITableViewDelegate,UITableViewDataSource,PhotoPickVCDelegate {
     
     private let groupsCell = "groupsCell"
     
@@ -79,7 +79,7 @@ class PhotoPickGroupVC: UIViewController,UITableViewDelegate,UITableViewDataSour
         return
     }
     
-    //MARK: PhotoPickDelegate
+    //MARK: PhotoPickVCDelegate
     func photoPick(pickVC: PhotoPickVC, assetImages: [PickedPhoto]) {
         self.confirmDismiss(assetImages);
     }

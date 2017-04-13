@@ -57,17 +57,16 @@ class ViewController: UIViewController, PhotoPickDelegate {
     }
     
     func buttonOnclick(){
-        let pv =  PhotoPickVC(maxSelectImagesCount:9)
-        let nav = UINavigationController(rootViewController: pv)
-        self.present(nav, animated: true, completion: nil)
-        pv.delegate = self
         if let v = showView {
             v.removeFromSuperview()
         }
+        PhotoPick.share.show(fromVC: self, deleage: self)
     }
     
-    func photoPick(pickVC: PhotoPickVC, assetImages: [PickedPhoto]) {
+    
+    func photoPick(pothoPick: PhotoPick, assetImages: [PickedPhoto]) {
         self.showImages(photos: assetImages)
     }
+    
 }
 

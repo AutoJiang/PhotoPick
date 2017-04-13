@@ -13,7 +13,6 @@ import ImageIO
 
 extension UIImage {
     //处理gif图片显示
-    //
     static func animatedGif(data: Data) -> UIImage? {
         guard let source = CGImageSourceCreateWithData(data as CFData, nil) else {
             return nil
