@@ -47,6 +47,7 @@
 		C980503F1E9B910E00C0C1A1 /* UIImageExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = C980503E1E9B910E00C0C1A1 /* UIImageExt.swift */; };
 		C98050401E9B938D00C0C1A1 /* UIImageExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = C980503E1E9B910E00C0C1A1 /* UIImageExt.swift */; };
 		C98050441E9E1A7500C0C1A1 /* PhotoPick.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98050431E9E1A7500C0C1A1 /* PhotoPick.swift */; };
+		C9FC27C21E9F617C00381239 /* PhotoPick.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98050431E9E1A7500C0C1A1 /* PhotoPick.swift */; };
 		FC3900114A8C5D9B992ED8C5 /* libPods-GKitPhotoPick.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6817F0E679243193DE7557F7 /* libPods-GKitPhotoPick.a */; };
 /* End PBXBuildFile section */
 
@@ -382,6 +383,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C9FC27C21E9F617C00381239 /* PhotoPick.swift in Sources */,
 				C98050401E9B938D00C0C1A1 /* UIImageExt.swift in Sources */,
 				C93363401E978FE7006F0C57 /* AssetTool.swift in Sources */,
 				C93363411E978FE7006F0C57 /* BigPhotoCell.swift in Sources */,
