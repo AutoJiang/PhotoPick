@@ -26,6 +26,23 @@
 		C93DE5EB1EA0763100E2167C /* PickedPhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93DE5DB1EA0763100E2167C /* PickedPhoto.swift */; };
 		C93DE5EC1EA0763100E2167C /* UIImageExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93DE5DC1EA0763100E2167C /* UIImageExt.swift */; };
 		C93DE5EE1EA0767100E2167C /* PhotoPick.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93DE5ED1EA0767100E2167C /* PhotoPick.swift */; };
+		C93DE5F51EA0B44900E2167C /* AssetTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93DE5CD1EA0763100E2167C /* AssetTool.swift */; };
+		C93DE5F61EA0B44900E2167C /* BigPhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93DE5CE1EA0763100E2167C /* BigPhotoCell.swift */; };
+		C93DE5F71EA0B44900E2167C /* BottomBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93DE5CF1EA0763100E2167C /* BottomBar.swift */; };
+		C93DE5F81EA0B44900E2167C /* CameraCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93DE5D01EA0763100E2167C /* CameraCell.swift */; };
+		C93DE5F91EA0B44900E2167C /* CircleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93DE5D11EA0763100E2167C /* CircleButton.swift */; };
+		C93DE5FA1EA0B44900E2167C /* CircleLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93DE5D21EA0763100E2167C /* CircleLabel.swift */; };
+		C93DE5FB1EA0B44900E2167C /* PhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93DE5D31EA0763100E2167C /* PhotoCell.swift */; };
+		C93DE5FC1EA0B44900E2167C /* PhotoGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93DE5D41EA0763100E2167C /* PhotoGroup.swift */; };
+		C93DE5FD1EA0B44900E2167C /* PhotoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93DE5D51EA0763100E2167C /* PhotoModel.swift */; };
+		C93DE5FE1EA0B44900E2167C /* PhotoPickConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93DE5D61EA0763100E2167C /* PhotoPickConfig.swift */; };
+		C93DE5FF1EA0B44900E2167C /* PhotoPick.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93DE5ED1EA0767100E2167C /* PhotoPick.swift */; };
+		C93DE6001EA0B44900E2167C /* PhotoPickGroupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93DE5D71EA0763100E2167C /* PhotoPickGroupVC.swift */; };
+		C93DE6011EA0B44900E2167C /* PhotoPickVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93DE5D81EA0763100E2167C /* PhotoPickVC.swift */; };
+		C93DE6021EA0B44900E2167C /* PhotoShowVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93DE5D91EA0763100E2167C /* PhotoShowVC.swift */; };
+		C93DE6031EA0B44900E2167C /* PhotoZoomScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93DE5DA1EA0763100E2167C /* PhotoZoomScrollView.swift */; };
+		C93DE6041EA0B44900E2167C /* PickedPhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93DE5DB1EA0763100E2167C /* PickedPhoto.swift */; };
+		C93DE6051EA0B44900E2167C /* UIImageExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93DE5DC1EA0763100E2167C /* UIImageExt.swift */; };
 		C958FDFD1E4DDE4B00C5684A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C958FDFC1E4DDE4B00C5684A /* AppDelegate.swift */; };
 		C958FDFF1E4DDE4B00C5684A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C958FDFE1E4DDE4B00C5684A /* ViewController.swift */; };
 		C958FE021E4DDE4B00C5684A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C958FE001E4DDE4B00C5684A /* Main.storyboard */; };
@@ -366,6 +383,23 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C93DE5F51EA0B44900E2167C /* AssetTool.swift in Sources */,
+				C93DE5F61EA0B44900E2167C /* BigPhotoCell.swift in Sources */,
+				C93DE5F71EA0B44900E2167C /* BottomBar.swift in Sources */,
+				C93DE5F81EA0B44900E2167C /* CameraCell.swift in Sources */,
+				C93DE5F91EA0B44900E2167C /* CircleButton.swift in Sources */,
+				C93DE5FA1EA0B44900E2167C /* CircleLabel.swift in Sources */,
+				C93DE5FB1EA0B44900E2167C /* PhotoCell.swift in Sources */,
+				C93DE5FC1EA0B44900E2167C /* PhotoGroup.swift in Sources */,
+				C93DE5FD1EA0B44900E2167C /* PhotoModel.swift in Sources */,
+				C93DE5FE1EA0B44900E2167C /* PhotoPickConfig.swift in Sources */,
+				C93DE5FF1EA0B44900E2167C /* PhotoPick.swift in Sources */,
+				C93DE6001EA0B44900E2167C /* PhotoPickGroupVC.swift in Sources */,
+				C93DE6011EA0B44900E2167C /* PhotoPickVC.swift in Sources */,
+				C93DE6021EA0B44900E2167C /* PhotoShowVC.swift in Sources */,
+				C93DE6031EA0B44900E2167C /* PhotoZoomScrollView.swift in Sources */,
+				C93DE6041EA0B44900E2167C /* PickedPhoto.swift in Sources */,
+				C93DE6051EA0B44900E2167C /* UIImageExt.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -574,6 +608,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D408F87DCE06D2A566636E09 /* Pods-GKitPhotoPick.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = R6P8BM5822;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -595,6 +630,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 19B5F106A7B14A7742C32959 /* Pods-GKitPhotoPick.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = R6P8BM5822;
 				FRAMEWORK_SEARCH_PATHS = (
