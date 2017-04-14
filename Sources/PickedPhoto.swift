@@ -79,7 +79,7 @@ public class PickedPhoto: NSObject {
             }
             let imagePath: String = directPath + name
             fileManager.createFile(atPath: imagePath, contents: data, attributes: nil)
-            return imagePath
+            return "file://" + imagePath
         }
     }
     

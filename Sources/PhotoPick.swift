@@ -20,7 +20,7 @@ public protocol PhotoPickDelegate: class {
     func photoPickCancel(pothoPick: PhotoPick) -> Void
 }
 
-extension PhotoPickDelegate {
+public extension PhotoPickDelegate {
     
     func photoPickCancel(pothoPick: PhotoPick) -> Void{}
 }
@@ -28,14 +28,14 @@ extension PhotoPickDelegate {
 
 public class PhotoPick: NSObject, PhotoPickVCDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     //单例
-    static public let share = PhotoPick()
+    static public let shared = PhotoPick()
     
     private override init() {}
     
     public weak var delegate: PhotoPickDelegate?
     
-    public func show(fromVC: UIViewController, type: PhotoPickType = .normal, deleage: PhotoPickDelegate) {
-        self.delegate = deleage
+    public func show(fromVC: UIViewController, type: PhotoPickType = .normal, delegate: PhotoPickDelegate) {
+        self.delegate = delegate
         if type == .normal {
             let pv =  PhotoPickVC(maxSelectImagesCount:9)
             pv.delegate = self

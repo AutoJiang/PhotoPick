@@ -19,16 +19,16 @@ public class PhotoPickConfig: NSObject {
     public static let shared = PhotoPickConfig()
     
     /// 最多可选图片数量(默认1)
-    public var maxSelectImagesCount: Int = 1
+    public var maxSelectImagesCount: Int = 9
     
     /// 当返回JPG图片时自动进行的压缩系数(默认0.5)
     public var jpgQuality: CGFloat = 0.5
 
-    /// TODO:
-    public var maxLongSidePixel: Int = 1280
+    /// 最长宽
+    public var maxLongSidePixel: CGFloat = 1280
     
     /// TODO:
-    public var maxShortSidePixel: Int = 720
+    public var maxShortSidePixel: CGFloat = 720
     
     /// 是否需要显示摄像头(默认: true)
     public var needShowCamera: Bool = true

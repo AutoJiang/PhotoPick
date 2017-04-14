@@ -46,6 +46,7 @@ class ViewController: UIViewController, PhotoPickDelegate {
                 iv.contentMode = .scaleAspectFill
                 iv.clipsToBounds = true
                 view.addSubview(iv)
+                print(photos[index].imagePath)
             }
         }
     }
@@ -59,7 +60,7 @@ class ViewController: UIViewController, PhotoPickDelegate {
         if let v = showView {
             v.removeFromSuperview()
         }
-        PhotoPick.share.show(fromVC: self, deleage: self)
+        PhotoPick.shared.show(fromVC: self, delegate: self)
     }
     
     
