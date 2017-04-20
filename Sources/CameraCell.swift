@@ -21,7 +21,7 @@ class CameraCell: UICollectionViewCell, UIImagePickerControllerDelegate, UINavig
         let title = UILabel(frame: frame)
         title.text = "拍摄"
         title.font = UIFont.systemFont(ofSize: 30)
-        title.textColor = UIColor.yellow
+        title.textColor = PhotoPickConfig.shared.tintColor
         title.textAlignment = .center
         self.addSubview(title)
         

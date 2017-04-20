@@ -1,12 +1,13 @@
 //
 //  ViewController.swift
-//  PhotoPick
+//  Demo
 //
-//  Created by Auto Jiang on 2016/12/14.
-//  Copyright © 2016年 Auto Jiang. All rights reserved.
+//  Created by Auto Jiang on 2017/4/17.
+//
 //
 
 import UIKit
+import PhotoPick
 
 class ViewController: UIViewController, PhotoPickDelegate {
     
@@ -39,7 +40,7 @@ class ViewController: UIViewController, PhotoPickDelegate {
                 if  index >= photos.count {
                     break
                 }
-
+                
                 let iv = UIImageView(frame: CGRect(x: col * width, y: row * width, width: width, height: width))
                 let image : UIImage = photos[index].image!;
                 iv.image = image
@@ -61,6 +62,7 @@ class ViewController: UIViewController, PhotoPickDelegate {
             v.removeFromSuperview()
         }
         PhotoPick.shared.show(fromVC: self, delegate: self)
+//        PhotoPick.shared.show(fromVC: self, type: .editedSinglePhoto, delegate: self)
     }
     
     
@@ -69,4 +71,3 @@ class ViewController: UIViewController, PhotoPickDelegate {
     }
     
 }
-

@@ -51,10 +51,11 @@ class PhotoShowVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         fatalError("init(coder:) has not been implemented")
     }
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationController?.isNavigationBarHidden = true
-        
+        navigationController?.isNavigationBarHidden = true
+
         let width = self.view.frame.width
         let height = self.view.frame.height
         
@@ -87,7 +88,7 @@ class PhotoShowVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         let confirmBtn = UIButton(frame: CGRect(x: width - 50, y: 17, width: 38, height: 18))
         confirmBtn.setTitle("确定", for: .normal)
         confirmBtn.titleLabel?.font = UIFont.systemFont(ofSize: 18)
-        confirmBtn.setTitleColor(UIColor.yellow, for: .normal)
+        confirmBtn.setTitleColor(PhotoPickConfig.shared.tintColor, for: .normal)
         confirmBtn.backgroundColor = UIColor.clear
         confirmBtn.addTarget(self, action: #selector(confirm), for: .touchUpInside)
         BottomBar.addSubview(confirmBtn)

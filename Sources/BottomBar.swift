@@ -52,7 +52,7 @@ class BottomBar: UIView {
         let confirmBtn = UIButton(frame: CGRect(x: width - 50, y: 0, width: 38, height: BottomBar.kBottomBarHeight))
         confirmBtn.setTitle("确定", for: .normal)
         confirmBtn.titleLabel?.font = UIFont.systemFont(ofSize: 18)
-        confirmBtn.setTitleColor(UIColor.yellow, for: .normal)
+        confirmBtn.setTitleColor(PhotoPickConfig.shared.tintColor, for: .normal)
         confirmBtn.backgroundColor = UIColor.clear
         confirmBtn.addTarget(self, action: #selector(doOnConfirm), for: .touchUpInside)
         addSubview(confirmBtn)

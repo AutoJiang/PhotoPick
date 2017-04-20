@@ -1,9 +1,9 @@
 //
 //  AppDelegate.swift
-//  GKitPhotoPick
+//  Demo
 //
-//  Created by Auto Jiang on 2017/2/10.
-//  Copyright © 2017年 Auto Jiang. All rights reserved.
+//  Created by Auto Jiang on 2017/4/17.
+//
 //
 
 import UIKit

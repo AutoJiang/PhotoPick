@@ -11,6 +11,7 @@ import UIKit
 public enum PhotoPickType {
     case editedSinglePhoto //需要编辑成方形图片的单张图片
     case normal            //无需编辑
+    case showCamera        //内部显示显示拍照
 }
 
 public protocol PhotoPickDelegate: class {
@@ -34,19 +35,28 @@ public class PhotoPick: NSObject, PhotoPickVCDelegate, UIImagePickerControllerDe
     
     public weak var delegate: PhotoPickDelegate?
     
+    private var imagePick: UIImagePickerController?
+    
     public func show(fromVC: UIViewController, type: PhotoPickType = .normal, delegate: PhotoPickDelegate) {
         self.delegate = delegate
+        let count = PhotoPickConfig.shared.maxSelectImagesCount
         if type == .normal {
-            let pv =  PhotoPickVC(maxSelectImagesCount:9)
+            let pv =  PhotoPickVC(isShowCamera: false, maxSelectImagesCount: count)
             pv.delegate = self
             let nav = UINavigationController(rootViewController: pv)
             fromVC.present(nav, animated: true, completion: nil)
         }else if type == .editedSinglePhoto {
-            let imagePick = UIImagePickerController()
-            imagePick.allowsEditing = true
-            imagePick.delegate = self
-            imagePick.sourceType = .photoLibrary
-            fromVC.present(imagePick, animated: true, completion: nil)
+            let imagePC = UIImagePickerController()
+            imagePC.allowsEditing = true
+            imagePC.delegate = self
+            imagePC.sourceType = .photoLibrary
+            fromVC.present(imagePC, animated: true, completion: nil)
+            imagePick = imagePC
+        }else if type == .showCamera {
+            let pv =  PhotoPickVC(isShowCamera: true, maxSelectImagesCount: count)
+            pv.delegate = self
+            let nav = UINavigationController(rootViewController: pv)
+            fromVC.present(nav, animated: true, completion: nil)
         }
     }
 
@@ -80,6 +90,10 @@ public class PhotoPick: NSObject, PhotoPickVCDelegate, UIImagePickerControllerDe
         if let delegate = self.delegate {
             delegate.photoPickCancel(pothoPick: self)
         }
+        guard let vc = imagePick else {
+            return
+        }
+        vc.dismiss(animated: true, completion: nil)
     }
     
     deinit {

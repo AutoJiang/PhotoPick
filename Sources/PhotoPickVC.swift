@@ -119,6 +119,8 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
             self.confirmOnClick()
         }
         
+        navigationController?.navigationBar.barTintColor = PhotoPickConfig.shared.NavBarColor
+        
         // 获取数据
         switch sourceType {
         case .all:
@@ -227,10 +229,12 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
         cell.bind(image: model.image)
         if model.isSelect {
             let index = self.selectedPhotoModels.index(of: model)
-            cell.cellSelect(index: "\(index!+1)")
+            cell.cellSelect(animated: model.isLastSelect, index: "\(index!+1)")
+            model.isLastSelect = false
         } else {
             cell.cellUnselect()
         }
+        
         
         cell.selectChangeCallback = {[unowned self] photoCell in
             //取消选中
@@ -246,6 +250,7 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
                 self.selectedPhotoModels.append(model)
                 model.isSelect = true
                 photoCell.cellSelect(animated: true, index: "\(self.selectedPhotoModels.count)")
+                model.isLastSelect = true
             }
         }
         return cell

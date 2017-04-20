@@ -22,7 +22,7 @@ class CircleLabel: UILabel {
         super.init(frame: frame)
         self.layer.cornerRadius = frame.width / 2
         self.layer.masksToBounds = true
-        self.backgroundColor = UIColor.yellow
+        self.backgroundColor = PhotoPickConfig.shared.tintColor
         self.textColor = UIColor.black
         self.textAlignment = .center
     }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0830"
+   LastUpgradeVersion = "9999"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "C93362AC1E977C30006F0C57"
+               BlueprintIdentifier = "OBJ_15"
                BuildableName = "PhotoPick.framework"
                BlueprintName = "PhotoPick"
-               ReferencedContainer = "container:GKitPhotoPick.xcodeproj">
+               ReferencedContainer = "container:PhotoPick.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -28,6 +28,16 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "OBJ_22"
+               BuildableName = "AbcTests.xctest"
+               BlueprintName = "AbcTests"
+               ReferencedContainer = "container:PhotoPick.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
       <AdditionalOptions>
       </AdditionalOptions>
@@ -45,10 +55,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "C93362AC1E977C30006F0C57"
+            BlueprintIdentifier = "OBJ_15"
             BuildableName = "PhotoPick.framework"
             BlueprintName = "PhotoPick"
-            ReferencedContainer = "container:GKitPhotoPick.xcodeproj">
+            ReferencedContainer = "container:PhotoPick.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -60,15 +70,6 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "C93362AC1E977C30006F0C57"
-            BuildableName = "PhotoPick.framework"
-            BlueprintName = "PhotoPick"
-            ReferencedContainer = "container:GKitPhotoPick.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">

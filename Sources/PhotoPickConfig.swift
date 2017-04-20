@@ -48,6 +48,12 @@ public class PhotoPickConfig: NSObject {
     /// 是否自动清理图片文件缓存
     public var isAutoClearDisk: Bool = true
     
+    //控件颜色
+    public var tintColor: UIColor = UIColor.orange
+    
+    //导航栏颜色
+    public var NavBarColor: UIColor = UIColor.yellow
+    
     /// 是否是长微博
     public var isLongImage: (_ width: CGFloat, _ height: CGFloat) -> Bool = { (width, height) in
         if width == 0 || height == 0 {
