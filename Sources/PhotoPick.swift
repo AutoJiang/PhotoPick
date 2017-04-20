@@ -12,6 +12,7 @@ public enum PhotoPickType {
     case editedSinglePhoto //需要编辑成方形图片的单张图片
     case normal            //无需编辑
     case showCamera        //内部显示显示拍照
+    case systemCamera      //直接调用系统拍照
 }
 
 public protocol PhotoPickDelegate: class {
@@ -40,23 +41,32 @@ public class PhotoPick: NSObject, PhotoPickVCDelegate, UIImagePickerControllerDe
     public func show(fromVC: UIViewController, type: PhotoPickType = .normal, delegate: PhotoPickDelegate) {
         self.delegate = delegate
         let count = PhotoPickConfig.shared.maxSelectImagesCount
-        if type == .normal {
+        
+        switch type {
+        case .normal:
             let pv =  PhotoPickVC(isShowCamera: false, maxSelectImagesCount: count)
             pv.delegate = self
             let nav = UINavigationController(rootViewController: pv)
             fromVC.present(nav, animated: true, completion: nil)
-        }else if type == .editedSinglePhoto {
+        case .editedSinglePhoto:
             let imagePC = UIImagePickerController()
             imagePC.allowsEditing = true
             imagePC.delegate = self
             imagePC.sourceType = .photoLibrary
             fromVC.present(imagePC, animated: true, completion: nil)
             imagePick = imagePC
-        }else if type == .showCamera {
+        case .showCamera:
             let pv =  PhotoPickVC(isShowCamera: true, maxSelectImagesCount: count)
             pv.delegate = self
             let nav = UINavigationController(rootViewController: pv)
             fromVC.present(nav, animated: true, completion: nil)
+        case .systemCamera:
+            let imagePC = UIImagePickerController()
+            imagePC.allowsEditing = true
+            imagePC.delegate = self
+            imagePC.sourceType = .camera
+            fromVC.present(imagePC, animated: true, completion: nil)
+            imagePick = imagePC
         }
     }
 
@@ -76,15 +86,16 @@ public class PhotoPick: NSObject, PhotoPickVCDelegate, UIImagePickerControllerDe
     ///MARK: UIImagePickerControllerDelegate
 
     public func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        picker.dismiss(animated: true, completion: nil)
         guard let image = info[UIImagePickerControllerOriginalImage] as? UIImage else {
             return
         }
+        picker.dismiss(animated: true, completion: nil)
         let model = PickedPhoto(image: image )
         if let delegate = self.delegate {
             delegate.photoPick(pothoPick: self, assetImages: [model])
         }
     }
+
     
     public func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         if let delegate = self.delegate {
