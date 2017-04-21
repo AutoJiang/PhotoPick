@@ -226,7 +226,7 @@
 					};
 					OBJ_15 = {
 						LastSwiftMigration = 0830;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 					};
 				};
 			};
