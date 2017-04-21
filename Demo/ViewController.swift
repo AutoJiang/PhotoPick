@@ -61,9 +61,9 @@ class ViewController: UIViewController, PhotoPickDelegate {
         if let v = showView {
             v.removeFromSuperview()
         }
-//        PhotoPick.shared.show(fromVC: self, delegate: self)
+        PhotoPick.shared.show(fromVC: self, delegate: self)
 //        PhotoPick.shared.show(fromVC: self, type: .editedSinglePhoto, delegate: self)
-        PhotoPick.shared.show(fromVC: self, type: .systemCamera, delegate: self)
+//        PhotoPick.shared.show(fromVC: self, type: .systemCamera, delegate: self)
     }
     
     

@@ -18,7 +18,7 @@ public class PhotoPickConfig: NSObject {
     
     public static let shared = PhotoPickConfig()
     
-    /// 最多可选图片数量(默认1)
+    /// 最多可选图片数量(默认9)
     public var maxSelectImagesCount: Int = 9
     
     /// 当返回JPG图片时自动进行的压缩系数(默认0.5)
