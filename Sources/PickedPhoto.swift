@@ -47,7 +47,7 @@ public class PickedPhoto: NSObject {
         }
     }
     
-    ///若是gif, 使用Data数据流传输到服务器
+    ///若是gif, 使用Data数据流传输到服务器，注意该数据是原始未压缩的数据
     public var data: Data {
         get{
             if let asset = asset{
@@ -63,7 +63,7 @@ public class PickedPhoto: NSObject {
                 return asset.defaultRepresentation().filename()
             }
             let date = Date(timeIntervalSinceNow: 0)
-            return "\(date.timeIntervalSince1970)"
+            return "\(date.timeIntervalSince1970).jpg"
         }
     }
     
