@@ -251,6 +251,8 @@ public class PhotoPickVC: UIViewController, UICollectionViewDelegate, UICollecti
                 model.isSelect = true
                 photoCell.cellSelect(animated: true, index: "\(self.selectedPhotoModels.count)")
                 model.isLastSelect = true
+            }else{//可选图片已达上限
+                PhotoPick.showOneCancelButtonAlertView(from: self, title: "可选图片已达上限", subTitle: nil)
             }
         }
         return cell

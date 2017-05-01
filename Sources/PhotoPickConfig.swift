@@ -52,7 +52,7 @@ public class PhotoPickConfig: NSObject {
     public var tintColor: UIColor = UIColor.orange
     
     //导航栏颜色
-    public var NavBarColor: UIColor = UIColor.yellow
+    public var NavBarColor: UIColor = UIColor.orange
     
     /// 是否是长微博
     public var isLongImage: (_ width: CGFloat, _ height: CGFloat) -> Bool = { (width, height) in

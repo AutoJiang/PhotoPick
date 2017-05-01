@@ -16,17 +16,25 @@ class ViewController: UIViewController, PhotoPickDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        
+    
+        let titleAray = ["编辑成方形图片的单张图片","普通相册选图","相册选图(带拍照)","系统拍照"]
+        var y: CGFloat = 350
+        for i in 0...3 {
+            y = createBtns(posY: y, tag: i, title: titleAray[i])
+        }
+    }
+    
+    func createBtns(posY: CGFloat, tag: Int, title: String) -> CGFloat{
         let width = view.frame.width
-        let height = view.frame.height;
-        
         let button = UIButton()
-        button.frame.size = CGSize(width: width - 50, height: 44)
-        button.center = CGPoint(x: 0.5*width, y: 0.9*height)
+        button.frame.size = CGSize(width: width - 50, height: 30)
+        button.center = CGPoint(x: 0.5 * width, y: posY)
         view.addSubview(button)
-        button.setTitle("图片选择", for: .normal)
+        button.setTitle(title, for: .normal)
         button.backgroundColor = UIColor.orange
+        button.tag = tag
         button.addTarget(self, action: #selector(buttonOnclick), for: .touchUpInside)
+        return posY + 50
     }
     
     func showImages(photos:[PickedPhoto]) {
@@ -57,13 +65,20 @@ class ViewController: UIViewController, PhotoPickDelegate {
         // Dispose of any resources that can be recreated.
     }
     
-    func buttonOnclick(){
+    func buttonOnclick(button: UIButton){
         if let v = showView {
             v.removeFromSuperview()
         }
-        PhotoPick.shared.show(fromVC: self, delegate: self)
-//        PhotoPick.shared.show(fromVC: self, type: .editedSinglePhoto, delegate: self)
-//        PhotoPick.shared.show(fromVC: self, type: .systemCamera, delegate: self)
+        let tag = button.tag
+        if tag == 0 {
+            PhotoPick.shared.show(fromVC: self, type: .editedSinglePhoto, delegate: self)
+        }else if tag == 1 {
+            PhotoPick.shared.show(fromVC: self, type: .normal, delegate: self)
+        }else if tag == 2 {
+            PhotoPick.shared.show(fromVC: self, type: .showCamera, delegate: self)
+        }else if tag == 3 {
+            PhotoPick.shared.show(fromVC: self, type: .systemCamera, delegate: self)
+        }
     }
     
     

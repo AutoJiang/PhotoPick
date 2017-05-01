@@ -70,7 +70,7 @@ class PhotoShowVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         cV.backgroundColor = UIColor.black
         cV.isPagingEnabled = true
         self.view.addSubview(cV)
-        cV.register(BigPhotoCell.self ,forCellWithReuseIdentifier: "bigCell")
+        cV.register(BigPhotoCell.self ,forCellWithReuseIdentifier: "PhotoPick.bigCell")
         collectionView = cV
         collectionView?.scrollToItem(at: IndexPath(row: index, section: 0), at: .left, animated: false)
 
@@ -124,6 +124,7 @@ class PhotoShowVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         
     @objc private func selectEvent() {
         if selectedPhotoModels.count >= maxSelectImagesCount {
+            PhotoPick.showOneCancelButtonAlertView(from: self, title: "可选图片已达上限", subTitle: nil)
             return
         }
         let element = assets[index]
@@ -172,7 +173,7 @@ class PhotoShowVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell :BigPhotoCell  = collectionView.dequeueReusableCell(withReuseIdentifier: "bigCell", for: indexPath) as! BigPhotoCell
+        let cell :BigPhotoCell  = collectionView.dequeueReusableCell(withReuseIdentifier: "PhotoPick.bigCell", for: indexPath) as! BigPhotoCell
         let data : PhotoModel = assets[indexPath.row]
         cell.bind(model: data)
         return cell

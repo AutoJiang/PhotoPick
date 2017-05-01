@@ -15,10 +15,10 @@ public class PickedPhoto: NSObject {
         case image(image: UIImage)
     }
     
-    private var asset : ALAsset?
+    private var asset: ALAsset?
     private var privateImage: UIImage?
-    private let maxSidePixels : CGFloat = 1280
-    private let minStretchSidePixels : CGFloat = 440
+    private let maxSidePixels: CGFloat = 1280
+    private let minStretchSidePixels: CGFloat = 440
     
     static let path = "/Documents/PhotoPick/"
     
