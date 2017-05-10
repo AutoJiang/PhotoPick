@@ -78,7 +78,9 @@ public class PickedPhoto: NSObject {
                 }
             }
             let imagePath: String = directPath + name
-            let data = UIImageJPEGRepresentation(originalImage, PhotoPickConfig.shared.jpgQuality)
+            
+            // gif图不能压缩
+            let data = UIImageJPEGRepresentation(originalImage, isGIF ? 1.0 : PhotoPickConfig.shared.jpgQuality)
             fileManager.createFile(atPath: imagePath, contents: data, attributes: nil)
             return "file://" + imagePath
         }
