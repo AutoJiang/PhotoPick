@@ -80,7 +80,8 @@ public class PickedPhoto: NSObject {
             let imagePath: String = directPath + name
             
             // gif图不能压缩
-            let data = UIImageJPEGRepresentation(originalImage, isGIF ? 1.0 : PhotoPickConfig.shared.jpgQuality)
+            let data = isGIF ? self.data : UIImageJPEGRepresentation(originalImage, PhotoPickConfig.shared.jpgQuality)
+            
             fileManager.createFile(atPath: imagePath, contents: data, attributes: nil)
             return "file://" + imagePath
         }
