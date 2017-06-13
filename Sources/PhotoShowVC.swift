@@ -72,7 +72,10 @@ class PhotoShowVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         self.view.addSubview(cV)
         cV.register(BigPhotoCell.self ,forCellWithReuseIdentifier: "PhotoPick.bigCell")
         collectionView = cV
-        collectionView?.scrollToItem(at: IndexPath(row: index, section: 0), at: .left, animated: false)
+        if 0 < index && index < assets.count {
+            collectionView?.scrollToItem(at: IndexPath(row: index, section: 0), at: .left, animated: false)
+        }
+
 
         self.createView()
     }

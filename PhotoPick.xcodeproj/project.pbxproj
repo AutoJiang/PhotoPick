@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C91294801EEFB11700519E91 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C912947F1EEFB11700519E91 /* Info.plist */; };
+		C91294811EEFB26400519E91 /* Info.plist in Sources */ = {isa = PBXBuildFile; fileRef = C912947F1EEFB11700519E91 /* Info.plist */; };
 		C93DE59B1EA072B300E2167C /* AssetTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93DE58A1EA072B300E2167C /* AssetTool.swift */; };
 		C93DE59C1EA072B300E2167C /* UIImageExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93DE58B1EA072B300E2167C /* UIImageExt.swift */; };
 		C93DE59D1EA072B300E2167C /* BigPhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93DE58C1EA072B300E2167C /* BigPhotoCell.swift */; };
@@ -58,6 +60,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		C912947F1EEFB11700519E91 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C93DE58A1EA072B300E2167C /* AssetTool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssetTool.swift; sourceTree = "<group>"; };
 		C93DE58B1EA072B300E2167C /* UIImageExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImageExt.swift; sourceTree = "<group>"; };
 		C93DE58C1EA072B300E2167C /* BigPhotoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BigPhotoCell.swift; sourceTree = "<group>"; };
@@ -169,6 +172,7 @@
 				C93DE5981EA072B300E2167C /* PhotoZoomScrollView.swift */,
 				C93DE5991EA072B300E2167C /* PickedPhoto.swift */,
 				C93DE59A1EA072B300E2167C /* PhotoPick.swift */,
+				C912947F1EEFB11700519E91 /* Info.plist */,
 			);
 			path = Sources;
 			sourceTree = SOURCE_ROOT;
@@ -222,7 +226,8 @@
 				TargetAttributes = {
 					C9943DC61EA4A98D00D88CCF = {
 						CreatedOnToolsVersion = 8.3;
-						ProvisioningStyle = Manual;
+						DevelopmentTeam = MA6LVQGK8C;
+						ProvisioningStyle = Automatic;
 					};
 					OBJ_15 = {
 						LastSwiftMigration = 0830;
@@ -254,6 +259,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C91294801EEFB11700519E91 /* Info.plist in Resources */,
 				C9943DD41EA4A98D00D88CCF /* LaunchScreen.storyboard in Resources */,
 				C9943DD11EA4A98D00D88CCF /* Assets.xcassets in Resources */,
 				C9943DCF1EA4A98D00D88CCF /* Main.storyboard in Resources */,
@@ -276,6 +282,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 0;
 			files = (
+				C91294811EEFB26400519E91 /* Info.plist in Sources */,
 				C93DE59E1EA072B300E2167C /* BottomBar.swift in Sources */,
 				C93DE59B1EA072B300E2167C /* AssetTool.swift in Sources */,
 				C93DE5A91EA072B300E2167C /* PhotoZoomScrollView.swift in Sources */,
@@ -350,7 +357,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = MA6LVQGK8C;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -372,6 +379,7 @@
 				MTL_ENABLE_DEBUG_INFO = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = cc.jat.Demo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
@@ -405,7 +413,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = MA6LVQGK8C;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -422,6 +430,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = cc.jat.Demo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				SWIFT_VERSION = 3.0;
