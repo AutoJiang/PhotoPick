@@ -16,12 +16,25 @@ class BottomBar: UIView {
     
     var onConfirm = {}
     
+    private let previewBtn: UIButton = {
+        //预览按钮
+        let previewBtn = UIButton(frame: CGRect(x: 12, y: 0, width: 38, height: BottomBar.kBottomBarHeight))
+        previewBtn.setTitle("预览", for: .normal)
+        previewBtn.titleLabel?.font = UIFont.systemFont(ofSize: 18)
+        previewBtn.setTitleColor(UIColor.white, for: .normal)
+        previewBtn.backgroundColor = UIColor.clear
+        previewBtn.addTarget(self, action: #selector(doGoShowPage), for: .touchUpInside)
+        previewBtn.isHidden = true
+        return previewBtn
+    }()
+    
     func updatePickedPhotoCount(count: Int){
         if count == 0 {
             indexLbl.isHidden = true
+            previewBtn.isHidden = true
             return
         }
-        
+        previewBtn.isHidden = false
         indexLbl.isHidden = false
         indexLbl.text = "\(count)"
         indexLbl.addAnimate()
@@ -38,14 +51,6 @@ class BottomBar: UIView {
         let y: CGFloat = UIScreen.main.bounds.height - BottomBar.kBottomBarHeight
         super.init(frame: CGRect(x: 0, y: y, width: width, height: BottomBar.kBottomBarHeight))
         backgroundColor = UIColor.black.withAlphaComponent(0.8)
-        
-        //预览按钮
-        let previewBtn = UIButton(frame: CGRect(x: 12, y: 0, width: 38, height: BottomBar.kBottomBarHeight))
-        previewBtn.setTitle("预览", for: .normal)
-        previewBtn.titleLabel?.font = UIFont.systemFont(ofSize: 18)
-        previewBtn.setTitleColor(UIColor.white, for: .normal)
-        previewBtn.backgroundColor = UIColor.clear
-        previewBtn.addTarget(self, action: #selector(doGoShowPage), for: .touchUpInside)
         addSubview(previewBtn)
         
         //确定按钮
